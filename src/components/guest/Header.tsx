@@ -47,7 +47,7 @@ function Header({ isAuthenticated }: Props) {
           </button>
         )}
       </div>
-      <Menu open={open} />
+      <Menu open={open} isAuthenticated={isAuthenticated} logout={logout} />
       <div className="flex items-center lg:hidden">
         {open ? (
           <XIcon className="icon" onClick={() => setOpen(false)} />

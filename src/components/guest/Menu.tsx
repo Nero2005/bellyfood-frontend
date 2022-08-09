@@ -3,9 +3,11 @@ import CustomLink from "./CustomLink";
 
 interface Props {
   open: boolean;
+  isAuthenticated: () => boolean;
+  logout: () => void;
 }
 
-function Menu({ open }: Props) {
+function Menu({ open, isAuthenticated, logout }: Props) {
   const links = [
     { text: "HOME", link: "/home" },
     { text: "ABOUT US", link: "/about" },
@@ -13,8 +15,9 @@ function Menu({ open }: Props) {
     { text: "PRODUCTS", link: "/products" },
     { text: "GIFT A BASKET", link: "/gift" },
     { text: "CONTACT", link: "/contact" },
-    { text: "LOGIN", link: "/login" },
   ];
+
+  if (!isAuthenticated()) links.push({ text: "LOGIN", link: "/login" });
   return (
     <div
       className={`${
@@ -25,6 +28,11 @@ function Menu({ open }: Props) {
       {links.map((link) => (
         <CustomLink text={link.text} link={link.link} key={link.text} />
       ))}
+      {isAuthenticated() && (
+        <button className="hover:text-green-400" onClick={() => logout()}>
+          LOGOUT
+        </button>
+      )}
     </div>
   );
 }
