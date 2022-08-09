@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
-import { BrowserRouter, Link, Navigate, Route, Routes } from "react-router-dom";
-import { useCookies } from "react-cookie";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+// import { useCookies } from "react-cookie";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
-// import Unauthorized from "./pages/Unauthorized";
-import { setUser } from "./store/userReducer";
+import { setUser, UserState } from "./store/userReducer";
 import { get } from "./utils/api";
 import { LinkRoutes } from "./utils";
 import Login from "./pages/Login";
@@ -17,38 +16,41 @@ import Super from "./pages/super";
 // import "./index.css";
 
 function App() {
-  const [cookies] = useCookies();
+  // const [cookies] = useCookies();
   const user = useAppSelector((state) => state.users.user);
   const dispatch = useAppDispatch();
 
+  const updateUser = async () => {
+    try {
+      const res = await get("users/me");
+      console.log(res.data.user);
+      // const { date, lastLogin, lastPayment } = res.data.user;
+
+      dispatch(setUser(res.data.user));
+      console.log(isAuthenticated());
+      return true;
+    } catch (err: any) {
+      console.log(err.message);
+      console.log(err.status);
+      console.log(err.msg);
+      console.log(err);
+      return false;
+    }
+  };
   useEffect(() => {
-    const updateUser = async () => {
-      try {
-        console.log(isAuthenticated());
-        if (isAuthenticated()) {
-          const res = await get("users/me");
-          console.log(res.data.user);
-          dispatch(setUser(res.data.user));
-        }
-      } catch (err: any) {
-        console.log(err.message);
-        console.log(err.status);
-        console.log(err.msg);
-        console.log(err);
-      }
-    };
     updateUser().then().catch();
+    // eslint-disable-next-line
   }, []);
   const isAuthenticated = () => {
-    return cookies.bellyfood ? true : false;
+    return user ? true : false;
   };
 
   const isCustomer = () => {
-    return user?.roles.every((r) => r === "CUSTOMER");
+    return user?.roles.every((r: string) => r === "CUSTOMER");
   };
 
   const isAdmin = () => {
-    return user?.roles.every((r) => r === "ADMIN");
+    return user?.roles.every((r: string) => r === "ADMIN");
   };
 
   const isSuperAdmin = () => {
@@ -56,7 +58,6 @@ function App() {
   };
 
   const dashboard = (): string => {
-    console.log(user);
     if (!user) return LinkRoutes.LOGIN;
     if (isCustomer()) return LinkRoutes.CUSTOMER;
     else if (isAdmin()) return LinkRoutes.ADMIN;

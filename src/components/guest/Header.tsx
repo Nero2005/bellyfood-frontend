@@ -5,6 +5,8 @@ import Menu from "./Menu";
 import CustomLink from "./CustomLink";
 import { LinkRoutes, post } from "../../utils";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../store/hooks";
+import { setUser } from "../../store/userReducer";
 
 interface Props {
   isAuthenticated: () => boolean;
@@ -24,8 +26,10 @@ function Header({ isAuthenticated }: Props) {
 
   if (!isAuthenticated()) links.push({ text: "LOGIN", link: "/login" });
 
+  const dispatch = useAppDispatch();
   const logout = async () => {
     await post("auth/logout");
+    dispatch(setUser(undefined));
     navigate(LinkRoutes.LOGIN);
     window.location.reload();
   };

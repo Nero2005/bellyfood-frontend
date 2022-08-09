@@ -12,9 +12,7 @@ interface FormData {
 function Login() {
   const {
     register,
-    setValue,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<FormData>();
   const [errorMessage, setErrorMessage] = useState("");
@@ -26,8 +24,8 @@ function Login() {
       const res = await post("auth/login", formData);
       console.log(res.data);
       console.log(res.headers);
-      // navigate(LinkRoutes.DASHBOARD);
-      // window.location.reload();
+      navigate(LinkRoutes.DASHBOARD);
+      window.location.reload();
     } catch (err: any) {
       const { status, msg } = err;
       if (status !== 200) setErrorMessage(msg);

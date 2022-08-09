@@ -1,0 +1,14 @@
+.progress-ring__circle {
+  stroke-dasharray: 10 20;
+  transition: stroke-dashoffset 0.35s;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+tr:hover {
+  cursor: pointer;
+  background-color: #e2e2e2;
+}
