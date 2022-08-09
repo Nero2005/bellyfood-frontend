@@ -9,7 +9,10 @@ export const http = axios.create({
 export const post = (endpoint: string, data?: any): Promise<AxiosResponse> =>
   new Promise((resolve, reject) =>
     http
-      .post(endpoint, data)
+      .post(endpoint, data, {
+        withCredentials: true,
+        credentials: "include",
+      })
       .then(resolve)
       .catch((e) => reject(e.response.data))
   );
