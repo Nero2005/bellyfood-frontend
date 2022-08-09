@@ -20,22 +20,23 @@ function App() {
   const [cookies] = useCookies();
   const user = useAppSelector((state) => state.users.user);
   const dispatch = useAppDispatch();
-  const updateUser = async () => {
-    try {
-      if (isAuthenticated()) {
-        const res = await get("users/me");
-        console.log(res.data.user);
-        dispatch(setUser(res.data.user));
-      }
-    } catch (err: any) {
-      console.log(err.message);
-      console.log(err.status);
-      console.log(err.msg);
-      console.log(err);
-    }
-  };
 
   useEffect(() => {
+    const updateUser = async () => {
+      try {
+        console.log(isAuthenticated());
+        if (isAuthenticated()) {
+          const res = await get("users/me");
+          console.log(res.data.user);
+          dispatch(setUser(res.data.user));
+        }
+      } catch (err: any) {
+        console.log(err.message);
+        console.log(err.status);
+        console.log(err.msg);
+        console.log(err);
+      }
+    };
     updateUser().then().catch();
   }, []);
   const isAuthenticated = () => {
