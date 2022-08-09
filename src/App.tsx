@@ -65,6 +65,17 @@ function App() {
     return LinkRoutes.LOGIN;
   };
 
+  const authorize = (authorizeMethod: any, Component: any) =>
+    isAuthenticated() ? (
+      authorizeMethod() ? (
+        <Component />
+      ) : (
+        <Navigate to={LinkRoutes.UNAUTHORIZED} />
+      )
+    ) : (
+      <Navigate to={LinkRoutes.LOGIN} />
+    );
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -89,45 +100,12 @@ function App() {
           />
           <Route
             path={LinkRoutes.CUSTOMER}
-            element={
-              isAuthenticated() ? (
-                isCustomer() ? (
-                  <Customer />
-                ) : (
-                  <Navigate to={LinkRoutes.UNAUTHORIZED} />
-                )
-              ) : (
-                <Navigate to={LinkRoutes.LOGIN} />
-              )
-            }
+            element={authorize(isCustomer, Customer)}
           />
-          <Route
-            path={LinkRoutes.ADMIN}
-            element={
-              isAuthenticated() ? (
-                isAdmin() ? (
-                  <Admin />
-                ) : (
-                  <Navigate to={LinkRoutes.UNAUTHORIZED} />
-                )
-              ) : (
-                <Navigate to={LinkRoutes.LOGIN} />
-              )
-            }
-          />
+          <Route path={LinkRoutes.ADMIN} element={authorize(isAdmin, Admin)} />
           <Route
             path={LinkRoutes.SUPER}
-            element={
-              isAuthenticated() ? (
-                isSuperAdmin() ? (
-                  <Super />
-                ) : (
-                  <Navigate to={LinkRoutes.UNAUTHORIZED} />
-                )
-              ) : (
-                <Navigate to={LinkRoutes.LOGIN} />
-              )
-            }
+            element={authorize(isSuperAdmin, Super)}
           />
           <Route
             path="/unauthorized"
