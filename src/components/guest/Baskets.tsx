@@ -20,7 +20,7 @@ function Baskets({ setShowModal }: Props) {
             View Basket Contents
           </button>
           <button className="bg-gray-50 text-green-400 rounded-xl py-1 px-8 mb-4">
-            Subscribe
+            Buy
           </button>
         </div>
         <div className="flex flex-col items-center bg-white rounded-sm shadow-md shadow-gray-500 px-7 py-2">
@@ -34,7 +34,7 @@ function Baskets({ setShowModal }: Props) {
             View Basket Contents
           </button>
           <button className="bg-gray-50 text-green-400 rounded-xl py-1 px-8 mb-4">
-            Subscribe
+            Buy
           </button>
         </div>
         <div className="flex flex-col items-center bg-white rounded-sm shadow-md shadow-gray-500 px-7 py-2">
@@ -48,7 +48,7 @@ function Baskets({ setShowModal }: Props) {
             View Basket Contents
           </button>
           <button className="bg-gray-50 text-green-400 rounded-xl py-1 px-8 mb-4">
-            Subscribe
+            Buy
           </button>
         </div>
         <div className="flex flex-col items-center bg-white rounded-sm shadow-md shadow-gray-500 px-7 py-2">
@@ -62,7 +62,7 @@ function Baskets({ setShowModal }: Props) {
             View Basket Contents
           </button>
           <button className="bg-gray-50 text-green-400 rounded-xl py-1 px-8 mb-4">
-            Subscribe
+            Buy
           </button>
         </div>
         <div className="flex flex-col items-center bg-white rounded-sm shadow-md shadow-gray-500 px-7 py-2">
@@ -76,7 +76,7 @@ function Baskets({ setShowModal }: Props) {
             View Basket Contents
           </button>
           <button className="bg-gray-50 text-green-400 rounded-xl py-1 px-8 mb-4">
-            Subscribe
+            Buy
           </button>
         </div>
       </div>

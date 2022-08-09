@@ -51,7 +51,7 @@ function Home({ isAuthenticated }: Props) {
 
   return (
     <div className="max-w-7xl mx-auto overflow-hidden">
-      <Header />
+      <Header isAuthenticated={isAuthenticated} />
       <Welcome welcome={welcome} />
       {showModal.open ? (
         <BasketModal setShowModal={setShowModal} name={showModal.name} />

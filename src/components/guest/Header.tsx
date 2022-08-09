@@ -3,8 +3,16 @@ import bellyfood from "../../assets/images/bellyfood-logo.jpg";
 import { MenuIcon, XIcon } from "@heroicons/react/solid";
 import Menu from "./Menu";
 import CustomLink from "./CustomLink";
-function Header() {
+import { LinkRoutes, post } from "../../utils";
+import { useNavigate } from "react-router-dom";
+
+interface Props {
+  isAuthenticated: () => boolean;
+}
+
+function Header({ isAuthenticated }: Props) {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
   const links = [
     { text: "HOME", link: "/home" },
     { text: "ABOUT US", link: "/about" },
@@ -12,8 +20,15 @@ function Header() {
     { text: "PRODUCTS", link: "/products" },
     { text: "GIFT A BASKET", link: "/gift" },
     { text: "CONTACT", link: "/contact" },
-    { text: "LOGIN", link: "/login" },
   ];
+
+  if (!isAuthenticated()) links.push({ text: "LOGIN", link: "/login" });
+
+  const logout = async () => {
+    await post("auth/logout");
+    navigate(LinkRoutes.LOGIN);
+    window.location.reload();
+  };
 
   return (
     <div className="flex bg-white max-w-6xl mx-auto justify-between items-center px-2 shadow">
@@ -26,6 +41,11 @@ function Header() {
         {links.map((link) => (
           <CustomLink text={link.text} link={link.link} key={link.text} />
         ))}
+        {isAuthenticated() && (
+          <button className="hover:text-green-400" onClick={() => logout()}>
+            LOGOUT
+          </button>
+        )}
       </div>
       <Menu open={open} />
       <div className="flex items-center lg:hidden">
