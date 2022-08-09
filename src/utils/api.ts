@@ -11,7 +11,6 @@ export const post = (endpoint: string, data?: any): Promise<AxiosResponse> =>
     http
       .post(endpoint, data, {
         withCredentials: true,
-        credentials: "include",
       })
       .then(resolve)
       .catch((e) => reject(e.response.data))
