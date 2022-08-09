@@ -5,7 +5,7 @@ export const http = axios.create({
   baseURL: API_URL,
   withCredentials: true,
 });
-
+//password password
 export const post = (endpoint: string, data?: any): Promise<AxiosResponse> =>
   new Promise((resolve, reject) =>
     http
