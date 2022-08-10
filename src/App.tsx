@@ -24,7 +24,8 @@ function App() {
   const updateUser = async () => {
     try {
       const res = await get("users/me");
-      console.log(res.data.user);
+      console.log(res.data);
+      console.log(res.data.msg);
       // const { date, lastLogin, lastPayment } = res.data.user;
 
       dispatch(setUser(res.data.user));
@@ -66,8 +67,9 @@ function App() {
     return LinkRoutes.LOGIN;
   };
 
-  const authorize = (authorizeMethod: any, Component: any) =>
-    isAuthenticated() ? (
+  const authorize = (authorizeMethod: any, Component: any) => {
+    /**
+     * isAuthenticated() ? (
       authorizeMethod() ? (
         <Component dashboard={dashboard} />
       ) : (
@@ -76,6 +78,19 @@ function App() {
     ) : (
       <Navigate to={LinkRoutes.LOGIN} />
     );
+     */
+    if (isAuthenticated()) {
+      if (authorizeMethod()) {
+        console.log("Authorized");
+        return <Component dashboard={dashboard} />;
+      } else {
+        return <Navigate to={LinkRoutes.UNAUTHORIZED} />;
+      }
+    } else {
+      console.log("Login");
+      return <Navigate to={LinkRoutes.LOGIN} />;
+    }
+  };
 
   return (
     <div className="App bg-slate-100 h-screen overflow-y-scroll">

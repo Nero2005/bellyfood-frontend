@@ -7,6 +7,7 @@ function Dashboard() {
   const countRef = useRef<HTMLSpanElement>(null!);
 
   useEffect(() => {
+    countRef.current.innerHTML = `${0}`;
     (async () => {
       try {
         const res = await getWithQuery("users/customers", { approved: false });
