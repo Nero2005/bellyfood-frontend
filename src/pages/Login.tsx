@@ -28,8 +28,8 @@ function Login({ dashboard }: Props) {
       const res = await post("auth/login", formData);
       console.log(res.data);
       console.log(res.headers);
-      // navigate(LinkRoutes.DASHBOARD);
-      // window.location.reload();
+      navigate(LinkRoutes.DASHBOARD);
+      window.location.reload();
     } catch (err: any) {
       const { status, msg } = err;
       if (status !== 200) setErrorMessage(msg);
