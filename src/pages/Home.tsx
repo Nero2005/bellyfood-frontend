@@ -72,7 +72,7 @@ function Home({ isAuthenticated, dashboard }: Props) {
       <Header isAuthenticated={isAuthenticated} dashboard={dashboard} />
       <Welcome vision={vision} mission={mission} about={about} />
 
-      <div className="px-10 py-2 mt-2 bg-white">
+      <div className="px-10 py-5 mt-2 bg-white">
         <h1 className="font-thin text-5xl text-center mb-5" id="about">
           About Us
         </h1>
