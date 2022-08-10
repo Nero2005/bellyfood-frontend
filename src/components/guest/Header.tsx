@@ -45,9 +45,10 @@ function Header({ isAuthenticated, dashboard }: Props) {
   const dispatch = useAppDispatch();
   const logout = async () => {
     await post("auth/logout");
+    console.log("Logging out");
     dispatch(setUser(undefined));
-    navigate(LinkRoutes.LOGIN);
-    window.location.reload();
+    // navigate(LinkRoutes.LOGIN);
+    // window.location.reload();
   };
 
   return (
