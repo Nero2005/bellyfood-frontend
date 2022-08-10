@@ -6,7 +6,7 @@ interface Props {
 }
 function Baskets({ setShowModal }: Props) {
   return (
-    <div className="flex flex-col items-center my-48">
+    <div className="bg-white rounded-md py-8 flex flex-col items-center my-20">
       <h1 className="text-5xl text-purple-600 font-thin mb-5">BASKETS</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4 place-items-center">
         <div className="flex flex-col items-center bg-white rounded-sm shadow-md shadow-gray-500 px-7 py-2">
@@ -39,7 +39,7 @@ function Baskets({ setShowModal }: Props) {
         </div>
         <div className="flex flex-col items-center bg-white rounded-sm shadow-md shadow-gray-500 px-7 py-2">
           <h2 className="text-2xl font-bold mb-8">MEGA</h2>
-          <h1 className="text-5xl font-bold text-yellow-400">₦30,000</h1>
+          <h1 className="text-5xl font-bold text-yellow-400">₦29,000</h1>
           <p className="mb-10">per month</p>
           <button
             className="bg-gray-50 text-green-400 rounded-md py-1 px-3 mb-8"
@@ -53,7 +53,7 @@ function Baskets({ setShowModal }: Props) {
         </div>
         <div className="flex flex-col items-center bg-white rounded-sm shadow-md shadow-gray-500 px-7 py-2">
           <h2 className="text-2xl font-bold mb-8">GIGA</h2>
-          <h1 className="text-5xl font-bold text-blue-300">₦40,000</h1>
+          <h1 className="text-5xl font-bold text-blue-300">₦65,000</h1>
           <p className="mb-10">per month</p>
           <button
             className="bg-gray-50 text-green-400 rounded-md py-1 px-3 mb-8"
@@ -67,7 +67,7 @@ function Baskets({ setShowModal }: Props) {
         </div>
         <div className="flex flex-col items-center bg-white rounded-sm shadow-md shadow-gray-500 px-7 py-2">
           <h2 className="text-2xl font-bold mb-8">OGA NA BOSS</h2>
-          <h1 className="text-5xl font-bold text-green-500">₦50,000</h1>
+          <h1 className="text-5xl font-bold text-green-500">₦89,000</h1>
           <p className="mb-10">per month</p>
           <button
             className="bg-gray-50 text-green-400 rounded-md py-1 px-3 mb-8"

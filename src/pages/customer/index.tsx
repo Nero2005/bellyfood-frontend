@@ -2,10 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import Header from "../../components/guest/Header";
 import { useAppSelector } from "../../store/hooks";
 import { get, Payment } from "../../utils";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import "./Customer.css";
 
-function Customer() {
+interface Props {
+  dashboard: () => string;
+}
+
+function Customer({ dashboard }: Props) {
   const ringRef = useRef<SVGCircleElement>(null!);
   const grayRef = useRef<SVGCircleElement>(null!);
   const textRef = useRef<HTMLSpanElement>(null!);
@@ -42,17 +46,20 @@ function Customer() {
         });
       } catch (err: any) {
         console.log(err);
-        toast.success(`Error: ${err.msg}`, {
+        toast.error(`Error: ${err.msg}`, {
           id: n,
         });
       }
     })();
+    // eslint-disable-next-line
   }, []);
 
   return (
     <div>
-      <Header isAuthenticated={() => true} />
-      <Toaster />
+      <Header isAuthenticated={() => true} dashboard={dashboard} />
+      <h1 className="font-bold text-2xl lg:text-3xl text-center py-2">
+        Welcome, {user?.name}
+      </h1>
       <div className="flex items-center space-x-5">
         <div className="relative text-center inline-flex justify-center py-3 px-2">
           <svg className="progress-ring" height="120" width="120">
@@ -83,24 +90,28 @@ function Customer() {
             style={{ left: "37%", top: "37%" }}
           ></span>
         </div>
-        <div className="flex flex-col">
-          <p>Total amount paid: {user?.amountPaid}</p>
-          <p>Total price {user?.totalPrice}</p>
-          <p>
-            Package Name:{" "}
-            <span className="text-bold">
-              {user?.packageNames?.map((p) => p)}
-            </span>
-          </p>
+        <div className="flex flex-1 justify-evenly items-center">
+          <div className="text-lg">
+            <p>Amount paid:</p>
+            <p>Total Price:</p>
+            <p>Package Name</p>
+            <p>Delivered: </p>
+          </div>
+          <div className="font-semibold text-xl">
+            <p>{user?.amountPaid}</p>
+            <p>{user?.totalPrice}</p>
+            <p>{user?.packageNames?.map((p) => p)}</p>
+            <p>{user?.delivered ? "Yes" : "No"}</p>
+          </div>
         </div>
       </div>
       <div className="flex flex-col max-w-5xl mx-auto items-center px-2 md:px-0">
-        <h1 className="text-bold text-2xl">Payment History</h1>
+        <h1 className="text-2xl">Payment History</h1>
         <table className="text-center mx-auto mt-5">
           <thead>
-            <tr className="bg-green-400">
-              <th className="px-2 py-2 sm:px-6">Amount Paid</th>
-              <th className="px-2 md:px-6">Date</th>
+            <tr className="">
+              <th className="bg-green-400 px-2 py-2 sm:px-6">Amount Paid</th>
+              <th className="bg-green-400 px-2 md:px-6">Date</th>
             </tr>
           </thead>
           <tbody>

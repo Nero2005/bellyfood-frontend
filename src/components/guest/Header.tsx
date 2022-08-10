@@ -1,30 +1,46 @@
 import React, { useState } from "react";
 import bellyfood from "../../assets/images/bellyfood-logo.jpg";
 import { MenuIcon, XIcon } from "@heroicons/react/solid";
-import Menu from "./Menu";
+import Menu from "./HeaderMenu";
 import CustomLink from "./CustomLink";
 import { LinkRoutes, post } from "../../utils";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../store/hooks";
 import { setUser } from "../../store/userReducer";
 
 interface Props {
   isAuthenticated: () => boolean;
+  dashboard: () => string;
 }
 
-function Header({ isAuthenticated }: Props) {
-  const [open, setOpen] = useState(false);
-  const navigate = useNavigate();
+export const getHeaderLinks = ({ isAuthenticated, dashboard }: Props) => {
   const links = [
     { text: "HOME", link: "/home" },
-    { text: "ABOUT US", link: "/about" },
+    { text: "ABOUT US", link: "#about", isA: true },
     { text: "DONATE A FOOD BASKET", link: "/donate" },
     { text: "PRODUCTS", link: "/products" },
     { text: "GIFT A BASKET", link: "/gift" },
     { text: "CONTACT", link: "/contact" },
   ];
-
+  if (isAuthenticated()) links.push({ text: "DASHBOARD", link: dashboard() });
   if (!isAuthenticated()) links.push({ text: "LOGIN", link: "/login" });
+  return links;
+};
+
+function Header({ isAuthenticated, dashboard }: Props) {
+  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  // const links = [
+  //   { text: "HOME", link: "/home" },
+  //   { text: "ABOUT US", link: "/about" },
+  //   { text: "DONATE A FOOD BASKET", link: "/donate" },
+  //   { text: "PRODUCTS", link: "/products" },
+  //   { text: "GIFT A BASKET", link: "/gift" },
+  //   { text: "CONTACT", link: "/contact" },
+  // ];
+
+  // if (!isAuthenticated()) links.push({ text: "LOGIN", link: "/login" });
+  const links = getHeaderLinks({ isAuthenticated, dashboard });
 
   const dispatch = useAppDispatch();
   const logout = async () => {
@@ -35,15 +51,19 @@ function Header({ isAuthenticated }: Props) {
   };
 
   return (
-    <div className="flex bg-white max-w-6xl mx-auto justify-between items-center px-2 shadow">
-      <img
-        className="w-20 flex-shrink-0 cursor-pointer"
-        src={bellyfood}
-        alt={"Company logo"}
-      />
+    // flex bg-white px-4 py-2 shadow-sm sticky top-0 z-50 items-center
+    // sticky w-full top-0 flex bg-white max-w-6xl mx-auto justify-between items-center px-2 shadow-sm z-50
+    <div className="sticky w-full top-0 flex bg-white mx-auto justify-between items-center px-2 shadow-sm z-50">
+      <Link to="/home">
+        <img
+          className="w-20 flex-shrink-0 cursor-pointer"
+          src={bellyfood}
+          alt={"Company logo"}
+        />
+      </Link>
       <div className="lg:flex space-x-8 hidden">
         {links.map((link) => (
-          <CustomLink text={link.text} link={link.link} key={link.text} />
+          <CustomLink link={link} key={link.text} />
         ))}
         {isAuthenticated() && (
           <button className="hover:text-green-400" onClick={() => logout()}>
@@ -51,7 +71,12 @@ function Header({ isAuthenticated }: Props) {
           </button>
         )}
       </div>
-      <Menu open={open} isAuthenticated={isAuthenticated} logout={logout} />
+      <Menu
+        open={open}
+        isAuthenticated={isAuthenticated}
+        logout={logout}
+        dashboard={dashboard}
+      />
       <div className="flex items-center lg:hidden">
         {open ? (
           <XIcon className="icon" onClick={() => setOpen(false)} />

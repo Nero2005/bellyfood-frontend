@@ -2,21 +2,26 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 interface Props {
-  text: string;
-  link: string;
+  link: { text: string; link: string; isA?: boolean };
 }
 
-function CustomLink({ text, link }: Props) {
+function CustomLink({ link }: Props) {
   return (
     <div>
-      <NavLink
-        className={({ isActive }) =>
-          isActive ? "text-green-400" : "hover:text-green-400"
-        }
-        to={link}
-      >
-        {text}
-      </NavLink>
+      {link.isA ? (
+        <a className="hover:text-green-400" href={link.link}>
+          {link.text}
+        </a>
+      ) : (
+        <NavLink
+          className={({ isActive }) =>
+            isActive ? "text-green-400" : "hover:text-green-400"
+          }
+          to={link.link}
+        >
+          {link.text}
+        </NavLink>
+      )}
     </div>
   );
 }

@@ -31,28 +31,53 @@ export const newUser: UserState = {
 
 interface Props {
   isAuthenticated: () => boolean;
+  dashboard: () => string;
 }
 
 export interface Basket {
   name: string;
   open: boolean;
 }
-function Home({ isAuthenticated }: Props) {
+function Home({ isAuthenticated, dashboard }: Props) {
   // const user = useAppSelector((state) => state.users.user);
   const [showModal, setShowModal] = useState<Basket>({ name: "", open: false });
 
   // const dispatch = useAppDispatch();
-  const welcome =
-    "Our primary goal is to make food as affordable as possible at wholesale prices through a monthly subscription service. " +
-    "We work with local farmers, manufacturers and cooperatives to source the best quality produce for our subscribers." +
-    "Your subscription will not only help you save money, but it will help another person or family fight hunger as well. With every box delivered to a subscriber, a food item gets donated to a person in need. ";
+  // We want to help people see, understand and consume health food at 36 state in Nigeria and Africa in a totally new way. To us food isn’t just food. Is to source it locally free from poisonous preservatives for human consumption and wellbeing
+  const vision =
+    "We want to help people see, understand and consume health food at 36 state in Nigeria and Africa " +
+    "in a totally new way. To us food isn’t just food. Is to source it locally free " +
+    "from poisonous preservatives for human consumption and wellbeing.";
+
+  const mission =
+    "We are on a mission to help people see,understand and consume food in a totally new way. " +
+    "We want people to eat our food and feel amazing afterwards, and we want them to be surprise " +
+    "by how delicious healthy food can we. Everything we serve is made by us ; " +
+    "we know where all our ingredients come from and we know how to cook them " +
+    "to get the most out of them, both in term";
+
+  const about =
+    "Rising prices of food items in Nigeria while income remains constant makes it difficult " +
+    "for low to middle income earners to purchase foodstuff. Many staple food suppliers offer " +
+    "home delivery service to customers using online channels. However, the low income " +
+    "earners at the bottom of the pyramid do not have the financial capability to pay " +
+    "for goods at once and so buy goods on credit or online. Bellyfood's offline/online " +
+    "food subscription delivery service in Nigeria allows customers to pay for food items " +
+    "on a subscription basis.";
 
   // useEffect(() => {}, []);
 
   return (
-    <div className="max-w-7xl mx-auto overflow-hidden">
-      <Header isAuthenticated={isAuthenticated} />
-      <Welcome welcome={welcome} />
+    <div className="max-w-7xl mx-auto">
+      <Header isAuthenticated={isAuthenticated} dashboard={dashboard} />
+      <Welcome vision={vision} mission={mission} about={about} />
+
+      <div className="px-10 py-2 mt-2 bg-white">
+        <h1 className="font-thin text-5xl text-center mb-5" id="about">
+          About Us
+        </h1>
+        <p className="leading-6 w-80 md:w-full">{about}</p>
+      </div>
       {showModal.open ? (
         <BasketModal setShowModal={setShowModal} name={showModal.name} />
       ) : null}

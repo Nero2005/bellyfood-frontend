@@ -4,7 +4,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
-import { setUser, UserState } from "./store/userReducer";
+import { setUser } from "./store/userReducer";
 import { get } from "./utils/api";
 import { LinkRoutes } from "./utils";
 import Login from "./pages/Login";
@@ -12,6 +12,7 @@ import Customer from "./pages/customer";
 import Admin from "./pages/admin";
 import Unauthorized from "./pages/Unauthorized";
 import Super from "./pages/super";
+import { Toaster } from "react-hot-toast";
 // import logo from "./logo.svg";
 // import "./index.css";
 
@@ -68,7 +69,7 @@ function App() {
   const authorize = (authorizeMethod: any, Component: any) =>
     isAuthenticated() ? (
       authorizeMethod() ? (
-        <Component />
+        <Component dashboard={dashboard} />
       ) : (
         <Navigate to={LinkRoutes.UNAUTHORIZED} />
       )
@@ -77,7 +78,8 @@ function App() {
     );
 
   return (
-    <div className="App">
+    <div className="App bg-slate-100 h-screen overflow-y-scroll">
+      <Toaster />
       <BrowserRouter>
         <Routes>
           <Route
@@ -86,12 +88,18 @@ function App() {
           />
           <Route
             path={LinkRoutes.HOME}
-            element={<Home isAuthenticated={isAuthenticated} />}
+            element={
+              <Home isAuthenticated={isAuthenticated} dashboard={dashboard} />
+            }
           />
           <Route
             path={LinkRoutes.LOGIN}
             element={
-              !isAuthenticated() ? <Login /> : <Navigate to={dashboard()} />
+              !isAuthenticated() ? (
+                <Login dashboard={dashboard} />
+              ) : (
+                <Navigate to={dashboard()} />
+              )
             }
           />
           <Route

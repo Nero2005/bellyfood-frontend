@@ -3,7 +3,7 @@ import twitterIcon from "../../assets/images/icons8-twitter.svg";
 
 function Footer() {
   return (
-    <div className="flex max-w-5xl mx-auto justify-between items-center pt-12 pb-2 flex-col lg:flex-row space-y-3">
+    <div className="bg-white flex max-w-7xl mt-10 px-5 mx-auto justify-between items-center pt-12 pb-2 flex-col lg:flex-row space-y-3">
       <div className="flex space-x-2">
         <img
           alt={"Social media icon"}

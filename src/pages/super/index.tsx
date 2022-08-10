@@ -1,10 +1,14 @@
 import React from "react";
 import Header from "../../components/guest/Header";
 
-function Super() {
+interface Props {
+  dashboard: () => string;
+}
+
+function Super({ dashboard }: Props) {
   return (
     <div>
-      <Header isAuthenticated={() => true} />
+      <Header isAuthenticated={() => true} dashboard={dashboard} />
     </div>
   );
 }

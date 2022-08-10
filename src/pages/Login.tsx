@@ -9,7 +9,11 @@ interface FormData {
   password: string;
 }
 
-function Login() {
+interface Props {
+  dashboard: () => string;
+}
+
+function Login({ dashboard }: Props) {
   const {
     register,
     handleSubmit,
@@ -35,9 +39,12 @@ function Login() {
 
   return (
     <div className="max-w-7xl mx-auto">
-      <Header isAuthenticated={() => false} />
+      <Header isAuthenticated={() => false} dashboard={dashboard} />
+
+      <h1 className="text-3xl font-semibold mt-5 text-center">Login</h1>
+
       <form
-        className="flex flex-col mt-12 p-5 max-w-2xl mx-auto"
+        className="flex flex-col mt-10 p-5 max-w-2xl mx-auto"
         onSubmit={onSubmit}
       >
         <label className="p-2">
@@ -45,7 +52,7 @@ function Login() {
           <input
             {...register("phone", { required: true })}
             type="tel"
-            placeholder="+2341234567890"
+            placeholder="+2348134567890"
             className="block border rounded form-input shadow ring-green-400 px-4 py-3 w-full mt-1 outline-none focus:ring"
           />
         </label>
