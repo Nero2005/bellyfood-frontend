@@ -45,13 +45,14 @@ function PendingPayments() {
       approved: true,
       paid: false,
       name: e.target.value,
+      agentCode: user?.agentCode,
     });
     setCustomers(res.data.users);
   };
 
   return (
     <div className="flex-1 md:mt-1 pr-2 pl-2 md:pl-0">
-      <div className="flex items-center bg-white sticky top-28 px-3">
+      <div className="flex items-center bg-white sticky md:top-28 top-52 px-3">
         <SearchIcon className="w-6 h-6" />
         <input
           onChange={(e) => handleChange(e)}

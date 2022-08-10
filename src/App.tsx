@@ -25,7 +25,7 @@ function App() {
     try {
       const res = await get("users/me");
       console.log(res.data);
-      console.log(res.data.msg);
+      // console.log(res.data.msg);
       // const { date, lastLogin, lastPayment } = res.data.user;
 
       dispatch(setUser(res.data.user));
