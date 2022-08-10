@@ -61,8 +61,10 @@ function App() {
 
   const dashboard = (): string => {
     if (!user) return LinkRoutes.LOGIN;
-    if (isCustomer()) return LinkRoutes.CUSTOMER;
-    else if (isAdmin()) return LinkRoutes.ADMIN;
+    if (isCustomer()) {
+      console.log("customer");
+      return LinkRoutes.CUSTOMER;
+    } else if (isAdmin()) return LinkRoutes.ADMIN;
     else if (isSuperAdmin()) return LinkRoutes.SUPER;
     return LinkRoutes.LOGIN;
   };
