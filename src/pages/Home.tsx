@@ -76,7 +76,7 @@ function Home({ isAuthenticated, dashboard }: Props) {
         <h1 className="font-thin text-5xl text-center mb-5" id="about">
           About Us
         </h1>
-        <p className="leading-6 w-80 md:w-full">{about}</p>
+        <p className="leading-6 md:w-full">{about}</p>
       </div>
       {showModal.open ? (
         <BasketModal setShowModal={setShowModal} name={showModal.name} />
