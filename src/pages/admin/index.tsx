@@ -10,8 +10,6 @@ interface Props {
   dashboard: () => string;
 }
 
-export type Page = "PENDING_PAYMENTS" | "PENDING_APPROVAL" | "DASHBOARD";
-
 function Admin({ dashboard }: Props) {
   const page = useAppSelector((state) => state.users.page);
   // const dispatch = useAppDispatch();
@@ -31,7 +29,7 @@ function Admin({ dashboard }: Props) {
   return (
     <div>
       <Header isAuthenticated={() => true} dashboard={dashboard} />
-      <div className="flex flex-col md:flex-row space-y-10 md:space-x-2 h-screen">
+      <div className="flex flex-col space-y-7 h-screen max-w-5xl mx-auto">
         <AdminMenu />
 
         {loadPage()}

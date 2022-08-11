@@ -22,3 +22,10 @@ export interface Payment {
   updatedAt: string;
   _id: string;
 }
+
+export type Page =
+  | "PENDING_PAYMENTS"
+  | "PENDING_APPROVAL"
+  | "DASHBOARD"
+  | "CUSTOMER_HISTORY"
+  | "CUSTOMER_PROFILE";

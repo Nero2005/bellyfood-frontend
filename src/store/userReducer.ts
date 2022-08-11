@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "./index";
-import { Page } from "../pages/admin";
+import { Page } from "../utils";
 
 // Define a type for the slice state
 export type PackageName = "NANO" | "MICRO" | "MEGA" | "GIGA" | "OGA NA BOSS";

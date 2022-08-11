@@ -2,7 +2,7 @@ import React from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setPage } from "../../store/userReducer";
 
-function AdminMenu() {
+function CustomerMenu() {
   const page = useAppSelector((state) => state.users.page);
   const dispatch = useAppDispatch();
 
@@ -24,22 +24,22 @@ function AdminMenu() {
         className={`sticky ${
           page === "PENDING_PAYMENTS" && "shadow-md text-white bg-green-400"
         } px-6 py-2 hover:bg-green-400 hover:text-white transform ease-in duration-300`}
-        onClick={() => dispatch(setPage("PENDING_PAYMENTS"))}
+        onClick={() => dispatch(setPage("CUSTOMER_HISTORY"))}
         // style={{ top: "6rem" }}
       >
-        Pending Payments
+        History
       </button>
       <button
         className={`sticky ${
           page === "PENDING_APPROVAL" && "shadow-md text-white bg-green-400"
         } px-6 py-2 hover:bg-green-400 hover:text-white transform ease-in duration-300`}
-        onClick={() => dispatch(setPage("PENDING_APPROVAL"))}
+        onClick={() => dispatch(setPage("CUSTOMER_PROFILE"))}
         // style={{ top: "7rem" }}
       >
-        Pending Approval
+        Profile
       </button>
     </div>
   );
 }
 
-export default AdminMenu;
+export default CustomerMenu;
