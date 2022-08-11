@@ -1,32 +1,22 @@
 import { SearchIcon } from "@heroicons/react/solid";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { UserState } from "../../store/userReducer";
-import { getWithQuery } from "../../utils";
-import Customer from "./Customer";
+import { get, getWithQuery } from "../../utils";
+import Admin from "./Admin";
 
-function PendingPayments() {
-  const user = useAppSelector((state) => state.users.user);
-  // eslint-disable-next-line
-  const dispatch = useAppDispatch();
-
-  const [customers, setCustomers] = useState<UserState[]>(null!);
+function Admins() {
+  const [admins, setAdmins] = useState<UserState[]>(null!);
   const [searchName, setSearchName] = useState("");
 
   useEffect(() => {
     (async () => {
-      // const n = toast.loading("Getting customers");
-      const n = toast.loading("Getting customers");
+      const n = toast.loading("Getting admins");
       try {
-        const res = await getWithQuery("users/customers", {
-          approved: true,
-          paid: false,
-          agentCode: user?.agentCode,
-        });
+        const res = await get("super/admins");
         console.log(res.data);
-        setCustomers(res.data.users);
-        toast.success("Got customers!", {
+        setAdmins(res.data.users);
+        toast.success("Got admins!", {
           id: n,
         });
       } catch (err: any) {
@@ -36,20 +26,15 @@ function PendingPayments() {
         });
       }
     })();
-    // eslint-disable-next-line
   }, []);
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
       console.log(e.target.value);
       setSearchName(e.target.value);
-      const res = await getWithQuery("users/customers", {
-        approved: true,
-        paid: false,
-        name: e.target.value,
-        agentCode: user?.agentCode,
-      });
-      setCustomers(res.data.users);
+      const res = await getWithQuery("super/admins", { name: e.target.value });
+      console.log(res.data);
+      setAdmins(res.data.users);
     } catch (err: any) {
       console.log(err);
       const n = toast.error(`Error: ${err.msg}`);
@@ -58,6 +43,9 @@ function PendingPayments() {
 
   return (
     <div className="flex-1 md:mt-1 px-2">
+      <h1 className="text-2xl font-semibold text-center my-2">
+        Your Employees
+      </h1>
       <div className="flex items-center bg-white sticky top-32 px-3">
         <SearchIcon className="w-6 h-6" />
         <input
@@ -68,13 +56,13 @@ function PendingPayments() {
           className="flex-1 py-2 my-2 px-3 outline-none bg-transparent"
         />
       </div>
-      <div className="flex flex-col space-y-5 my-2">
-        {customers?.map((customer) => (
-          <Customer key={customer._id} customer={customer} />
+      <div className="flex flex-col space-y-5 my-3">
+        {admins?.map((admin) => (
+          <Admin admin={admin} />
         ))}
       </div>
     </div>
   );
 }
 
-export default PendingPayments;
+export default Admins;

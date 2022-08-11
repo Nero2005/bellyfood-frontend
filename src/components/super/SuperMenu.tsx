@@ -2,7 +2,7 @@ import React from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setPage } from "../../store/userReducer";
 
-function AdminMenu() {
+function SuperMenu() {
   const page = useAppSelector((state) => state.users.page);
   const dispatch = useAppDispatch();
 
@@ -22,23 +22,40 @@ function AdminMenu() {
       </button>
       <button
         className={`sticky ${
+          page === "CREATE_ADMIN" && "shadow-md text-white bg-green-400"
+        } px-6 py-2 hover:bg-green-400 hover:text-white transform ease-in duration-300`}
+        onClick={() => dispatch(setPage("CREATE_ADMIN"))}
+        // style={{ top: "7rem" }}
+      >
+        Create Admin
+      </button>
+      <button
+        className={`sticky ${
           page === "CREATE_CUSTOMER" && "shadow-md text-white bg-green-400"
         } px-6 py-2 hover:bg-green-400 hover:text-white transform ease-in duration-300`}
         onClick={() => dispatch(setPage("CREATE_CUSTOMER"))}
-        // style={{ top: "6rem" }}
+        // style={{ top: "7rem" }}
       >
         Create Customer
       </button>
       <button
         className={`sticky ${
-          page === "PENDING_PAYMENTS" && "shadow-md text-white bg-green-400"
+          page === "ADMINS" && "shadow-md text-white bg-green-400"
         } px-6 py-2 hover:bg-green-400 hover:text-white transform ease-in duration-300`}
-        onClick={() => dispatch(setPage("PENDING_PAYMENTS"))}
-        // style={{ top: "6rem" }}
+        onClick={() => dispatch(setPage("ADMINS"))}
+        // style={{ top: "7rem" }}
       >
-        Pending Payments
+        Admins
       </button>
-      {/* //COMPLETED_DELIVERIES */}
+      <button
+        className={`sticky ${
+          page === "PENDING_DELIVERIES" && "shadow-md text-white bg-green-400"
+        } px-6 py-2 hover:bg-green-400 hover:text-white transform ease-in duration-300`}
+        onClick={() => dispatch(setPage("PENDING_DELIVERIES"))}
+        // style={{ top: "7rem" }}
+      >
+        Pending Deliveries
+      </button>
       <button
         className={`sticky ${
           page === "COMPLETED_DELIVERIES" && "shadow-md text-white bg-green-400"
@@ -61,4 +78,4 @@ function AdminMenu() {
   );
 }
 
-export default AdminMenu;
+export default SuperMenu;

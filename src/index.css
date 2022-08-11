@@ -16,6 +16,12 @@ code {
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://fonts.googleapis.com/css2?family=Readex+Pro:wght@200;300;400;500;600;700&display=swap");
+
+body {
+  font-family: "Readex Pro", sans-serif;
+}
+
 @layer components {
   .icon {
     @apply h-9 w-8 lg:w-9 cursor-pointer rounded-sm lg:p-1 lg:hover:bg-gray-100;

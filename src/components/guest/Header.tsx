@@ -16,11 +16,11 @@ interface Props {
 export const getHeaderLinks = ({ isAuthenticated, dashboard }: Props) => {
   const links = [
     { text: "HOME", link: "/home" },
-    { text: "ABOUT US", link: "#about", isA: true },
-    { text: "DONATE A FOOD BASKET", link: "/donate" },
-    { text: "PRODUCTS", link: "/products" },
-    { text: "GIFT A BASKET", link: "/gift" },
-    { text: "CONTACT", link: "/contact" },
+    { text: "ABOUT US", link: "/home#about", isA: true },
+    { text: "DONATE A FOOD BASKET", link: "/home#donate", isA: true },
+    { text: "SUBSCRIPTION PLAN", link: "/home#products", isA: true },
+    { text: "GIFT A BASKET", link: "/home#gift", isA: true },
+    { text: "CONTACT", link: "/home#contact", isA: true },
   ];
   if (isAuthenticated()) links.push({ text: "DASHBOARD", link: dashboard() });
   if (!isAuthenticated()) links.push({ text: "LOGIN", link: "/login" });
@@ -47,8 +47,8 @@ function Header({ isAuthenticated, dashboard }: Props) {
     await post("auth/logout");
     console.log("Logging out");
     dispatch(setUser(undefined));
-    // navigate(LinkRoutes.LOGIN);
-    // window.location.reload();
+    navigate(LinkRoutes.LOGIN);
+    window.location.reload();
   };
 
   return (
@@ -67,7 +67,10 @@ function Header({ isAuthenticated, dashboard }: Props) {
           <CustomLink link={link} key={link.text} />
         ))}
         {isAuthenticated() && (
-          <button className="hover:text-green-400" onClick={() => logout()}>
+          <button
+            className="hover:text-green-400 text-sm xl:text-base"
+            onClick={() => logout()}
+          >
             LOGOUT
           </button>
         )}

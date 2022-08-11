@@ -23,9 +23,28 @@ export interface Payment {
   _id: string;
 }
 
+export interface History {
+  agentCode: string | number;
+  details: string;
+  type: string;
+  location: string;
+  date: string;
+  customerId: string;
+}
+
+export interface Package {
+  name: PackageName;
+  price: number;
+}
+
 export type Page =
   | "PENDING_PAYMENTS"
   | "PENDING_APPROVAL"
   | "DASHBOARD"
   | "CUSTOMER_HISTORY"
-  | "CUSTOMER_PROFILE";
+  | "CUSTOMER_PROFILE"
+  | "ADMINS"
+  | "PENDING_DELIVERIES"
+  | "COMPLETED_DELIVERIES"
+  | "CREATE_CUSTOMER"
+  | "CREATE_ADMIN";

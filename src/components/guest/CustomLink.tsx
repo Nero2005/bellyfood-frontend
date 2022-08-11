@@ -9,13 +9,18 @@ function CustomLink({ link }: Props) {
   return (
     <div>
       {link.isA ? (
-        <a className="hover:text-green-400" href={link.link}>
+        <a
+          className="hover:text-green-400 text-sm xl:text-base"
+          href={link.link}
+        >
           {link.text}
         </a>
       ) : (
         <NavLink
           className={({ isActive }) =>
-            isActive ? "text-green-400" : "hover:text-green-400"
+            isActive
+              ? "text-green-400 text-sm xl:text-base"
+              : "hover:text-green-400 text-sm xl:text-base"
           }
           to={link.link}
         >

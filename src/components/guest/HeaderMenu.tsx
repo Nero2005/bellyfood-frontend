@@ -32,7 +32,10 @@ function Menu({ open, isAuthenticated, logout, dashboard }: Props) {
         <CustomLink link={link} key={link.text} />
       ))}
       {isAuthenticated() && (
-        <button className="hover:text-green-400" onClick={() => logout()}>
+        <button
+          className="hover:text-green-400 text-sm xl:text-base"
+          onClick={() => logout()}
+        >
           LOGOUT
         </button>
       )}
