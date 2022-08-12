@@ -11,8 +11,7 @@ function Baskets({ setShowModal }: Props) {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4 place-items-center">
         <div className="flex flex-col items-center bg-white rounded-sm shadow-md shadow-gray-500 px-7 py-2">
           <h2 className="text-2xl font-bold mb-8">NANO</h2>
-          <h1 className="text-5xl font-bold text-amber-700">₦10,500</h1>
-          <p className="mb-10">per month</p>
+          <h1 className="text-5xl font-bold text-amber-700 my-6">₦10,500</h1>
           <button
             className="bg-gray-50 text-green-400 rounded-md py-1 px-3 mb-8"
             onClick={() => setShowModal({ open: true, name: "NANO" })}
@@ -25,8 +24,7 @@ function Baskets({ setShowModal }: Props) {
         </div>
         <div className="flex flex-col items-center bg-white rounded-sm shadow-md shadow-gray-500 px-7 py-2">
           <h2 className="text-2xl font-bold mb-8">MICRO</h2>
-          <h1 className="text-5xl font-bold text-gray-300">₦18,000</h1>
-          <p className="mb-10">per month</p>
+          <h1 className="text-5xl font-bold text-gray-300 my-6">₦18,000</h1>
           <button
             className="bg-gray-50 text-green-400 rounded-md py-1 px-3 mb-8"
             onClick={() => setShowModal({ open: true, name: "MICRO" })}
@@ -39,8 +37,7 @@ function Baskets({ setShowModal }: Props) {
         </div>
         <div className="flex flex-col items-center bg-white rounded-sm shadow-md shadow-gray-500 px-7 py-2">
           <h2 className="text-2xl font-bold mb-8">MEGA</h2>
-          <h1 className="text-5xl font-bold text-yellow-400">₦29,000</h1>
-          <p className="mb-10">per month</p>
+          <h1 className="text-5xl font-bold text-yellow-400 my-6">₦29,000</h1>
           <button
             className="bg-gray-50 text-green-400 rounded-md py-1 px-3 mb-8"
             onClick={() => setShowModal({ open: true, name: "MEGA" })}
@@ -53,8 +50,7 @@ function Baskets({ setShowModal }: Props) {
         </div>
         <div className="flex flex-col items-center bg-white rounded-sm shadow-md shadow-gray-500 px-7 py-2">
           <h2 className="text-2xl font-bold mb-8">GIGA</h2>
-          <h1 className="text-5xl font-bold text-blue-300">₦65,000</h1>
-          <p className="mb-10">per month</p>
+          <h1 className="text-5xl font-bold text-blue-300 my-6">₦65,000</h1>
           <button
             className="bg-gray-50 text-green-400 rounded-md py-1 px-3 mb-8"
             onClick={() => setShowModal({ open: true, name: "GIGA" })}
@@ -67,8 +63,7 @@ function Baskets({ setShowModal }: Props) {
         </div>
         <div className="flex flex-col items-center bg-white rounded-sm shadow-md shadow-gray-500 px-7 py-2">
           <h2 className="text-2xl font-bold mb-8">OGA NA BOSS</h2>
-          <h1 className="text-5xl font-bold text-green-500">₦89,000</h1>
-          <p className="mb-10">per month</p>
+          <h1 className="text-5xl font-bold text-green-500 my-6">₦89,000</h1>
           <button
             className="bg-gray-50 text-green-400 rounded-md py-1 px-3 mb-8"
             onClick={() => setShowModal({ open: true, name: "OGA NA BOSS" })}

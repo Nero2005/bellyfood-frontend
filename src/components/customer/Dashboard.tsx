@@ -1,6 +1,5 @@
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { InformationCircleIcon } from "@heroicons/react/solid";
 import React, { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useAppSelector } from "../../store/hooks";

@@ -1,10 +1,12 @@
 import { SearchIcon } from "@heroicons/react/solid";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { getCustomers, getLocations } from "../../services";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { UserState } from "../../store/userReducer";
 import { getWithQuery } from "../../utils";
 import Customer from "../admin/Customer";
+import DeliveryLocation from "./DeliveryLocation";
 
 function PendingDeliveries() {
   const user = useAppSelector((state) => state.users.user);
@@ -12,6 +14,7 @@ function PendingDeliveries() {
   const dispatch = useAppDispatch();
 
   const [customers, setCustomers] = useState<UserState[]>(null!);
+  const [locations, setLocations] = useState<string[]>(null!);
   const [searchName, setSearchName] = useState("");
 
   useEffect(() => {
@@ -19,6 +22,7 @@ function PendingDeliveries() {
       // const n = toast.loading("Getting customers");
       const n = toast.loading("Getting customers");
       try {
+        setLocations(await getLocations());
         const res = await getWithQuery("users/customers", {
           approved: true,
           paid: true,
@@ -49,10 +53,17 @@ function PendingDeliveries() {
         delivered: false,
         name: e.target.value,
       });
-      setCustomers(res.data.users);
+      setCustomers(
+        await getCustomers({
+          approved: true,
+          paid: true,
+          delivered: false,
+          name: e.target.value,
+        })
+      );
     } catch (err: any) {
       console.log(err);
-      const n = toast.error(`Error: ${err.msg}`);
+      toast.error(`Error: ${err.msg}`);
     }
   };
 
@@ -68,10 +79,17 @@ function PendingDeliveries() {
           className="flex-1 py-2 my-2 px-3 outline-none bg-transparent"
         />
       </div>
-      <div className="flex flex-col space-y-5 my-2">
-        {customers?.map((customer) => (
-          <Customer key={customer._id} customer={customer} />
+      <div className="flex flex-col space-y-5 my-2 items-center w-full">
+        {locations?.map((location) => (
+          <DeliveryLocation location={location} />
         ))}
+        {/* {customers?.map((customer) => (
+          <Customer
+            setCustomers={setCustomers}
+            key={customer._id}
+            customer={customer}
+          />
+        ))} */}
       </div>
     </div>
   );

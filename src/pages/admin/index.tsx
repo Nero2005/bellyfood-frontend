@@ -27,7 +27,7 @@ function Admin({ dashboard }: Props) {
       case "DASHBOARD":
         return <Dashboard />;
       case "CREATE_CUSTOMER":
-        return <CreateCustomer />;
+        return <CreateCustomer isAdmin />;
     }
   };
 

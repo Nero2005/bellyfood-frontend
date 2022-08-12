@@ -37,7 +37,7 @@ function Admins() {
       setAdmins(res.data.users);
     } catch (err: any) {
       console.log(err);
-      const n = toast.error(`Error: ${err.msg}`);
+      toast.error(`Error: ${err.msg}`);
     }
   };
 

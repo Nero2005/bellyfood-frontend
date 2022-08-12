@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../store/hooks";
 import { get, Package, post } from "../../utils";
+import { getLocations, getPackages } from "../../services";
 
 interface FormData {
   phone: string;
@@ -30,27 +32,30 @@ function CreateCustomer({ isAdmin }: Props) {
   const [errorMessage, setErrorMessage] = useState("");
   const [locations, setLocations] = useState<string[]>(null!);
   const [packages, setPackages] = useState<Package[]>(null!);
+  const [test, setTTest] = useState<any[]>([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log(test);
     (async () => {
       try {
-        const res = await get("users/locations");
-        const { data } = await get("users/packages");
-        console.log(res.data);
-        console.log(data);
-        setLocations(res.data.locations);
-        setPackages(data.packages);
+        // const res = await get("users/locations");
+        // const { data } = await get("users/packages");
+        // console.log(res.data);
+        // console.log(data);
+        setLocations(await getLocations());
+        setPackages(await getPackages());
       } catch (err: any) {
         const { status, msg } = err;
         if (status !== 200) setErrorMessage(msg);
         console.log(err);
       }
     })();
-  }, []);
+  }, [test]);
 
   const onSubmit = handleSubmit(async (formData) => {
+    const n = toast.loading("Adding customer");
     try {
       const data = {
         phone: watch("phone"),
@@ -63,8 +68,9 @@ function CreateCustomer({ isAdmin }: Props) {
       };
       console.log(data);
 
-      const res = await post("auth/create", formData);
+      const res = await post("auth/create", data);
       console.log(res.data);
+      setTTest((prev) => [...prev, { ...data, customerId: 2 }]);
       if (isAdmin) {
         const { data: data2 } = await post(
           `users/approve?customerId=${res.data.newCustomer._id}&agentCode=${user?.agentCode}`
@@ -73,12 +79,15 @@ function CreateCustomer({ isAdmin }: Props) {
 
       // navigate(LinkRoutes.DASHBOARD);
       // window.location.reload();
+      toast.success("Customer created successfully!", { id: n });
+      setErrorMessage("");
     } catch (err: any) {
       const { status, msg } = err;
       if (status !== 200) setErrorMessage(msg);
       console.log(err);
+      toast.error(`Error creating customer: ${msg}`, { id: n });
     } finally {
-      // reset();
+      reset();
     }
   });
 

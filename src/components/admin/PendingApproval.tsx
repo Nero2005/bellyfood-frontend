@@ -58,7 +58,11 @@ function PendingApproval() {
       </div>
       <div className="flex flex-col space-y-5 my-2">
         {customers?.map((customer) => (
-          <Customer key={customer._id} customer={customer} />
+          <Customer
+            setCustomers={setCustomers}
+            key={customer._id}
+            customer={customer}
+          />
         ))}
       </div>
     </div>

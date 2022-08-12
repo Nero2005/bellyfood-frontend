@@ -1,8 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import Header from "../../components/guest/Header";
 import { useAppSelector } from "../../store/hooks";
-import { get, Payment } from "../../utils";
-import toast from "react-hot-toast";
 import "./Customer.css";
 import CustomerMenu from "../../components/customer/CustomerMenu";
 import Dashboard from "../../components/customer/Dashboard";
@@ -14,7 +12,7 @@ interface Props {
 }
 
 function Customer({ dashboard }: Props) {
-  const { user, page } = useAppSelector((state) => state.users);
+  const { page } = useAppSelector((state) => state.users);
 
   const loadPage = () => {
     switch (page) {

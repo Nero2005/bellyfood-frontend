@@ -13,6 +13,7 @@ import Admin from "./pages/admin";
 import Unauthorized from "./pages/Unauthorized";
 import Super from "./pages/super";
 import { Toaster } from "react-hot-toast";
+import ErrorBoundary from "./ErrorBoundary";
 // import logo from "./logo.svg";
 // import "./index.css";
 
@@ -70,17 +71,6 @@ function App() {
   };
 
   const authorize = (authorizeMethod: any, Component: any) => {
-    /**
-     * isAuthenticated() ? (
-      authorizeMethod() ? (
-        <Component dashboard={dashboard} />
-      ) : (
-        <Navigate to={LinkRoutes.UNAUTHORIZED} />
-      )
-    ) : (
-      <Navigate to={LinkRoutes.LOGIN} />
-    );
-     */
     if (isAuthenticated()) {
       if (authorizeMethod()) {
         console.log("Authorized");
@@ -95,51 +85,56 @@ function App() {
   };
 
   return (
-    <div className="App bg-slate-100 h-screen overflow-y-scroll">
-      <Toaster />
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path={LinkRoutes.BASE}
-            element={<Navigate to={LinkRoutes.HOME} />}
-          />
-          <Route
-            path={LinkRoutes.HOME}
-            element={
-              <Home isAuthenticated={isAuthenticated} dashboard={dashboard} />
-            }
-          />
-          <Route
-            path={LinkRoutes.LOGIN}
-            element={
-              !isAuthenticated() ? (
-                <Login dashboard={dashboard} />
-              ) : (
-                <Navigate to={dashboard()} />
-              )
-            }
-          />
-          <Route
-            path={LinkRoutes.DASHBOARD}
-            element={<Navigate to={dashboard()} />}
-          />
-          <Route
-            path={LinkRoutes.CUSTOMER}
-            element={authorize(isCustomer, Customer)}
-          />
-          <Route path={LinkRoutes.ADMIN} element={authorize(isAdmin, Admin)} />
-          <Route
-            path={LinkRoutes.SUPER}
-            element={authorize(isSuperAdmin, Super)}
-          />
-          <Route
-            path="/unauthorized"
-            element={<Unauthorized dashboard={dashboard} />}
-          />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <ErrorBoundary dashboard={dashboard}>
+      <div className="App bg-slate-100 h-screen overflow-y-scroll">
+        <Toaster />
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path={LinkRoutes.BASE}
+              element={<Navigate to={LinkRoutes.HOME} />}
+            />
+            <Route
+              path={LinkRoutes.HOME}
+              element={
+                <Home isAuthenticated={isAuthenticated} dashboard={dashboard} />
+              }
+            />
+            <Route
+              path={LinkRoutes.LOGIN}
+              element={
+                !isAuthenticated() ? (
+                  <Login dashboard={dashboard} />
+                ) : (
+                  <Navigate to={dashboard()} />
+                )
+              }
+            />
+            <Route
+              path={LinkRoutes.DASHBOARD}
+              element={<Navigate to={dashboard()} />}
+            />
+            <Route
+              path={LinkRoutes.CUSTOMER}
+              element={authorize(isCustomer, Customer)}
+            />
+            <Route
+              path={LinkRoutes.ADMIN}
+              element={authorize(isAdmin, Admin)}
+            />
+            <Route
+              path={LinkRoutes.SUPER}
+              element={authorize(isSuperAdmin, Super)}
+            />
+            <Route
+              path="/unauthorized"
+              element={<Unauthorized dashboard={dashboard} />}
+            />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </ErrorBoundary>
   );
 }
 

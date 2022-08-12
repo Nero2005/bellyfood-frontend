@@ -67,12 +67,12 @@ function SuperMenu() {
       </button>
       <button
         className={`sticky ${
-          page === "PENDING_APPROVAL" && "shadow-md text-white bg-green-400"
+          page === "HISTORY" && "shadow-md text-white bg-green-400"
         } px-6 py-2 hover:bg-green-400 hover:text-white transform ease-in duration-300`}
-        onClick={() => dispatch(setPage("PENDING_APPROVAL"))}
+        onClick={() => dispatch(setPage("HISTORY"))}
         // style={{ top: "7rem" }}
       >
-        Pending Approval
+        History
       </button>
     </div>
   );

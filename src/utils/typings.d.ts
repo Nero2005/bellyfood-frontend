@@ -32,9 +32,27 @@ export interface History {
   customerId: string;
 }
 
+export interface HistoryDetails {
+  numNewCustomer: number;
+  numNewPayment: number;
+  numNewDelivery: number;
+  totalAmount: number;
+  histories: History[];
+}
+
 export interface Package {
   name: PackageName;
   price: number;
+}
+
+export interface UserFilter {
+  [key: string]: any;
+  approved?: boolean;
+  paid?: boolean;
+  delivered?: boolean;
+  agentCode?: number;
+  name?: string;
+  location?: string;
 }
 
 export type Page =
@@ -47,4 +65,5 @@ export type Page =
   | "PENDING_DELIVERIES"
   | "COMPLETED_DELIVERIES"
   | "CREATE_CUSTOMER"
-  | "CREATE_ADMIN";
+  | "CREATE_ADMIN"
+  | "HISTORY";

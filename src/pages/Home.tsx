@@ -45,22 +45,22 @@ function Home({ isAuthenticated, dashboard }: Props) {
   // const dispatch = useAppDispatch();
   // We want to help people see, understand and consume health food at 36 state in Nigeria and Africa in a totally new way. To us food isn’t just food. Is to source it locally free from poisonous preservatives for human consumption and wellbeing
   const vision =
-    "We want to help people see, understand and consume health food at 36 state in Nigeria and Africa " +
-    "in a totally new way. To us food isn’t just food. Is to source it locally free " +
-    "from poisonous preservatives for human consumption and wellbeing.";
+    "We want to help people see, understand and consume healthy food in all 36 states of Nigeria and Africa " +
+    "in a totally new way. To us food isn’t just food. It’s sourced locally and free " +
+    "from poisonous preservatives making it suitable for human consumption.";
 
   const mission =
-    "We are on a mission to help people see,understand and consume food in a totally new way. " +
-    "We want people to eat our food and feel amazing afterwards, and we want them to be surprise " +
-    "by how delicious healthy food can we. Everything we serve is made by us ; " +
+    "We are on a mission to help people see, understand and consume food in a totally new way. " +
+    "We want people to eat our food and feel amazing afterwards, and we want them to be surprised " +
+    "by how delicious healthy food can be. Everything we serve is made by us, " +
     "we know where all our ingredients come from and we know how to cook them " +
-    "to get the most out of them, both in term";
+    "to get the most out of them.";
 
   const about =
-    "Rising prices of food items in Nigeria while income remains constant makes it difficult " +
+    "Rising prices of food items in Nigeria while income remains stagnant makes it difficult " +
     "for low to middle income earners to purchase foodstuff. Many staple food suppliers offer " +
     "home delivery service to customers using online channels. However, the low income " +
-    "earners at the bottom of the pyramid do not have the financial capability to pay " +
+    "earners at the bottom of the pyramid do not have the financial ability to pay " +
     "for goods at once and so buy goods on credit or online. Bellyfood's offline/online " +
     "food subscription delivery service in Nigeria allows customers to pay for food items " +
     "on a subscription basis.";

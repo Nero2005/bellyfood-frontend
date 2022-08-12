@@ -5,10 +5,12 @@ import PendingApproval from "../../components/admin/PendingApproval";
 import Header from "../../components/guest/Header";
 import Admins from "../../components/super/Admins";
 import CreateAdmin from "../../components/super/CreateAdmin";
-import Dashboard from "../../components/super/Dashbaord";
+import Dashboard from "../../components/super/Dashboard";
 import PendingDeliveries from "../../components/super/PendingDeliveries";
 import SuperMenu from "../../components/super/SuperMenu";
 import { useAppSelector } from "../../store/hooks";
+import DailyHistory from "../../components/super/DailyHistory";
+import Histories from "../../components/super/Histories";
 
 interface Props {
   dashboard: () => string;
@@ -32,7 +34,9 @@ function Super({ dashboard }: Props) {
       case "CREATE_ADMIN":
         return <CreateAdmin />;
       case "CREATE_CUSTOMER":
-        return <CreateCustomer />;
+        return <CreateCustomer isAdmin />;
+      case "HISTORY":
+        return <Histories />;
     }
   };
 
