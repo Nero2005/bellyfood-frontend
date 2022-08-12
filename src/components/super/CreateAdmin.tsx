@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { LinkRoutes, post } from "../../utils";
 
@@ -23,6 +24,7 @@ function CreateAdmin() {
   const navigate = useNavigate();
 
   const onSubmit = handleSubmit(async (formData) => {
+    const n = toast.loading("Adding admin");
     try {
       console.log(formData);
       const data = {
@@ -33,15 +35,18 @@ function CreateAdmin() {
       };
       console.log(data);
 
-      // const res = await post("super/create", formData);
-      // console.log(res.data);
+      const res = await post("super/create", data);
+      console.log(res.data);
 
       // navigate(LinkRoutes.DASHBOARD);
       // window.location.reload();
+      toast.success("Admin created successfully!", { id: n });
+      setErrorMessage("");
     } catch (err: any) {
       const { status, msg } = err;
       if (status !== 200) setErrorMessage(msg);
       console.log(err);
+      toast.error(`Error creating admin: ${msg}`, { id: n });
     } finally {
       reset();
     }
