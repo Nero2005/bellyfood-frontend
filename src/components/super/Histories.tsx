@@ -23,9 +23,9 @@ function Histories() {
     <div className="flex flex-col items-center space-y-2">
       <div>
         <input type="date" className="px-2 py-1" defaultValue={day} 
-        max={day} onChange={(e) => setDay(e.target.value)} />
+        max={new Date().toISOString().split("T")[0]} onChange={(e) => setDay(e.target.value)} />
       </div>
-      <DailyHistory day={day} historyDetails={historyDetails} />;
+      <DailyHistory day={day} historyDetails={historyDetails} />
     </div>
   );
 }
