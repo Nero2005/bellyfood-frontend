@@ -82,7 +82,7 @@ customer.approved && customer.paid && customer.delivered &&
   return (
     <div className="flex flex-col cursor-pointer w-full">
       <div
-        className="flex flex-col md:flex-row md:space-x-2 space-y-2 lg:space-x-32 justify-center py-2 md:items-center bg-white"
+        className="flex flex-col md:flex-row md:space-x-2 space-y-2 lg:space-x-32 justify-center py-2 items-center bg-white"
         onClick={() => setOpen((open) => ({ ...open, [page]: !open[page] }))}
       >
         <h1 className="text-sm lg:text-base">{customer.name}</h1>
@@ -125,9 +125,8 @@ customer.approved && customer.paid && customer.delivered &&
         )}
       </div>
       <div
-        className={`${
-          open.PENDING_PAYMENTS ? "flex" : "hidden"
-        } justify-center py-2 px-2 items-center bg-white`}
+        className={`${open.PENDING_PAYMENTS ? "flex" : "hidden"
+          } justify-center py-2 px-2 items-center bg-white`}
       >
         <label className="p-2 flex items-center justify-between space-x-5">
           <span>Amount: </span>
@@ -148,18 +147,16 @@ customer.approved && customer.paid && customer.delivered &&
         />
       </div>
       <div
-        className={`${
-          open.PENDING_APPROVAL || open.PENDING_DELIVERIES ? "flex" : "hidden"
-        } justify-between py-2 px-2 items-center bg-white w-full flex-col sm:flex-row`}
+        className={`${open.PENDING_APPROVAL || open.PENDING_DELIVERIES ? "flex" : "hidden"
+          } justify-between py-2 px-2 items-center bg-white w-full flex-col sm:flex-row`}
       >
         <p>Phone: {customer.phone}</p>
         <p>Package(s) Ordered: {customer.packageNames?.map((p) => p)}</p>
         <p>Price: {customer.totalPrice}</p>
       </div>
       <div
-        className={`${
-          open.COMPLETED_DELIVERIES ? "flex" : "hidden"
-        } justify-between py-2 px-2 items-center bg-white w-full flex-col sm:flex-row`}
+        className={`${open.COMPLETED_DELIVERIES ? "flex" : "hidden"
+          } justify-between py-2 px-2 items-center bg-white w-full flex-col sm:flex-row`}
       >
         <p>Completed</p>
       </div>

@@ -81,7 +81,7 @@ function PendingDeliveries() {
       </div>
       <div className="flex flex-col space-y-5 my-2 items-center w-full">
         {locations?.map((location) => (
-          <DeliveryLocation location={location} />
+          <DeliveryLocation key={location} location={location} />
         ))}
         {/* {customers?.map((customer) => (
           <Customer

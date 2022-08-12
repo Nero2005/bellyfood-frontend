@@ -58,7 +58,7 @@ function Admins() {
       </div>
       <div className="flex flex-col space-y-5 my-3">
         {admins?.map((admin) => (
-          <Admin admin={admin} />
+          <Admin key={admin._id} admin={admin} />
         ))}
       </div>
     </div>

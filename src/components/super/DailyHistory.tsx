@@ -2,16 +2,21 @@ import React, { useEffect, useState } from "react";
 import { getSuperDailyHistory } from "../../services";
 import { History, HistoryDetails } from "../../utils";
 
-function DailyHistory({ day }: { day: string }) {
-  const [historyDetails, setHistoryDetails] = useState<HistoryDetails>(null!);
+interface Props {
+  day: string;
+  historyDetails: HistoryDetails
+}
 
-  useEffect(() => {
+function DailyHistory({ day, historyDetails }: Props) {
+  //const [historyDetails, setHistoryDetails] = useState<HistoryDetails>(null!);
+
+  /*useEffect(() => {
     (async () => {
       const h = await getSuperDailyHistory(day.split("T")[0]);
       console.log(h);
       setHistoryDetails(h);
     })();
-  }, []);
+  }, []);*/
 
   return (
     <div className="flex flex-col flex-1 items-center space-y-2">
