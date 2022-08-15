@@ -14,11 +14,8 @@ function Welcome({ vision, mission, about }: Props) {
       <div className="max-w-xl">
         <img src={WelcomeImg} className="w-full" />
       </div>
-      <h1 className="text-5xl lg:text-6xl text-green-400 font-thin text-center">
-        Welcome to Bellyfood
-      </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <div className="px-3 py-2">
+        <div className="px-3 pb-2">
           <h1 className="font-bold text-2xl">Our Vision</h1>
           <p className="leading-6 w-80 md:w-full">{vision}</p>
         </div>

@@ -78,9 +78,6 @@ function Home({ isAuthenticated, dashboard }: Props) {
           <img className="w-full" src={AboutImg} />
         </div>
         <div className="">
-          <h1 className="font-thin text-5xl text-center mb-5" id="about">
-            About Us
-          </h1>
           <p className="leading-6 md:w-full">{about}</p>
         </div>
       </div>
