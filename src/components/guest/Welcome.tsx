@@ -1,4 +1,6 @@
 import React from "react";
+import WelcomeImg from "../../assets/images/welcome.jpeg";
+import DonateImg from "../assets/images/donate.jpeg";
 
 interface Props {
   vision: string;
@@ -8,7 +10,10 @@ interface Props {
 
 function Welcome({ vision, mission, about }: Props) {
   return (
-    <div className="bg-white flex flex-col md:px-10 overflow-hidden mt-16 rounded-md py-5 items-center space-y-10 my-32">
+    <div className="bg-white px-10 flex flex-col md:px-10 overflow-hidden mt-16 rounded-md py-5 items-center space-y-10 my-32">
+      <div className="max-w-xl">
+        <img src={WelcomeImg} className="w-full" />
+      </div>
       <h1 className="text-5xl lg:text-6xl text-green-400 font-thin text-center">
         Welcome to Bellyfood
       </h1>

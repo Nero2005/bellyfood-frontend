@@ -9,6 +9,7 @@ import BasketModal from "../components/guest/BasketModal";
 import Baskets from "../components/guest/Baskets";
 import CompareBaskets from "../components/guest/CompareBaskets";
 import Footer from "../components/guest/Footer";
+import AboutImg from "../assets/images/aboutus.jpeg";
 
 export const newUser: UserState = {
   _id: "1",
@@ -72,11 +73,16 @@ function Home({ isAuthenticated, dashboard }: Props) {
       <Header isAuthenticated={isAuthenticated} dashboard={dashboard} />
       <Welcome vision={vision} mission={mission} about={about} />
 
-      <div className="px-10 py-5 mt-2 bg-white">
-        <h1 className="font-thin text-5xl text-center mb-5" id="about">
-          About Us
-        </h1>
-        <p className="leading-6 md:w-full">{about}</p>
+      <div className="px-10 py-5 mt-2 bg-white flex lg:flex-row flex-col lg:space-x-5 space-y-5 items-center">
+        <div className="flex-shrink-0 max-w-lg">
+          <img className="w-full" src={AboutImg} />
+        </div>
+        <div className="">
+          <h1 className="font-thin text-5xl text-center mb-5" id="about">
+            About Us
+          </h1>
+          <p className="leading-6 md:w-full">{about}</p>
+        </div>
       </div>
       {showModal.open ? (
         <BasketModal setShowModal={setShowModal} name={showModal.name} />
