@@ -45,7 +45,7 @@ function DailyHistory({ day, historyDetails, agentWorks }: Props) {
         <div
           className={`${
             openPayments ? "flex" : "hidden"
-          } overflow-scroll max-w-sm scrollbar-hide mx-2 border`}
+          } overflow-scroll max-w-sm sm:max-w-2xl scrollbar-hide mx-2 border`}
         >
           <table className="mx-auto text-center overflow-scroll">
             <thead>
