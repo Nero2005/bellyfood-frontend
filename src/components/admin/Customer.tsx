@@ -135,16 +135,12 @@ function Customer({ customer, setCustomers, loadFunc }: Props) {
   };
 
   useEffect(() => {
-    console.log(open);
-    console.log(amount);
-    console.log(packages);
-
     (async () => {
       const pkgs = await getPackages();
       setPackages(pkgs);
       setPkgChange(pkgs[0]);
     })();
-  }, [open, amount, packages]);
+  }, []);
 
   /**
    * customer.approved && customer.paid && customer.delivered && 
