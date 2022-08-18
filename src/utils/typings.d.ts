@@ -32,7 +32,16 @@ export interface History {
   customerId: string;
 }
 
+export interface Agent {
+  histories: any;
+  numNewCustomer: number;
+  numNewPayment: number;
+  totalAmount: number;
+  agentCode: number;
+}
+
 export interface HistoryDetails {
+  agentWork: Agent[];
   numNewCustomer: number;
   numNewPayment: number;
   numNewDelivery: number;

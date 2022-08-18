@@ -11,7 +11,7 @@ export interface UserState {
   gender: string;
   phone: string;
   roles: string[];
-  agentCode?: string;
+  agentCode: string;
   location?: string;
   approved: boolean;
   packageNames?: PackageName[];

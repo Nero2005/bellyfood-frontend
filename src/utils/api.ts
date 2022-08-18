@@ -16,6 +16,29 @@ export const post = (endpoint: string, data?: any): Promise<AxiosResponse> =>
       .catch((e) => reject(e.response.data))
   );
 
+export const deleteVerb = (
+  endpoint: string,
+  data?: any
+): Promise<AxiosResponse> =>
+  new Promise((resolve, reject) =>
+    http
+      .delete(endpoint, {
+        withCredentials: true,
+      })
+      .then(resolve)
+      .catch((e) => reject(e.response.data))
+  );
+
+export const put = (endpoint: string, data?: any): Promise<AxiosResponse> =>
+  new Promise((resolve, reject) =>
+    http
+      .put(endpoint, data, {
+        withCredentials: true,
+      })
+      .then(resolve)
+      .catch((e) => reject(e.response.data))
+  );
+
 export const get = (endpoint: string): Promise<AxiosResponse> =>
   new Promise((resolve, reject) =>
     http

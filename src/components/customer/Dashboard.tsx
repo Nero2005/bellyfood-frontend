@@ -2,6 +2,7 @@ import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { getPayments } from "../../services";
 import { useAppSelector } from "../../store/hooks";
 import { get, Payment } from "../../utils";
 
@@ -34,9 +35,10 @@ function Dashboard() {
     (async () => {
       const n = toast.loading("Getting payments");
       try {
-        const res = await get("users/payments");
-        console.log(res.data);
-        setPayments(res.data.payments);
+        // const res = await get("users/payments");
+        const data = await getPayments();
+        console.log(data);
+        setPayments(data.payments);
         toast.success("Got payments!", {
           id: n,
         });
@@ -85,7 +87,7 @@ function Dashboard() {
             style={{ left: "37%", top: "37%" }}
           ></span>
         </div>
-        <div className="flex flex-1 justify-evenly items-center">
+        <div className="flex flex-1 justify-evenly items-center pr-4">
           <div className="text-lg">
             <p className="flex items-center">
               <FontAwesomeIcon

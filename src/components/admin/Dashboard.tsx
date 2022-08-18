@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { getCustomers } from "../../services";
 import { useAppSelector } from "../../store/hooks";
 import { getWithQuery } from "../../utils";
 
@@ -10,10 +11,11 @@ function Dashboard() {
     countRef.current.innerHTML = `${0}`;
     (async () => {
       try {
-        const res = await getWithQuery("users/customers", { approved: false });
-        console.log(res.data.count);
+        // const res = await getWithQuery("users/customers", { approved: false });
+        const data = await getCustomers({ approved: false });
+        console.log(data.count);
         if (countRef) {
-          countRef.current.innerHTML = res.data.count;
+          countRef.current.innerHTML = data.count;
         }
       } catch (err: any) {
         console.log(err);

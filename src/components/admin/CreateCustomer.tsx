@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../store/hooks";
 import { get, Package, post } from "../../utils";
-import { getLocations, getPackages } from "../../services";
+import { getLocations, getPackages, postCustomer } from "../../services";
 
 interface FormData {
   phone: string;
@@ -68,12 +68,13 @@ function CreateCustomer({ isAdmin }: Props) {
       };
       console.log(data);
 
-      const res = await post("auth/create", data);
-      console.log(res.data);
+      // const res = await post("auth/create", data);
+      const data3 = await postCustomer(data);
+      console.log(data3);
       setTTest((prev) => [...prev, { ...data, customerId: 2 }]);
       if (isAdmin) {
         const { data: data2 } = await post(
-          `users/approve?customerId=${res.data.newCustomer._id}&agentCode=${user?.agentCode}`
+          `users/approve?customerId=${data3.newCustomer._id}&agentCode=${user?.agentCode}`
         );
       }
 

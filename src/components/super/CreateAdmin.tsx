@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { postAdmin } from "../../services";
 import { LinkRoutes, post } from "../../utils";
 
 interface FormData {
@@ -35,8 +36,9 @@ function CreateAdmin() {
       };
       console.log(data);
 
-      const res = await post("super/create", data);
-      console.log(res.data);
+      // const res = await post("super/create", data);
+      const data2 = await postAdmin(data);
+      console.log(data2);
 
       // navigate(LinkRoutes.DASHBOARD);
       // window.location.reload();

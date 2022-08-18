@@ -17,28 +17,37 @@ function PendingDeliveries() {
   const [locations, setLocations] = useState<string[]>(null!);
   const [searchName, setSearchName] = useState("");
 
+  const loadPendingDeliveries = async () => {
+    // const n = toast.loading("Getting customers");
+    const n = toast.loading("Getting customers");
+    try {
+      setLocations(await getLocations());
+      // const res = await getWithQuery("users/customers", {
+      //   approved: true,
+      //   paid: true,
+      //   delivered: false,
+      // });
+      const data = await getCustomers({
+        approved: true,
+        paid: true,
+        delivered: false,
+      });
+      console.log(data);
+      setCustomers(data.users);
+      toast.success("Got customers!", {
+        id: n,
+      });
+    } catch (err: any) {
+      console.log(err);
+      toast.error(`Error: ${err.msg}`, {
+        id: n,
+      });
+    }
+  };
+
   useEffect(() => {
     (async () => {
-      // const n = toast.loading("Getting customers");
-      const n = toast.loading("Getting customers");
-      try {
-        setLocations(await getLocations());
-        const res = await getWithQuery("users/customers", {
-          approved: true,
-          paid: true,
-          delivered: false,
-        });
-        console.log(res.data);
-        setCustomers(res.data.users);
-        toast.success("Got customers!", {
-          id: n,
-        });
-      } catch (err: any) {
-        console.log(err);
-        toast.error(`Error: ${err.msg}`, {
-          id: n,
-        });
-      }
+      await loadPendingDeliveries();
     })();
     // eslint-disable-next-line
   }, []);
@@ -47,20 +56,19 @@ function PendingDeliveries() {
     try {
       console.log(e.target.value);
       setSearchName(e.target.value);
-      const res = await getWithQuery("users/customers", {
+      // const res = await getWithQuery("users/customers", {
+      //   approved: true,
+      //   paid: true,
+      //   delivered: false,
+      //   name: e.target.value,
+      // });
+      const data = await getCustomers({
         approved: true,
         paid: true,
         delivered: false,
         name: e.target.value,
       });
-      setCustomers(
-        await getCustomers({
-          approved: true,
-          paid: true,
-          delivered: false,
-          name: e.target.value,
-        })
-      );
+      setCustomers(data.users);
     } catch (err: any) {
       console.log(err);
       toast.error(`Error: ${err.msg}`);
@@ -69,6 +77,9 @@ function PendingDeliveries() {
 
   return (
     <div className="flex-1 md:mt-1 px-2">
+      <h1 className="text-2xl font-semibold text-center my-2">
+        Your Pending Deliveries
+      </h1>
       <div className="flex items-center bg-white sticky top-32 px-3">
         <SearchIcon className="w-6 h-6" />
         <input

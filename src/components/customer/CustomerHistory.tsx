@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { getCustomerDeliveryHistory } from "../../services";
 import { get, History } from "../../utils";
 import Delivery from "./Delivery";
 
@@ -10,9 +11,10 @@ function CustomerHistory() {
     (async () => {
       const n = toast.loading("Getting completed deliveries");
       try {
-        const res = await get("users/delivery/history");
-        console.log(res.data);
-        setHistories(res.data.histories);
+        // const res = await get("users/delivery/history");
+        const data = await getCustomerDeliveryHistory();
+        console.log(data);
+        setHistories(data.histories);
         toast.success("Got completed deliveries!", {
           id: n,
         });
@@ -35,7 +37,9 @@ function CustomerHistory() {
       </p>
       <div>
         {histories?.length > 0 ? (
-          histories?.map((history) => <Delivery history={history} />)
+          histories?.map((history) => (
+            <Delivery key={history.date.toString()} history={history} />
+          ))
         ) : (
           <h1>You have not made any deliveries yet</h1>
         )}
