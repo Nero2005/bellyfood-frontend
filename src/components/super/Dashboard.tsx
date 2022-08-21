@@ -67,7 +67,9 @@ function Dashboard() {
       <h1 className="font-bold text-2xl lg:text-3xl text-center py-2">
         Welcome, {user?.name}
       </h1>
-      <p className="text-xl">Click the buttons to switch navigation</p>
+      <p className="text-xl flex justify-center px-2 text-center">
+        Click the buttons to switch navigation
+      </p>
       <p>
         There are <span ref={countRef}></span> pending deliveries
       </p>
