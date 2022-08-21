@@ -6,22 +6,11 @@ import DailyHistory from "./DailyHistory";
 function Histories() {
   const [day, setDay] = useState(new Date().toISOString().split("T")[0]);
   const [historyDetails, setHistoryDetails] = useState<HistoryDetails>(null!);
-  const [agentWorks, setAgentWorks] = useState<any[]>(null!);
 
   useEffect(() => {
     console.log(day);
     (async () => {
       const h = await getSuperDailyHistory(day.split("T")[0]);
-      h?.agentWork?.forEach(
-        async (agent: any, index: number, agentArr: any[]) => {
-          const agentDetails = await getAdminByCode(agent.agentCode);
-          agentArr[index] = { ...agent, name: agentDetails.name };
-        }
-      );
-      console.log(h);
-      console.log(h?.agentWork);
-
-      setAgentWorks(h?.agentWork);
       setHistoryDetails(h);
     })();
   }, [day]);
@@ -39,11 +28,7 @@ function Histories() {
           onChange={(e) => setDay(e.target.value)}
         />
       </div>
-      <DailyHistory
-        day={day}
-        historyDetails={historyDetails}
-        agentWorks={agentWorks}
-      />
+      <DailyHistory day={day} historyDetails={historyDetails} />
     </div>
   );
 }

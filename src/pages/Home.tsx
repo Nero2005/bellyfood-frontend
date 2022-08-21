@@ -10,6 +10,7 @@ import Baskets from "../components/guest/Baskets";
 import CompareBaskets from "../components/guest/CompareBaskets";
 import Footer from "../components/guest/Footer";
 import AboutImg from "../assets/images/aboutus.jpeg";
+import Donate from "../components/guest/Donate";
 
 export const newUser: UserState = {
   _id: "1",
@@ -81,6 +82,9 @@ function Home({ isAuthenticated, dashboard }: Props) {
           <p className="leading-6 md:w-full">{about}</p>
         </div>
       </div>
+
+      <Donate />
+
       {showModal.open ? (
         <BasketModal setShowModal={setShowModal} name={showModal.name} />
       ) : null}

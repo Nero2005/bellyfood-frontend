@@ -71,7 +71,7 @@ function Dashboard() {
       <p>
         There are <span ref={countRef}></span> pending deliveries
       </p>
-      <div className="flex flex-col mt-4">
+      <div className="flex flex-col mt-4 items-center">
         <h1 className="text-xl py-2">Available Locations</h1>
         <table className="text-center">
           <thead>

@@ -1,35 +1,35 @@
 import React, { useEffect, useState } from "react";
-import { getAdminByCode, getSuperDailyHistory } from "../../services";
-import { History, HistoryDetails } from "../../utils";
-import PaymentAgentHistories from "./PaymentAgentHistories";
-import AgentHistory from "./AgentHistory";
+import {
+  getAdminByCode,
+  getCustomer,
+  getSuperDailyHistory,
+} from "../../services";
+import { HistoryItem, HistoryDetails } from "../../utils";
+import PaymentHistories from "./PaymentHistories";
+import CustomerHistories from "./CustomerHistories";
 
 interface Props {
   day: string;
   historyDetails: HistoryDetails;
-  agentWorks: any[];
 }
 
-function DailyHistory({ day, historyDetails, agentWorks }: Props) {
-  // const [agentWorks, setAgentWorks] = useState<any>();
+function DailyHistory({ day, historyDetails }: Props) {
   const [openPayments, setOpenPayments] = useState(false);
+  const [openCustomers, setOpenCustomers] = useState(false);
 
   useEffect(() => {
-    console.log(agentWorks);
-  }, [agentWorks]);
-
-  // useEffect(() => {
-  //   console.log(agentWorks);
-
-  //   (async () => {
-  //     setAgentWorks(
-  //       await historyDetails?.agentWork?.map(async (agent) => {
-  //         const agentDetails = await getAdminByCode(agent.agentCode);
-  //         return { ...agent, name: agentDetails.name };
-  //       })
-  //     );
-  //   })();
-  // }, [agentWorks]);
+    // historyDetails?.histories.forEach(async (historyD, index, historiesA) => {
+    //   const agentDetails = await getAdminByCode(historyD?.agentCode);
+    //   const customerDetails = await getCustomer(historyD?.customerId);
+    //   console.log(agentDetails);
+    //   console.log(customerDetails);
+    //   historiesA[index] = {
+    //     ...historiesA[index],
+    //     agentName: agentDetails.name,
+    //     customerName: customerDetails.name,
+    //   };
+    // });
+  }, []);
 
   return (
     <div className="flex flex-col flex-1 items-center space-y-2">
@@ -41,7 +41,7 @@ function DailyHistory({ day, historyDetails, agentWorks }: Props) {
         <span>Total revenue on {new Date(day).toDateString()}:</span>
         <span> ₦{historyDetails?.totalAmount}</span>
       </div>
-      {historyDetails?.totalAmount !== 0 && (
+      {/* {historyDetails?.totalAmount !== 0 && (
         <div
           className={`${
             openPayments ? "flex" : "hidden"
@@ -68,11 +68,30 @@ function DailyHistory({ day, historyDetails, agentWorks }: Props) {
             </tbody>
           </table>
         </div>
+      )} */}
+      {historyDetails?.totalAmount > 0 && (
+        <PaymentHistories
+          openPayments={openPayments}
+          histories={historyDetails.histories.filter(
+            (historyItem) => historyItem.type === "payment"
+          )}
+        />
       )}
-      <div className="flex space-x-6">
+      <div
+        className="flex space-x-6 cursor-pointer"
+        onClick={() => setOpenCustomers((prev) => !prev)}
+      >
         <span>Total customers added on {new Date(day).toDateString()}:</span>
         <span> {historyDetails?.numNewCustomer}</span>
       </div>
+      {historyDetails?.numNewCustomer > 0 && (
+        <CustomerHistories
+          openCustomers={openCustomers}
+          histories={historyDetails.histories.filter(
+            (historyItem) => historyItem.type === "creation"
+          )}
+        />
+      )}
       <div className="flex space-x-6">
         <span>Total deliveries made on {new Date(day).toDateString()}:</span>
         <span> {historyDetails?.numNewDelivery}</span>

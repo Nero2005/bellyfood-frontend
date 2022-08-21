@@ -23,13 +23,17 @@ export interface Payment {
   _id: string;
 }
 
-export interface History {
+export interface HistoryItem {
   agentCode: string | number;
   details: string;
   type: string;
   location: string;
   date: string;
   customerId: string;
+  paymentId: string;
+  amountPaid: number;
+  agentName?: string;
+  customerName?: string;
 }
 
 export interface Agent {
@@ -46,7 +50,7 @@ export interface HistoryDetails {
   numNewPayment: number;
   numNewDelivery: number;
   totalAmount: number;
-  histories: History[];
+  histories: HistoryItem[];
 }
 
 export interface Package {

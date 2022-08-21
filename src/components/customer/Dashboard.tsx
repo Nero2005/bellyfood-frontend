@@ -88,53 +88,69 @@ function Dashboard() {
           ></span>
         </div>
         <div className="flex flex-1 justify-evenly items-center pr-4">
-          <div className="text-lg">
-            <p className="flex items-center">
-              <FontAwesomeIcon
-                icon={faCircle}
-                className="w-4 h-4 mr-2 text-green-400"
-              />
-              {/* <InformationCircleIcon className="w-5 h-5 mr-2 text-green-400" />{" "} */}
-              Total Price:
+          <div className="text-md">
+            <div className="flex items-center space-x-3">
+              <div>
+                <FontAwesomeIcon
+                  icon={faCircle}
+                  className="w-4 h-4 mr-2 text-green-400"
+                />
+                <span>Total Price:</span>
+              </div>
+              <p className="font-semibold">{user?.totalPrice}</p>
+            </div>
+            <p className="flex items-center space-x-3">
+              <div>
+                <FontAwesomeIcon
+                  icon={faCircle}
+                  className="w-4 h-4 mr-2 text-blue-300"
+                />
+                <span>Amount paid:</span>
+              </div>
+              <p className="font-semibold">{user?.amountPaid}</p>
             </p>
-            <p className="flex items-center">
-              <FontAwesomeIcon
-                icon={faCircle}
-                className="w-4 h-4 mr-2 text-blue-300"
-              />
-              {/* <InformationCircleIcon className="w-5 h-5 mr-2 text-blue-300" />{" "} */}
-              Amount paid:
+            <p className="flex items-center space-x-3">
+              <div>
+                <FontAwesomeIcon
+                  icon={faCircle}
+                  className="w-4 h-4 mr-2 text-red-400"
+                />
+                <span>Amount left:</span>
+              </div>
+              <p className="font-semibold">
+                {user ? user?.totalPrice - user?.amountPaid : 0}
+              </p>
             </p>
-            <p className="flex items-center">
-              <FontAwesomeIcon
-                icon={faCircle}
-                className="w-4 h-4 mr-2 text-red-400"
-              />
-              {/* <InformationCircleIcon className="w-5 h-5 mr-2 text-red-400" />{" "} */}
-              Amount left:{" "}
+            <p className="flex items-center space-x-3">
+              <div>
+                <FontAwesomeIcon
+                  icon={faCircle}
+                  className="w-4 h-4 mr-2 text-orange-400"
+                />
+                <span>Package Name:</span>
+              </div>
+              <p className="font-semibold">
+                {user?.packageNames?.map((p) => p)}
+              </p>
             </p>
-            <p className="flex items-center">
-              <FontAwesomeIcon
-                icon={faCircle}
-                className="w-4 h-4 mr-2 text-orange-400"
-              />
-              Package Name
-            </p>
-            <p className="flex items-center">
-              <FontAwesomeIcon
-                icon={faCircle}
-                className="w-4 h-4 mr-2 text-purple-400"
-              />
-              Delivered:{" "}
+            <p className="flex items-center space-x-3">
+              <div>
+                <FontAwesomeIcon
+                  icon={faCircle}
+                  className="w-4 h-4 mr-2 text-purple-400"
+                />
+                <span>Delivered:</span>
+              </div>
+              <p className="font-semibold">{user?.delivered ? "Yes" : "No"}</p>
             </p>
           </div>
-          <div className="font-semibold text-xl">
-            <p>{user?.totalPrice}</p>
-            <p>{user?.amountPaid}</p>
+          {/* <div className="font-semibold text-lg"> */}
+          {/* <p>{user?.totalPrice}</p> */}
+          {/* <p>{user?.amountPaid}</p>
             <p>{user ? user?.totalPrice - user?.amountPaid : 0}</p>
             <p>{user?.packageNames?.map((p) => p)}</p>
-            <p>{user?.delivered ? "Yes" : "No"}</p>
-          </div>
+            <p>{user?.delivered ? "Yes" : "No"}</p> */}
+          {/* </div> */}
         </div>
       </div>
       <div className="flex flex-col max-w-5xl mx-auto items-center mt-3 px-2 md:px-0">

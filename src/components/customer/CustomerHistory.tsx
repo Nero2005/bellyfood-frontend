@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { getCustomerDeliveryHistory } from "../../services";
-import { get, History } from "../../utils";
+import { get, HistoryItem } from "../../utils";
 import Delivery from "./Delivery";
 
 function CustomerHistory() {
-  const [histories, setHistories] = useState<History[]>(null!);
+  const [histories, setHistories] = useState<HistoryItem[]>(null!);
 
   useEffect(() => {
     (async () => {

@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useAppSelector } from "../../store/hooks";
-import { History } from "../../utils";
+import { HistoryItem } from "../../utils";
 
 interface Props {
-  history: History;
+  history: HistoryItem;
 }
 
 function Delivery({ history }: Props) {
