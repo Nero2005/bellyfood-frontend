@@ -25,7 +25,7 @@ function Unauthorized({ dashboard }: Props) {
 
   return (
     <div>
-      <Header isAuthenticated={() => true} dashboard={dashboard} />
+      {/* <Header isAuthenticated={() => true} dashboard={dashboard} /> */}
     </div>
   );
 }

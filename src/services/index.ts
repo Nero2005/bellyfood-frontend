@@ -96,8 +96,8 @@ export const getPayments = async () => {
   return res.data;
 };
 
-export const getAdmins = async () => {
-  const res = await get("super/admins");
+export const getAdmins = async (filter: any) => {
+  const res = await getWithQuery("super/admins", filter);
   return res.data;
 };
 

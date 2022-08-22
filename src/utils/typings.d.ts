@@ -79,4 +79,5 @@ export type Page =
   | "COMPLETED_DELIVERIES"
   | "CREATE_CUSTOMER"
   | "CREATE_ADMIN"
-  | "HISTORY";
+  | "HISTORY"
+  | "CUSTOMERS";

@@ -39,7 +39,7 @@ function Login({ dashboard }: Props) {
 
   return (
     <div className="max-w-7xl mx-auto">
-      <Header isAuthenticated={() => false} dashboard={dashboard} />
+      {/* <Header isAuthenticated={() => false} dashboard={dashboard} /> */}
 
       <h1 className="text-3xl font-semibold mt-5 text-center">Login</h1>
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { SetStateAction } from "react";
 import CustomLink from "./CustomLink";
 import { getHeaderLinks } from "./Header";
 
@@ -7,9 +7,10 @@ interface Props {
   isAuthenticated: () => boolean;
   logout: () => void;
   dashboard: () => string;
+  setOpen: (value: SetStateAction<boolean>) => void;
 }
 
-function Menu({ open, isAuthenticated, logout, dashboard }: Props) {
+function Menu({ open, isAuthenticated, logout, dashboard, setOpen }: Props) {
   // const links = [
   //   { text: "HOME", link: "/home" },
   //   { text: "ABOUT US", link: "/about" },
@@ -23,6 +24,7 @@ function Menu({ open, isAuthenticated, logout, dashboard }: Props) {
   const links = getHeaderLinks({ isAuthenticated, dashboard });
   return (
     <div
+      onClick={() => setOpen(false)}
       className={`${
         open ? "translate-x-0" : "-translate-x-full"
       } justify-center h-screen p-8 absolute 

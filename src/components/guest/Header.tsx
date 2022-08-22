@@ -62,6 +62,7 @@ function Header({ isAuthenticated, dashboard }: Props) {
           alt={"Company logo"}
         />
       </Link>
+
       <div className="lg:flex space-x-8 hidden">
         {links.map((link) => (
           <CustomLink link={link} key={link.text} />
@@ -77,6 +78,7 @@ function Header({ isAuthenticated, dashboard }: Props) {
       </div>
       <Menu
         open={open}
+        setOpen={setOpen}
         isAuthenticated={isAuthenticated}
         logout={logout}
         dashboard={dashboard}

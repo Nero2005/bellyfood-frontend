@@ -71,7 +71,7 @@ function Home({ isAuthenticated, dashboard }: Props) {
 
   return (
     <div className="max-w-7xl mx-auto">
-      <Header isAuthenticated={isAuthenticated} dashboard={dashboard} />
+      {/* <Header isAuthenticated={isAuthenticated} dashboard={dashboard} /> */}
       <Welcome vision={vision} mission={mission} about={about} />
 
       <div className="px-10 py-5 mt-2 bg-white flex lg:flex-row flex-col lg:space-x-5 space-y-5 items-center">

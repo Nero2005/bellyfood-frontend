@@ -28,9 +28,7 @@ function NotFound() {
 
   return (
     <div>
-      <div onClick={() => window.location.reload()}>
-        Click to reload {window.location.href}
-      </div>
+      <h1 className="text-3xl font-bold text-center">404 Page Not Found</h1>
     </div>
   );
 }

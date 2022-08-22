@@ -11,6 +11,7 @@ import SuperMenu from "../../components/super/SuperMenu";
 import { useAppSelector } from "../../store/hooks";
 import DailyHistory from "../../components/super/DailyHistory";
 import Histories from "../../components/super/Histories";
+import Customers from "../../components/super/Customers";
 
 interface Props {
   dashboard: () => string;
@@ -37,12 +38,14 @@ function Super({ dashboard }: Props) {
         return <CreateCustomer isAdmin />;
       case "HISTORY":
         return <Histories />;
+      case "CUSTOMERS":
+        return <Customers />;
     }
   };
 
   return (
     <div>
-      <Header isAuthenticated={() => true} dashboard={dashboard} />
+      {/* <Header isAuthenticated={() => true} dashboard={dashboard} /> */}
 
       <div className="flex flex-col space-y-7 max-w-5xl mx-auto">
         <SuperMenu />

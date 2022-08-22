@@ -6,7 +6,7 @@ import { UserState } from "../../store/userReducer";
 
 interface Props {
   admin: UserState;
-  loadAdmins?: () => Promise<void>;
+  loadAdmins?: (page: number) => Promise<void>;
 }
 
 function Admin({ admin, loadAdmins }: Props) {

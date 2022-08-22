@@ -34,7 +34,7 @@ function Admin({ dashboard }: Props) {
   useEffect(() => {}, [page]);
   return (
     <div>
-      <Header isAuthenticated={() => true} dashboard={dashboard} />
+      {/* <Header isAuthenticated={() => true} dashboard={dashboard} /> */}
       <div className="flex flex-col space-y-7 max-w-5xl mx-auto">
         <AdminMenu />
 

@@ -6,26 +6,25 @@ import {
 } from "@heroicons/react/solid";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { getAdmins, getAdminsByName } from "../../services";
+import { getCustomers } from "../../services";
 import { UserState } from "../../store/userReducer";
-import { get, getWithQuery } from "../../utils";
-import Admin from "./Admin";
+import SuperCustomer from "./SuperCustomer";
 
-function Admins() {
-  const [admins, setAdmins] = useState<UserState[]>(null!);
+function Customers() {
+  const [customers, setCustomers] = useState<UserState[]>(null!);
   const [searchName, setSearchName] = useState("");
   const [count, setCount] = useState(0);
   const [pageNumber, setPageNumber] = useState(0);
 
-  const loadAdmins = async (page: number) => {
-    const n = toast.loading("Getting admins");
+  const loadCustomers = async (page: number) => {
+    const n = toast.loading("Getting customers");
     try {
       // const res = await get("super/admins");
-      const data = await getAdmins({ page });
+      const data = await getCustomers({ page });
       console.log(data);
-      setAdmins(data.users);
+      setCustomers(data.users);
       setCount(data.count);
-      toast.success("Got admins!", {
+      toast.success("Got customers!", {
         id: n,
       });
     } catch (err: any) {
@@ -39,7 +38,7 @@ function Admins() {
   const decPage = async () => {
     if (pageNumber == 0) return;
     setPageNumber((prev) => prev - 1);
-    await loadAdmins(pageNumber - 1);
+    await loadCustomers(pageNumber - 1);
   };
   const incPage = async () => {
     console.log(count / 10);
@@ -47,12 +46,12 @@ function Admins() {
     if (pageNumber === Math.ceil(count / 10) - 1) return;
     setPageNumber((prev) => prev + 1);
 
-    await loadAdmins(pageNumber + 1);
+    await loadCustomers(pageNumber + 1);
   };
 
   useEffect(() => {
     (async () => {
-      await loadAdmins(0);
+      await loadCustomers(0);
     })();
   }, []);
 
@@ -61,9 +60,9 @@ function Admins() {
       console.log(e.target.value);
       setSearchName(e.target.value);
       // const res = await getWithQuery("super/admins", { name: e.target.value });
-      const data = await getAdminsByName(e.target.value);
+      const data = await getCustomers({ name: e.target.value });
       console.log(data);
-      setAdmins(data.users);
+      setCustomers(data.users);
     } catch (err: any) {
       console.log(err);
       toast.error(`Error: ${err.msg}`);
@@ -73,11 +72,11 @@ function Admins() {
   return (
     <div className="flex-1 md:mt-1 px-2">
       <h1 className="text-2xl font-semibold text-center my-2">
-        Your Employees
+        Your Customers
       </h1>
       <RefreshIcon
         className="w-6 h-6 fixed top-44 z-50 right-10 cursor-pointer"
-        onClick={async () => await loadAdmins(pageNumber)}
+        onClick={async () => await loadCustomers(pageNumber)}
       />
       <div className="flex items-center bg-white sticky top-32 px-3">
         <SearchIcon className="w-6 h-6" />
@@ -85,13 +84,17 @@ function Admins() {
           onChange={(e) => handleChange(e)}
           type="text"
           value={searchName}
-          placeholder="Enter admin name"
+          placeholder="Enter customer name"
           className="flex-1 py-2 my-2 px-3 outline-none bg-transparent"
         />
       </div>
       <div className="flex flex-col space-y-5 my-3">
-        {admins?.map((admin) => (
-          <Admin loadAdmins={loadAdmins} key={admin._id} admin={admin} />
+        {customers?.map((customer) => (
+          <SuperCustomer
+            customer={customer}
+            loadCustomers={loadCustomers}
+            key={customer._id}
+          />
         ))}
       </div>
       <div className="fixed bottom-4 items-center flex w-full justify-evenly z-50">
@@ -113,4 +116,4 @@ function Admins() {
   );
 }
 
-export default Admins;
+export default Customers;

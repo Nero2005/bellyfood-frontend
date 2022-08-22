@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 // import { useCookies } from "react-cookie";
 import Home from "./pages/Home";
@@ -14,13 +14,37 @@ import Unauthorized from "./pages/Unauthorized";
 import Super from "./pages/super";
 import { Toaster } from "react-hot-toast";
 import ErrorBoundary from "./ErrorBoundary";
-// import logo from "./logo.svg";
+import ReactPWAInstallProvider, { useReactPWAInstall } from "react-pwa-install";
+import logo from "./logo.svg";
+import Header from "./components/guest/Header";
 // import "./index.css";
 
 function App() {
   // const [cookies] = useCookies();
   const user = useAppSelector((state) => state.users.user);
   const dispatch = useAppDispatch();
+  const [supportsPWA, setSupportsPWA] = useState(false);
+  const [promptInstall, setPromptInstall] = useState<any>(null);
+
+  useEffect(() => {
+    const handler = (e: any) => {
+      e.preventDefault();
+      console.log("we are being triggered :D");
+      setSupportsPWA(true);
+      setPromptInstall(e);
+    };
+    window.addEventListener("beforeinstallprompt", handler);
+
+    return () => window.removeEventListener("transitionend", handler);
+  }, []);
+
+  const handleClick = (e: any) => {
+    e.preventDefault();
+    if (!promptInstall) {
+      return;
+    }
+    promptInstall.prompt();
+  };
 
   const updateUser = async () => {
     try {
@@ -89,6 +113,18 @@ function App() {
       <div className="App bg-slate-100 h-screen overflow-y-scroll">
         <Toaster />
         <BrowserRouter>
+          <Header isAuthenticated={isAuthenticated} dashboard={dashboard} />
+          <div className="fixed top-4 right-14 z-50">
+            {supportsPWA && (
+              <button
+                type="button"
+                className="bg-green-400 text-white px-3 py-2"
+                onClick={handleClick}
+              >
+                Install App
+              </button>
+            )}
+          </div>
           <Routes>
             <Route
               path={LinkRoutes.BASE}
