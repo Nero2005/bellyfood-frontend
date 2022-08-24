@@ -56,6 +56,7 @@ function AdminMenu() {
       >
         Pending Approval
       </button>
+
       <button
         className={`sticky ${
           page === "ADMIN_HISTORY" && "shadow-md text-white bg-green-400"
