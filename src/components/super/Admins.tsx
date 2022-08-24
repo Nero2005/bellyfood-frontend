@@ -6,9 +6,10 @@ import {
 } from "@heroicons/react/solid";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import { getAdmins, getAdminsByName } from "../../services";
 import { UserState } from "../../store/userReducer";
-import { get, getWithQuery } from "../../utils";
+import { get, getWithQuery, LinkRoutes } from "../../utils";
 import Admin from "./Admin";
 
 function Admins() {
@@ -16,13 +17,12 @@ function Admins() {
   const [searchName, setSearchName] = useState("");
   const [count, setCount] = useState(0);
   const [pageNumber, setPageNumber] = useState(0);
+  const navigate = useNavigate();
 
   const loadAdmins = async (page: number) => {
     const n = toast.loading("Getting admins");
     try {
-      // const res = await get("super/admins");
       const data = await getAdmins({ page });
-      console.log(data);
       setAdmins(data.users);
       setCount(data.count);
       toast.success("Got admins!", {
@@ -30,9 +30,11 @@ function Admins() {
       });
     } catch (err: any) {
       console.log(err);
-      toast.error(`Error: ${err.msg}`, {
-        id: n,
-      });
+      if (err === "Unauthorized") {
+        navigate(LinkRoutes.LOGIN);
+        window.location.reload();
+      }
+      toast.error("An error occurred", { id: n });
     }
   };
 
@@ -42,9 +44,7 @@ function Admins() {
     await loadAdmins(pageNumber - 1);
   };
   const incPage = async () => {
-    console.log(count / 10);
-
-    if (pageNumber === Math.ceil(count / 10) - 1) return;
+    if (pageNumber === Math.ceil(count / 10) - 1 || count === 0) return;
     setPageNumber((prev) => prev + 1);
 
     await loadAdmins(pageNumber + 1);
@@ -58,11 +58,9 @@ function Admins() {
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
-      console.log(e.target.value);
       setSearchName(e.target.value);
       // const res = await getWithQuery("super/admins", { name: e.target.value });
       const data = await getAdminsByName(e.target.value);
-      console.log(data);
       setAdmins(data.users);
     } catch (err: any) {
       console.log(err);
@@ -104,7 +102,8 @@ function Admins() {
         <span>Page: {pageNumber + 1}</span>
         <ArrowRightIcon
           className={`w-6 cursor-pointer ${
-            pageNumber === Math.ceil(count / 10) - 1 && "text-gray-300"
+            (pageNumber === Math.ceil(count / 10) - 1 || count === 0) &&
+            "text-gray-300"
           }`}
           onClick={() => incPage()}
         />

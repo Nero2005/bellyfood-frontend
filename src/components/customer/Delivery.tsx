@@ -8,10 +8,7 @@ interface Props {
 
 function Delivery({ history }: Props) {
   const { user } = useAppSelector((state) => state.users);
-  useEffect(() => {
-    // (async () => {
-    // })()
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <div className="flex space-x-10 w-full">

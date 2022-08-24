@@ -11,16 +11,6 @@ interface Props {
 }
 
 function Menu({ open, isAuthenticated, logout, dashboard, setOpen }: Props) {
-  // const links = [
-  //   { text: "HOME", link: "/home" },
-  //   { text: "ABOUT US", link: "/about" },
-  //   { text: "DONATE A FOOD BASKET", link: "/donate" },
-  //   { text: "PRODUCTS", link: "/products" },
-  //   { text: "GIFT A BASKET", link: "/gift" },
-  //   { text: "CONTACT", link: "/contact" },
-  // ];
-
-  // if (!isAuthenticated()) links.push({ text: "LOGIN", link: "/login" });
   const links = getHeaderLinks({ isAuthenticated, dashboard });
   return (
     <div

@@ -24,6 +24,8 @@ export interface Payment {
 }
 
 export interface HistoryItem {
+  _id: string;
+  bellysave: string;
   agentCode: string | number;
   details: string;
   type: string;
@@ -80,4 +82,7 @@ export type Page =
   | "CREATE_CUSTOMER"
   | "CREATE_ADMIN"
   | "HISTORY"
-  | "CUSTOMERS";
+  | "CUSTOMERS"
+  | "ADMIN_HISTORY"
+  | "BELLYSAVE_ADMIN"
+  | "BELLYSAVE_SUPER";

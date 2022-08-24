@@ -1,4 +1,7 @@
+import { faGift, faHandHoldingDollar } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { Link } from "react-router-dom";
 import WelcomeImg from "../../assets/images/welcome.jpeg";
 import DonateImg from "../assets/images/donate.jpeg";
 
@@ -25,15 +28,12 @@ function Welcome({ vision, mission, about }: Props) {
         </div>
       </div>
       <div className="lg:flex-row lg:space-x-4 flex flex-col space-y-3">
-        <button className="rounded-2xl bg-green-500 py-2 px-4 text-white">
-          BUY A BASKET
-        </button>
-        <button className="rounded-2xl bg-green-500 py-2 px-4 text-white">
-          GIFT A BASKET
-        </button>
-        <button className="rounded-2xl bg-green-500 py-2 px-4 text-white">
-          DONATE A BASKET
-        </button>
+        <a href="/home#donate">
+          <FontAwesomeIcon
+            icon={faHandHoldingDollar}
+            className="w-10 h-10 cursor-pointer rounded-2xl bg-green-500 py-2 px-4 text-white"
+          />
+        </a>
       </div>
     </div>
   );

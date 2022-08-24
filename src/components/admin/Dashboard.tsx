@@ -1,24 +1,32 @@
 import React, { useEffect, useRef } from "react";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import { getCustomers } from "../../services";
 import { useAppSelector } from "../../store/hooks";
-import { getWithQuery } from "../../utils";
+import { getWithQuery, LinkRoutes } from "../../utils";
 
 function Dashboard() {
   const user = useAppSelector((state) => state.users.user);
   const countRef = useRef<HTMLSpanElement>(null!);
+  const navigate = useNavigate();
 
   useEffect(() => {
     countRef.current.innerHTML = `${0}`;
+    const n = toast.loading("Loading");
     (async () => {
       try {
-        // const res = await getWithQuery("users/customers", { approved: false });
         const data = await getCustomers({ approved: false });
-        console.log(data.count);
         if (countRef) {
           countRef.current.innerHTML = data.count;
+          toast.success("Success", { id: n });
         }
       } catch (err: any) {
         console.log(err);
+        if (err === "Unauthorized") {
+          navigate(LinkRoutes.LOGIN);
+          window.location.reload();
+        }
+        toast.error("An error occurred", { id: n });
       }
     })();
   }, []);

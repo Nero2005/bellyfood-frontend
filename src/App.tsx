@@ -17,6 +17,7 @@ import ErrorBoundary from "./ErrorBoundary";
 import ReactPWAInstallProvider, { useReactPWAInstall } from "react-pwa-install";
 import logo from "./logo.svg";
 import Header from "./components/guest/Header";
+import Bellysave from "./pages/Bellysave";
 // import "./index.css";
 
 function App() {
@@ -49,15 +50,9 @@ function App() {
   const updateUser = async () => {
     try {
       const res = await get("users/me");
-      console.log(res.data);
-      // console.log(res.data.msg);
-      // const { date, lastLogin, lastPayment } = res.data.user;
-
       dispatch(setUser(res.data.user));
-      console.log(isAuthenticated());
       return true;
     } catch (err: any) {
-      console.log(err.message);
       console.log(err.status);
       console.log(err.msg);
       console.log(err);
@@ -73,21 +68,31 @@ function App() {
   };
 
   const isCustomer = () => {
+    if (user?.roles === undefined) {
+      return LinkRoutes.BELLYSAVE;
+    }
     return user?.roles.every((r: string) => r === "CUSTOMER");
   };
 
   const isAdmin = () => {
+    if (user?.roles === undefined) {
+      return LinkRoutes.BELLYSAVE;
+    }
     return user?.roles.every((r: string) => r === "ADMIN");
   };
 
   const isSuperAdmin = () => {
+    if (user?.roles === undefined) {
+      return LinkRoutes.BELLYSAVE;
+    }
     return user?.roles.includes("SUPERADMIN");
   };
 
   const dashboard = (): string => {
     if (!user) return LinkRoutes.LOGIN;
-    if (isCustomer()) {
-      console.log("customer");
+    else if (user.roles === undefined) {
+      return LinkRoutes.BELLYSAVE;
+    } else if (isCustomer()) {
       return LinkRoutes.CUSTOMER;
     } else if (isAdmin()) return LinkRoutes.ADMIN;
     else if (isSuperAdmin()) return LinkRoutes.SUPER;
@@ -97,13 +102,23 @@ function App() {
   const authorize = (authorizeMethod: any, Component: any) => {
     if (isAuthenticated()) {
       if (authorizeMethod()) {
-        console.log("Authorized");
         return <Component dashboard={dashboard} />;
       } else {
         return <Navigate to={LinkRoutes.UNAUTHORIZED} />;
       }
     } else {
-      console.log("Login");
+      return <Navigate to={LinkRoutes.LOGIN} />;
+    }
+  };
+
+  const bellysaveAuth = (Component: any) => {
+    if (isAuthenticated()) {
+      if (user?.roles === undefined) {
+        return <Component />;
+      } else {
+        return <Navigate to={LinkRoutes.UNAUTHORIZED} />;
+      }
+    } else {
       return <Navigate to={LinkRoutes.LOGIN} />;
     }
   };
@@ -114,7 +129,7 @@ function App() {
         <Toaster />
         <BrowserRouter>
           <Header isAuthenticated={isAuthenticated} dashboard={dashboard} />
-          <div className="fixed top-4 right-14 z-50">
+          <div className="fixed top-4 right-14 z-50 lg:hidden">
             {supportsPWA && (
               <button
                 type="button"
@@ -136,6 +151,7 @@ function App() {
                 <Home isAuthenticated={isAuthenticated} dashboard={dashboard} />
               }
             />
+            <Route path={LinkRoutes.BELLYSAVE} element={<Bellysave />} />
             <Route
               path={LinkRoutes.LOGIN}
               element={

@@ -6,5 +6,6 @@ export enum LinkRoutes {
   ADMIN = "/admin",
   SUPER = "/super",
   DASHBOARD = "/dashboard",
+  BELLYSAVE = "/bellysave",
   UNAUTHORIZED = "/unauthorized",
 }

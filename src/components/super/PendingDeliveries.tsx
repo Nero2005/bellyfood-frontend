@@ -1,10 +1,11 @@
 import { SearchIcon } from "@heroicons/react/solid";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import { getCustomers, getLocations } from "../../services";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { UserState } from "../../store/userReducer";
-import { getWithQuery } from "../../utils";
+import { getWithQuery, LinkRoutes } from "../../utils";
 import Customer from "../admin/Customer";
 import DeliveryLocation from "./DeliveryLocation";
 
@@ -16,32 +17,28 @@ function PendingDeliveries() {
   const [customers, setCustomers] = useState<UserState[]>(null!);
   const [locations, setLocations] = useState<string[]>(null!);
   const [searchName, setSearchName] = useState("");
+  const navigate = useNavigate();
 
   const loadPendingDeliveries = async () => {
-    // const n = toast.loading("Getting customers");
     const n = toast.loading("Getting customers");
     try {
       setLocations(await getLocations());
-      // const res = await getWithQuery("users/customers", {
-      //   approved: true,
-      //   paid: true,
-      //   delivered: false,
-      // });
       const data = await getCustomers({
         approved: true,
         paid: true,
         delivered: false,
       });
-      console.log(data);
       setCustomers(data.users);
       toast.success("Got customers!", {
         id: n,
       });
     } catch (err: any) {
       console.log(err);
-      toast.error(`Error: ${err.msg}`, {
-        id: n,
-      });
+      if (err === "Unauthorized") {
+        navigate(LinkRoutes.LOGIN);
+        window.location.reload();
+      }
+      toast.error("An error occurred", { id: n });
     }
   };
 
@@ -54,14 +51,7 @@ function PendingDeliveries() {
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
-      console.log(e.target.value);
       setSearchName(e.target.value);
-      // const res = await getWithQuery("users/customers", {
-      //   approved: true,
-      //   paid: true,
-      //   delivered: false,
-      //   name: e.target.value,
-      // });
       const data = await getCustomers({
         approved: true,
         paid: true,

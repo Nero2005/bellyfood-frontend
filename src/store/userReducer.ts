@@ -12,6 +12,9 @@ export interface UserState {
   phone: string;
   roles: string[];
   agentCode: string;
+  agentName?: string[];
+  bankName?: string;
+  accountNumber?: string;
   location?: string;
   approved: boolean;
   packageNames?: PackageName[];

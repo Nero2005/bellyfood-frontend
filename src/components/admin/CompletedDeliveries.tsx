@@ -1,10 +1,16 @@
-import { RefreshIcon, SearchIcon } from "@heroicons/react/solid";
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  RefreshIcon,
+  SearchIcon,
+} from "@heroicons/react/solid";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import { getCustomers } from "../../services";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { UserState } from "../../store/userReducer";
-import { getWithQuery } from "../../utils";
+import { getWithQuery, LinkRoutes } from "../../utils";
 import Customer from "./Customer";
 
 function CompletedDeliveries() {
@@ -14,51 +20,56 @@ function CompletedDeliveries() {
 
   const [customers, setCustomers] = useState<UserState[]>(null!);
   const [searchName, setSearchName] = useState("");
+  const [count, setCount] = useState(0);
+  const [pageNumber, setPageNumber] = useState(0);
+  const navigate = useNavigate();
 
-  const loadCompletedDeliveries = async () => {
-    // const n = toast.loading("Getting customers");
+  const loadCompletedDeliveries = async (page?: number) => {
     const n = toast.loading("Getting customers");
     try {
-      // const res = await getWithQuery("users/customers", {
-      //   approved: true,
-      //   paid: true,
-      //   delivered: true,
-      // });
       const data = await getCustomers({
         approved: true,
         paid: true,
         delivered: true,
+        page,
       });
-      console.log(data);
       setCustomers(data.users);
+      setCount(data.count);
       toast.success("Got customers!", {
         id: n,
       });
     } catch (err: any) {
       console.log(err);
-      toast.error(`Error: ${err.msg}`, {
-        id: n,
-      });
+      if (err === "Unauthorized") {
+        navigate(LinkRoutes.LOGIN);
+        window.location.reload();
+      }
+      toast.error("An error occurred", { id: n });
     }
+  };
+
+  const decPage = async () => {
+    if (pageNumber == 0) return;
+    setPageNumber((prev) => prev - 1);
+    await loadCompletedDeliveries(pageNumber - 1);
+  };
+  const incPage = async () => {
+    if (pageNumber === Math.ceil(count / 10) - 1 || count === 0) return;
+    setPageNumber((prev) => prev + 1);
+
+    await loadCompletedDeliveries(pageNumber + 1);
   };
 
   useEffect(() => {
     (async () => {
-      await loadCompletedDeliveries();
+      await loadCompletedDeliveries(0);
     })();
     // eslint-disable-next-line
   }, []);
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
-      console.log(e.target.value);
       setSearchName(e.target.value);
-      // const res = await getWithQuery("users/customers", {
-      //   approved: true,
-      //   paid: true,
-      //   delivered: true,
-      //   name: e.target.value,
-      // });
       const data = await getCustomers({
         approved: true,
         paid: true,
@@ -89,7 +100,7 @@ function CompletedDeliveries() {
       </div>
       <RefreshIcon
         className="w-6 h-6 fixed top-44 z-50 right-10 cursor-pointer"
-        onClick={async () => await loadCompletedDeliveries()}
+        onClick={async () => await loadCompletedDeliveries(pageNumber)}
       />
       <div className="flex flex-col space-y-5 my-2">
         {customers?.map((customer) => (
@@ -100,6 +111,23 @@ function CompletedDeliveries() {
             customer={customer}
           />
         ))}
+      </div>
+      <div className="h-10"></div>
+      <div className="fixed bottom-4 items-center flex w-full justify-evenly z-50">
+        <ArrowLeftIcon
+          className={`w-6 cursor-pointer ${
+            pageNumber === 0 && "text-gray-300"
+          }`}
+          onClick={() => decPage()}
+        />
+        <span>Page: {pageNumber + 1}</span>
+        <ArrowRightIcon
+          className={`w-6 cursor-pointer ${
+            (pageNumber === Math.ceil(count / 10) - 1 || count === 0) &&
+            "text-gray-300"
+          }`}
+          onClick={() => incPage()}
+        />
       </div>
     </div>
   );

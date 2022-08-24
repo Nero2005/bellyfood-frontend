@@ -27,9 +27,8 @@ function Customer({ dashboard }: Props) {
 
   return (
     <div>
-      {/* <Header isAuthenticated={() => true} dashboard={dashboard} /> */}
-
       <CustomerMenu />
+
       {loadPage()}
     </div>
   );

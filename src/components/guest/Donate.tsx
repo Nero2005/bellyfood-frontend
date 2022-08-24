@@ -24,7 +24,10 @@ function Donate() {
     "At Bellyfood, we are so encouraged if you want to donate to the poor or somehow make a meaningful " +
     "impact on those living in abject poverty as the popular saying goes “We rise by lifting others”.";
   return (
-    <div className="bg-white space-y-10 px-8 flex flex-col md:px-10 overflow-hidden mt-16 rounded-md py-5 items-center my-32">
+    <div
+      id="donate"
+      className="bg-white space-y-10 px-8 flex flex-col md:px-10 overflow-hidden mt-16 rounded-md py-5 items-center my-32"
+    >
       <div className="max-w-xl">
         <img src={DonateImg} className="w-full" />
       </div>

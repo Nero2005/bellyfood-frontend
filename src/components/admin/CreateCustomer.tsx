@@ -3,8 +3,19 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../store/hooks";
-import { get, Package, post } from "../../utils";
-import { getLocations, getPackages, postCustomer } from "../../services";
+import { get, LinkRoutes, Package, post } from "../../utils";
+import {
+  getAdmins,
+  getAgents,
+  getLocations,
+  getPackages,
+  postBellysaveCustomer,
+  postCustomer,
+} from "../../services";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEyeSlash, faEye } from "@fortawesome/free-regular-svg-icons";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { UserState } from "../../store/userReducer";
 
 interface FormData {
   phone: string;
@@ -13,14 +24,18 @@ interface FormData {
   gender: string;
   location: string;
   packageNames: string;
+  service: string;
   priceModifier: number;
+  bankName: string;
+  accountNumber: string;
 }
 
 interface Props {
   isAdmin?: boolean;
+  isSuper?: boolean;
 }
 
-function CreateCustomer({ isAdmin }: Props) {
+function CreateCustomer({ isAdmin, isSuper }: Props) {
   const user = useAppSelector((state) => state.users.user);
   const {
     register,
@@ -33,49 +48,95 @@ function CreateCustomer({ isAdmin }: Props) {
   const [locations, setLocations] = useState<string[]>(null!);
   const [packages, setPackages] = useState<Package[]>(null!);
   const [test, setTTest] = useState<any[]>([]);
+  const [icon, setIcon] = useState<IconProp>(faEyeSlash);
+  const [admins, setAdmins] = useState<UserState[]>(null!);
+  const [agents, setAgents] = useState<any>();
+  const [service, setService] = useState<string>("bellyfood");
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(test);
     (async () => {
       try {
-        // const res = await get("users/locations");
-        // const { data } = await get("users/packages");
-        // console.log(res.data);
-        // console.log(data);
         setLocations(await getLocations());
         setPackages(await getPackages());
+        const agents = await getAgents();
+        console.log(agents);
+        setAgents(agents);
+        if (isSuper) {
+          const data = await getAdmins({});
+          setAdmins(data.users);
+        }
       } catch (err: any) {
+        if (err === "Unauthorized") {
+          navigate(LinkRoutes.LOGIN);
+          window.location.reload();
+        }
         const { status, msg } = err;
         if (status !== 200) setErrorMessage(msg);
         console.log(err);
       }
     })();
-  }, [test]);
+  }, []);
 
   const onSubmit = handleSubmit(async (formData) => {
     const n = toast.loading("Adding customer");
     try {
-      const data = {
-        phone: watch("phone"),
-        password: watch("password"),
-        name: watch("name"),
-        gender: watch("gender"),
-        location: watch("location") ? watch("location") : "Ikorodu",
-        packageNames: [watch("packageNames") ? watch("packageNames") : "NANO"],
-        priceModifier: parseInt(watch("priceModifier").toString()),
-      };
-      console.log(data);
+      let data;
+      let phone = watch("phone");
+      if (phone.charAt(0) === "0") {
+        phone = phone.slice(1);
+      }
+      if (service === "bellyfood") {
+        data = {
+          phone: `+234${phone}`,
+          password: watch("password")
+            ? watch("password")
+            : `${agents?.slice(0, 1)[0].name}`,
+          agentName: watch("password")
+            ? watch("password")
+            : `${agents?.slice(0, 1)[0].name}`,
+          name: watch("name"),
+          gender: watch("gender"),
+          location: watch("location")
+            ? watch("location")
+            : `${locations?.slice(0, 1)[0]}`,
+          packageNames: [
+            watch("packageNames") ? watch("packageNames") : "NANO",
+          ],
+          priceModifier: parseInt(watch("priceModifier").toString()),
+        };
+        const data3 = await postCustomer(data);
+        if (isAdmin) {
+          await post(
+            `users/approve?customerId=${data3.newCustomer._id}&agentCode=${user?.agentCode}`
+          );
+        }
+      } else if (service === "bellysave") {
+        data = {
+          phone: `+234${phone}`,
+          password: watch("password")
+            ? watch("password")
+            : `${agents?.slice(0, 1)[0].name}`,
+          agentName: watch("password")
+            ? watch("password")
+            : `${agents?.slice(0, 1)[0].name}`,
+          name: watch("name"),
+          gender: watch("gender"),
+          bankName: watch("bankName"),
+          accountNumber: watch("accountNumber"),
+          location: watch("location")
+            ? watch("location")
+            : `${locations?.slice(0, 1)[0]}`,
+        };
+        console.log(data);
 
-      // const res = await post("auth/create", data);
-      const data3 = await postCustomer(data);
-      console.log(data3);
-      setTTest((prev) => [...prev, { ...data, customerId: 2 }]);
-      if (isAdmin) {
-        const { data: data2 } = await post(
-          `users/approve?customerId=${data3.newCustomer._id}&agentCode=${user?.agentCode}`
-        );
+        const data3 = await postBellysaveCustomer(data);
+        if (isAdmin) {
+          await post(
+            `bellysave/approve?customerId=${data3.newCustomer._id}&agentCode=${user?.agentCode}`
+          );
+        }
       }
 
       // navigate(LinkRoutes.DASHBOARD);
@@ -89,12 +150,12 @@ function CreateCustomer({ isAdmin }: Props) {
       toast.error(`Error creating customer: ${msg}`, { id: n });
     } finally {
       reset();
+      setService("bellyfood");
     }
   });
 
   return (
     <div className="flex-1 md:mt-1 px-2">
-      {/* <h1 className="text-3xl font-semibold mt-5 text-center">Create Admin</h1> */}
       <h1 className="text-2xl font-semibold text-center mt-2">
         Create Customer
       </h1>
@@ -103,13 +164,31 @@ function CreateCustomer({ isAdmin }: Props) {
         className="flex flex-col mt-4 p-5 max-w-2xl mx-auto"
         onSubmit={onSubmit}
       >
-        <input type="hidden" {...register("priceModifier")} value="1" />
+        <label className="p-2">
+          <span>Service: </span>
+          <select
+            className="block border rounded shadow ring-green-400 px-4 py-3 w-full mt-1 outline-none focus:ring"
+            {...register("service")}
+            defaultValue="bellyfood"
+            onChange={(e) => setService(e.target.value)}
+          >
+            <option className="" value="bellyfood">
+              Bellyfood
+            </option>
+            <option className="" value="bellysave">
+              Bellysave
+            </option>
+          </select>
+        </label>
+        {service === "bellyfood" && (
+          <input type="hidden" {...register("priceModifier")} value="1" />
+        )}
         <label className="p-2">
           <span>Phone: </span>
           <input
             {...register("phone", { required: true })}
             type="tel"
-            placeholder="+2348134567890"
+            placeholder="08134567890"
             className="block border rounded form-input shadow ring-green-400 px-4 py-3 w-full mt-1 outline-none focus:ring"
           />
         </label>
@@ -122,6 +201,29 @@ function CreateCustomer({ isAdmin }: Props) {
             className="block border rounded form-input shadow ring-green-400 px-4 py-3 w-full mt-1 outline-none focus:ring"
           />
         </label>
+        {service === "bellysave" && (
+          <label className="p-2">
+            <span>Bank Name: </span>
+            <input
+              {...register("bankName", { required: true })}
+              type="text"
+              placeholder="Enter bank name"
+              className="block border rounded form-input shadow ring-green-400 px-4 py-3 w-full mt-1 outline-none focus:ring"
+            />
+          </label>
+        )}
+        {service === "bellysave" && (
+          <label className="p-2">
+            <span>Account Number: </span>
+            <input
+              {...register("accountNumber", { required: true })}
+              type="text"
+              placeholder="Enter account number"
+              className="block border rounded form-input shadow ring-green-400 px-4 py-3 w-full mt-1 outline-none focus:ring"
+            />
+          </label>
+        )}
+
         <label className="p-2">
           <span>Gender: </span>
           <select
@@ -137,7 +239,6 @@ function CreateCustomer({ isAdmin }: Props) {
             </option>
           </select>
         </label>
-
         <label className="p-2">
           <span>Location: </span>
           <select
@@ -152,46 +253,73 @@ function CreateCustomer({ isAdmin }: Props) {
             ))}
           </select>
         </label>
-
         <label className="p-2">
-          <span>Package: </span>
+          <span>Agent: </span>
           <select
             className="block border rounded shadow ring-green-400 px-4 py-3 w-full mt-1 outline-none focus:ring"
-            {...register("packageNames")}
-            defaultValue={`${packages?.slice(0, 1)[0]}`}
+            {...register("password")}
+            defaultValue={`${agents?.slice(0, 1)[0].name}`}
           >
-            {packages?.map((pkg) => (
-              <option value={`${pkg.name}`} key={pkg.name}>
-                Name: {pkg.name}, Price: {pkg.price}
+            {agents?.map((agent: any) => (
+              <option value={`${agent.name}`} key={agent._id}>
+                {agent.name}
               </option>
             ))}
           </select>
         </label>
-
-        <label className="p-2">
+        {service === "bellyfood" && (
+          <label className="p-2">
+            <span>Package: </span>
+            <select
+              className="block border rounded shadow ring-green-400 px-4 py-3 w-full mt-1 outline-none focus:ring"
+              {...register("packageNames")}
+              defaultValue={`${packages?.slice(0, 1)[0]}`}
+            >
+              {packages?.map((pkg) => (
+                <option value={`${pkg.name}`} key={pkg.name}>
+                  Name: {pkg.name}, Price: {pkg.price}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
+        {/* <label className="p-2">
           <span>Password: </span>
           <input
+            id="password"
             {...register("password", { required: true })}
             type="password"
             placeholder="Enter password"
             className="block border rounded form-input shadow ring-green-400 px-4 py-3 w-full mt-1 outline-none focus:ring"
           />
-        </label>
-
+          <FontAwesomeIcon
+            onClick={() => {
+              const password = document.getElementById("password");
+              const type =
+                password!.getAttribute("type") === "password"
+                  ? "text"
+                  : "password";
+              password!.setAttribute("type", type);
+              setIcon((prev) => (prev === faEyeSlash ? faEye : faEyeSlash));
+            }}
+            icon={icon}
+            className="w-6 h-6 absolute right-4 top-12 cursor-pointer"
+            id="icon"
+          />
+        </label> */}
         {(Object.keys(errors).length > 0 || errorMessage) && (
           <div className="space-y-2 p-2 text-red-500">
             {errors.phone?.type === "required" && (
               <p> - Phone number is required</p>
             )}
-            {errors.password?.type === "required" && (
+            {/* {errors.password?.type === "required" && (
               <p> - Password is required</p>
-            )}
-            {errors.name?.type === "required" && <p> - Phone is required</p>}
+            )} */}
+            {errors.name?.type === "required" && <p> - Name is required</p>}
             {errors.gender?.type === "required" && <p> - Gender is required</p>}
             {errorMessage && <p>- {errorMessage}</p>}
           </div>
         )}
-
         <input
           type="submit"
           value="Create Customer"

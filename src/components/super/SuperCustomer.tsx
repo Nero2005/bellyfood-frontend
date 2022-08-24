@@ -1,28 +1,97 @@
-import { TrashIcon } from "@heroicons/react/solid";
-import React from "react";
+import { CheckIcon, PencilIcon, TrashIcon } from "@heroicons/react/solid";
+import React, { useEffect, useState } from "react";
+import { editCustomer } from "../../services";
 import { UserState } from "../../store/userReducer";
 
 interface Props {
   customer: UserState;
-  loadCustomers?: (page: number) => Promise<void>;
+  loadCustomers?: (page: number, filter: any) => Promise<void>;
+  timeAgo: any;
+  index: number;
 }
 
-function SuperCustomer({ customer, loadCustomers }: Props) {
+function SuperCustomer({ customer, loadCustomers, timeAgo, index }: Props) {
+  const [editableN, setEditableN] = useState("");
+  const [editableP, setEditableP] = useState("");
+  const [editingName, setEditingName] = useState("");
+  const [editingPhone, setEditingPhone] = useState("");
+  useEffect(() => {}, []);
+
   return (
-    <div className="flex flex-col cursor-pointer">
-      <div className="flex flex-col md:flex-row md:space-x-10 justify-center py-3 items-center bg-white">
-        <h1>{customer.name}</h1>
-        <h2>{customer.phone}</h2>
-        <h3>{new Date(customer.date!).toDateString()}</h3>
-        <h3>{customer.packageNames?.map((p) => p)}</h3>
-        <h3>{customer.amountPaid}</h3>
-        <h3>{customer.totalPrice - customer.amountPaid}</h3>
-        {/* <TrashIcon
-          className="w-6 h-6 cursor-pointer text-gray-500"
-          onClick={async () => await deleteCustomerClick()}
-        /> */}
-      </div>
-    </div>
+    <tr className="border border-gray-500">
+      <td className="border border-gray-500 mx-1 px-1">{index}</td>
+      <td className="border border-gray-500">
+        {editableN === customer.name ? (
+          <input
+            type="text"
+            className="w-40"
+            defaultValue={customer.name}
+            onChange={(e) => setEditingName(e.target.value)}
+          />
+        ) : (
+          <span>{customer.name}</span>
+        )}
+
+        {editableN === customer.name ? (
+          <CheckIcon
+            className="text-green-600 w-6 h-6 cursor-pointer"
+            onClick={async () => {
+              setEditableN("");
+              editCustomer(customer._id, { name: editingName });
+              setEditingName("");
+            }}
+          />
+        ) : (
+          <PencilIcon
+            className="text-gray-400 w-6 h-6 cursor-pointer"
+            onClick={async () => {
+              setEditableN(customer.name);
+            }}
+          />
+        )}
+      </td>
+
+      <td className="border border-gray-500">
+        {editableP === customer.phone ? (
+          <input
+            type="text"
+            className="w-36"
+            defaultValue={customer.phone}
+            onChange={(e) => setEditableP(e.target.value)}
+          />
+        ) : (
+          <span>{customer.phone}</span>
+        )}
+
+        {editableP === customer.phone ? (
+          <CheckIcon
+            className="text-green-600 w-6 h-6 cursor-pointer"
+            onClick={async () => {
+              setEditableP("");
+              editCustomer(customer._id, { phone: editingPhone });
+              setEditingPhone("");
+            }}
+          />
+        ) : (
+          <PencilIcon
+            className="text-gray-400 w-6 h-6 cursor-pointer"
+            onClick={async () => {
+              setEditableP(customer.phone);
+            }}
+          />
+        )}
+      </td>
+      <td className="border border-gray-500">
+        {new Date(customer.date!).toLocaleDateString()}
+      </td>
+      <td className="border border-gray-500">
+        {customer.packageNames?.map((p) => p)}
+      </td>
+      <td className="border border-gray-500">{customer.amountPaid}</td>
+      <td className="border border-gray-500">
+        {customer.totalPrice - customer.amountPaid}
+      </td>
+    </tr>
   );
 }
 

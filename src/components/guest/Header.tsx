@@ -18,7 +18,7 @@ export const getHeaderLinks = ({ isAuthenticated, dashboard }: Props) => {
     { text: "HOME", link: "/home" },
     { text: "ABOUT US", link: "/home#about", isA: true },
     { text: "DONATE A FOOD BASKET", link: "/home#donate", isA: true },
-    { text: "SUBSCRIPTION PLAN", link: "/home#products", isA: true },
+    { text: "SUBSCRIPTION PLAN", link: "/home#baskets", isA: true },
     { text: "GIFT A BASKET", link: "/home#gift", isA: true },
     { text: "CONTACT", link: "/home#contact", isA: true },
   ];
@@ -30,16 +30,6 @@ export const getHeaderLinks = ({ isAuthenticated, dashboard }: Props) => {
 function Header({ isAuthenticated, dashboard }: Props) {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  // const links = [
-  //   { text: "HOME", link: "/home" },
-  //   { text: "ABOUT US", link: "/about" },
-  //   { text: "DONATE A FOOD BASKET", link: "/donate" },
-  //   { text: "PRODUCTS", link: "/products" },
-  //   { text: "GIFT A BASKET", link: "/gift" },
-  //   { text: "CONTACT", link: "/contact" },
-  // ];
-
-  // if (!isAuthenticated()) links.push({ text: "LOGIN", link: "/login" });
   const links = getHeaderLinks({ isAuthenticated, dashboard });
 
   const dispatch = useAppDispatch();
@@ -52,8 +42,6 @@ function Header({ isAuthenticated, dashboard }: Props) {
   };
 
   return (
-    // flex bg-white px-4 py-2 shadow-sm sticky top-0 z-50 items-center
-    // sticky w-full top-0 flex bg-white max-w-6xl mx-auto justify-between items-center px-2 shadow-sm z-50
     <div className="sticky w-full top-0 flex bg-white mx-auto justify-between items-center px-2 shadow-sm z-50">
       <Link to="/home">
         <img

@@ -2,9 +2,10 @@ import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import { getPayments } from "../../services";
 import { useAppSelector } from "../../store/hooks";
-import { get, Payment } from "../../utils";
+import { get, LinkRoutes, Payment } from "../../utils";
 
 function Dashboard() {
   const ringRef = useRef<SVGCircleElement>(null!);
@@ -12,10 +13,10 @@ function Dashboard() {
   const textRef = useRef<HTMLSpanElement>(null!);
   const user = useAppSelector((state) => state.users.user);
   const [payments, setPayments] = useState<Payment[]>(null!);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (ringRef && textRef && grayRef) {
-      console.log("Hello");
       const circle = ringRef.current;
       const radius = circle.r.baseVal.value;
       const circumference = radius * 2 * Math.PI;
@@ -35,18 +36,18 @@ function Dashboard() {
     (async () => {
       const n = toast.loading("Getting payments");
       try {
-        // const res = await get("users/payments");
         const data = await getPayments();
-        console.log(data);
         setPayments(data.payments);
         toast.success("Got payments!", {
           id: n,
         });
       } catch (err: any) {
         console.log(err);
-        toast.error(`Error: ${err.msg}`, {
-          id: n,
-        });
+        if (err === "Unauthorized") {
+          navigate(LinkRoutes.LOGIN);
+          window.location.reload();
+        }
+        toast.error("An error occurred", { id: n });
       }
     })();
     // eslint-disable-next-line
@@ -99,29 +100,29 @@ function Dashboard() {
               </div>
               <p className="font-semibold">{user?.totalPrice}</p>
             </div>
-            <p className="flex items-center space-x-3">
+            <div className="flex items-center space-x-3">
               <div>
                 <FontAwesomeIcon
                   icon={faCircle}
-                  className="w-4 h-4 mr-2 text-blue-300"
+                  className="w-4 h-4 mr-2 text-blue-700"
                 />
                 <span>Amount paid:</span>
               </div>
               <p className="font-semibold">{user?.amountPaid}</p>
-            </p>
-            <p className="flex items-center space-x-3">
+            </div>
+            <div className="flex items-center space-x-3">
               <div>
                 <FontAwesomeIcon
                   icon={faCircle}
-                  className="w-4 h-4 mr-2 text-red-400"
+                  className="w-4 h-4 mr-2 text-gray-300"
                 />
                 <span>Amount left:</span>
               </div>
               <p className="font-semibold">
                 {user ? user?.totalPrice - user?.amountPaid : 0}
               </p>
-            </p>
-            <p className="flex items-center space-x-3">
+            </div>
+            <div className="flex items-center space-x-3">
               <div>
                 <FontAwesomeIcon
                   icon={faCircle}
@@ -132,8 +133,8 @@ function Dashboard() {
               <p className="font-semibold">
                 {user?.packageNames?.map((p) => p)}
               </p>
-            </p>
-            <p className="flex items-center space-x-3">
+            </div>
+            <div className="flex items-center space-x-3">
               <div>
                 <FontAwesomeIcon
                   icon={faCircle}
@@ -142,31 +143,28 @@ function Dashboard() {
                 <span>Delivered:</span>
               </div>
               <p className="font-semibold">{user?.delivered ? "Yes" : "No"}</p>
-            </p>
+            </div>
           </div>
-          {/* <div className="font-semibold text-lg"> */}
-          {/* <p>{user?.totalPrice}</p> */}
-          {/* <p>{user?.amountPaid}</p>
-            <p>{user ? user?.totalPrice - user?.amountPaid : 0}</p>
-            <p>{user?.packageNames?.map((p) => p)}</p>
-            <p>{user?.delivered ? "Yes" : "No"}</p> */}
-          {/* </div> */}
         </div>
       </div>
       <div className="flex flex-col max-w-5xl mx-auto items-center mt-3 px-2 md:px-0">
         <h1 className="text-2xl">Payment History</h1>
-        <table className="text-center mx-auto mt-5">
+        <table className="text-center mx-auto mt-5 border border-gray-500">
           <thead>
             <tr className="">
-              <th className="bg-green-400 px-2 py-2 sm:px-6">Amount Paid</th>
-              <th className="bg-green-400 px-2 md:px-6">Date</th>
+              <th className="bg-green-400 px-2 py-2 sm:px-6 border border-gray-500">
+                Amount Paid
+              </th>
+              <th className="bg-green-400 px-2 md:px-6 border border-gray-500">
+                Date
+              </th>
             </tr>
           </thead>
           <tbody>
             {payments?.map((payment) => (
-              <tr key={payment._id}>
-                <td>{payment.amount}</td>
-                <td className="py-1">
+              <tr key={payment._id} className="border border-gray-500">
+                <td className="border border-gray-500">{payment.amount}</td>
+                <td className="py-1 border border-gray-500">
                   {new Date(payment.createdAt).toDateString()}{" "}
                   {new Date(payment.createdAt).toLocaleTimeString()}
                 </td>

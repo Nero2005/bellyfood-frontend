@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { postAdmin } from "../../services";
 import { LinkRoutes, post } from "../../utils";
+import { faEyeSlash, faEye } from "@fortawesome/free-regular-svg-icons";
 
 interface FormData {
   phone: string;
@@ -21,6 +24,7 @@ function CreateAdmin() {
     reset,
   } = useForm<FormData>();
   const [errorMessage, setErrorMessage] = useState("");
+  const [icon, setIcon] = useState<IconProp>(faEyeSlash);
 
   const navigate = useNavigate();
 
@@ -28,20 +32,20 @@ function CreateAdmin() {
     const n = toast.loading("Adding admin");
     try {
       console.log(formData);
+      let phone = watch("phone");
+      if (phone.charAt(0) === "0") {
+        phone = phone.slice(1);
+      }
       const data = {
-        phone: watch("phone"),
+        phone: `+234${phone}`,
         password: watch("password"),
         name: watch("name"),
         gender: watch("gender"),
       };
       console.log(data);
 
-      // const res = await post("super/create", data);
       const data2 = await postAdmin(data);
       console.log(data2);
-
-      // navigate(LinkRoutes.DASHBOARD);
-      // window.location.reload();
       toast.success("Admin created successfully!", { id: n });
       setErrorMessage("");
     } catch (err: any) {
@@ -56,7 +60,6 @@ function CreateAdmin() {
 
   return (
     <div className="flex-1 md:mt-1 px-2">
-      {/* <h1 className="text-3xl font-semibold mt-5 text-center">Create Admin</h1> */}
       <h1 className="text-2xl font-semibold text-center mt-2">Create Admin</h1>
 
       <form
@@ -96,13 +99,28 @@ function CreateAdmin() {
           </select>
         </label>
 
-        <label className="p-2">
+        <label className="p-2 relative">
           <span>Password: </span>
           <input
+            id="password"
             {...register("password", { required: true })}
             type="password"
             placeholder="Enter password"
             className="block border rounded form-input shadow ring-green-400 px-4 py-3 w-full mt-1 outline-none focus:ring"
+          />
+          <FontAwesomeIcon
+            onClick={() => {
+              const password = document.getElementById("password");
+              const type =
+                password!.getAttribute("type") === "password"
+                  ? "text"
+                  : "password";
+              password!.setAttribute("type", type);
+              setIcon((prev) => (prev === faEyeSlash ? faEye : faEyeSlash));
+            }}
+            icon={icon}
+            className="w-6 h-6 absolute right-4 top-12 cursor-pointer"
+            id="icon"
           />
         </label>
 
@@ -114,7 +132,7 @@ function CreateAdmin() {
             {errors.password?.type === "required" && (
               <p> - Password is required</p>
             )}
-            {errors.name?.type === "required" && <p> - Phone is required</p>}
+            {errors.name?.type === "required" && <p> - Name is required</p>}
             {errors.gender?.type === "required" && <p> - Gender is required</p>}
             {errorMessage && <p>- {errorMessage}</p>}
           </div>

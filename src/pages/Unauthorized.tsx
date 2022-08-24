@@ -9,25 +9,11 @@ interface Props {
 
 function Unauthorized({ dashboard }: Props) {
   const navigate = useNavigate();
-
-  // const notification = toast.loading(
-  //   "You're not authorized to go to this route"
-  // );
   useEffect(() => {
-    // setTimeout(() => {
-    //   navigate(dashboard());
-    // }, 1000);
-    // toast.success("Success", {
-    //   id: notification,
-    // });
     navigate(dashboard());
   });
 
-  return (
-    <div>
-      {/* <Header isAuthenticated={() => true} dashboard={dashboard} /> */}
-    </div>
-  );
+  return <div>Unauthorized</div>;
 }
 
 export default Unauthorized;

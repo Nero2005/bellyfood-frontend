@@ -1,33 +1,54 @@
 import React, { SetStateAction, useEffect, useState } from "react";
-import {
-  getAdminByCode,
-  getCustomer,
-  getSuperDailyHistory,
-} from "../../services";
-import { HistoryItem, HistoryDetails } from "../../utils";
-import PaymentHistories from "./PaymentHistories";
-import CustomerHistories from "./CustomerHistories";
-import DeliveryHistories from "./DeliveryHistories";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { getAdminDailyHistory } from "../../services";
+import { useAppSelector } from "../../store/hooks";
+import { LinkRoutes } from "../../utils";
+import CustomerHistories from "../super/CustomerHistories";
+import PaymentHistories from "../super/PaymentHistories";
 
-interface Props {
-  day: string;
-  historyDetails: HistoryDetails;
-  bellysaveH: HistoryDetails;
-  setSave: (value: SetStateAction<boolean>) => void;
-}
-
-function DailyHistory({ day, historyDetails, bellysaveH, setSave }: Props) {
+function AdminHistory() {
+  const user = useAppSelector((state) => state.users.user);
   const [openPayments, setOpenPayments] = useState(false);
   const [openCustomers, setOpenCustomers] = useState(false);
-  const [openDeliveries, setOpenDeliveries] = useState(false);
+  const [historyDetails, setHistoryDetails] = useState<any>(null!);
+  const [bellysaveH, setBellysaveH] = useState<any>(null!);
+  const day = new Date().toISOString().split("T")[0];
+  const navigate = useNavigate();
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const n = toast.loading("Getting history");
+    (async () => {
+      try {
+        const h = await getAdminDailyHistory(
+          day,
+          user?.agentCode || 12345,
+          "bellyfood"
+        );
+        const b = await getAdminDailyHistory(
+          day,
+          user?.agentCode || 12345,
+          "bellysave"
+        );
+        setHistoryDetails(h);
+        setBellysaveH(b);
+        toast.success("Got history", { id: n });
+      } catch (err: any) {
+        console.log(err);
+        if (err === "Unauthorized") {
+          navigate(LinkRoutes.LOGIN);
+          window.location.reload();
+        }
+        toast.error("An error occurred", { id: n });
+      }
+    })();
+  }, []);
 
   return (
     <div className="flex flex-col flex-1 items-center space-y-2">
       <h1 className="text-2xl font-bold">Daily History</h1>
       <div
-        className="flex flex-col md:flex-row items-center space-x-6 cursor-pointer text-blue-500"
+        className="text-blue-500 flex flex-col items-center space-y-4 cursor-pointer"
         onClick={() => setOpenPayments((prev) => !prev)}
       >
         <span>
@@ -37,15 +58,14 @@ function DailyHistory({ day, historyDetails, bellysaveH, setSave }: Props) {
       </div>
       {historyDetails?.totalAmount > 0 && (
         <PaymentHistories
-          setSave={setSave}
           openPayments={openPayments}
           histories={historyDetails.histories.filter(
-            (historyItem) => historyItem.type === "payment"
+            (historyItem: any) => historyItem.type === "payment"
           )}
         />
       )}
       <div
-        className="flex flex-col md:flex-row items-center space-x-6 cursor-pointer text-red-500"
+        className="text-red-500 flex flex-col items-center space-y-4 cursor-pointer"
         onClick={() => setOpenPayments((prev) => !prev)}
       >
         <span>
@@ -55,15 +75,14 @@ function DailyHistory({ day, historyDetails, bellysaveH, setSave }: Props) {
       </div>
       {bellysaveH?.totalAmount > 0 && (
         <PaymentHistories
-          setSave={setSave}
           openPayments={openPayments}
           histories={bellysaveH.histories.filter(
-            (historyItem) => historyItem.type === "payment"
+            (historyItem: any) => historyItem.type === "payment"
           )}
         />
       )}
       <div
-        className="flex flex-col md:flex-row space-x-6 items-center cursor-pointer mx-2 text-blue-500"
+        className="text-blue-500 flex flex-col md:flex-row space-x-6 items-center cursor-pointer mx-2"
         onClick={() => setOpenCustomers((prev) => !prev)}
       >
         <span>
@@ -75,12 +94,12 @@ function DailyHistory({ day, historyDetails, bellysaveH, setSave }: Props) {
         <CustomerHistories
           openCustomers={openCustomers}
           histories={historyDetails.histories.filter(
-            (historyItem) => historyItem.type === "creation"
+            (historyItem: any) => historyItem.type === "creation"
           )}
         />
       )}
       <div
-        className="flex flex-col md:flex-row space-x-6 items-center cursor-pointer mx-2 text-red-500"
+        className="text-red-500 flex flex-col md:flex-row space-x-6 items-center cursor-pointer mx-2"
         onClick={() => setOpenCustomers((prev) => !prev)}
       >
         <span>
@@ -92,22 +111,7 @@ function DailyHistory({ day, historyDetails, bellysaveH, setSave }: Props) {
         <CustomerHistories
           openCustomers={openCustomers}
           histories={bellysaveH.histories.filter(
-            (historyItem) => historyItem.type === "creation"
-          )}
-        />
-      )}
-      <div
-        onClick={() => setOpenDeliveries((prev) => !prev)}
-        className="flex flex-col md:flex-row items-center space-x-6 mx-2 cursor-pointer text-blue-500"
-      >
-        <span>Total deliveries made on {new Date(day).toDateString()}</span>
-        <span>{historyDetails?.numNewDelivery || 0}</span>
-      </div>
-      {historyDetails?.numNewDelivery > 0 && (
-        <DeliveryHistories
-          openDeliveries={openDeliveries}
-          histories={historyDetails.histories.filter(
-            (historyItem) => historyItem.type === "delivery"
+            (historyItem: any) => historyItem.type === "creation"
           )}
         />
       )}
@@ -115,4 +119,4 @@ function DailyHistory({ day, historyDetails, bellysaveH, setSave }: Props) {
   );
 }
 
-export default DailyHistory;
+export default AdminHistory;

@@ -1,5 +1,6 @@
 import React, { SetStateAction, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import {
   changePackage,
   deleteCustomerS,
@@ -11,12 +12,12 @@ import {
 } from "../../services";
 import { useAppSelector } from "../../store/hooks";
 import { PackageName, UserState } from "../../store/userReducer";
-import { getWithQuery, post } from "../../utils";
+import { getWithQuery, LinkRoutes, post } from "../../utils";
 
 interface Props {
   customer: UserState;
   setCustomers: (value: SetStateAction<UserState[]>) => void;
-  loadFunc?: () => Promise<void>;
+  loadFunc?: (page?: number) => Promise<void>;
 }
 
 interface CustomerDrop {
@@ -38,6 +39,7 @@ function Customer({ customer, setCustomers, loadFunc }: Props) {
   const [amount, setAmount] = useState<string | number>(0);
   const [packages, setPackages] = useState<any[]>([]);
   const [pkgChange, setPkgChange] = useState("");
+  const navigate = useNavigate();
 
   const addPayment = async () => {
     try {
@@ -46,20 +48,19 @@ function Customer({ customer, setCustomers, loadFunc }: Props) {
         const n = toast.error("Amount required");
         return;
       }
-      // const res = await post("payments/create", {
-      //   phone,
-      //   amount: parseInt(amount as string),
-      // });
       const d = await postPayment({
         phone,
         amount: parseInt(amount as string),
       });
-      console.log(d);
       const n = toast.success(d.msg);
       setAmount(0);
     } catch (err: any) {
       console.log(err);
-      const n = toast.error(`Error: ${err.msg}`);
+      if (err === "Unauthorized") {
+        navigate(LinkRoutes.LOGIN);
+        window.location.reload();
+      }
+      toast.error("An error occurred");
     }
   };
 
@@ -67,7 +68,6 @@ function Customer({ customer, setCustomers, loadFunc }: Props) {
     try {
       // const res = await post(`super/deliver?customerId=${customer._id}`);
       const data = await postDelivery(customer._id);
-      console.log(data);
       const n = toast.success(data.msg);
       if (loadFunc) {
         await loadFunc();
@@ -151,7 +151,7 @@ customer.approved && customer.paid && customer.delivered &&
   return (
     <div className="flex flex-col cursor-pointer w-full">
       <div
-        className="flex flex-col md:flex-row md:space-x-2 space-y-2 lg:space-x-32 justify-center py-2 items-center bg-white"
+        className="text-blue-500 flex flex-col md:flex-row md:space-x-2 space-y-2 lg:space-x-32 justify-center py-2 items-center bg-white"
         onClick={() => setOpen((open) => ({ ...open, [page]: !open[page] }))}
       >
         <h1 className="text-sm lg:text-base">{customer.name}</h1>
@@ -220,6 +220,7 @@ customer.approved && customer.paid && customer.delivered &&
           <span>Amount: </span>
           <input
             value={amount}
+            onClick={() => setAmount("")}
             onChange={(e) => setAmount(e.target.value)}
             type="number"
             required={true}

@@ -14,17 +14,23 @@ function CustomerHistories({ openCustomers, histories }: Props) {
         openCustomers ? "flex" : "hidden"
       } overflow-scroll max-w-sm sm:max-w-2xl scrollbar-hide mx-2 border`}
     >
-      <table className="mx-auto text-center overflow-scroll">
+      <table className="mx-auto text-center overflow-scroll border border-gray-500">
         <thead>
-          <tr>
-            <th>Agent Name</th>
-            <th>Location</th>
-            <th>Customer Name</th>
+          <tr className="border border-gray-500">
+            <th className="border border-gray-500">S/N</th>
+            <th className="border border-gray-500">Admin Name</th>
+            <th className="border border-gray-500">Agent Name</th>
+            <th className="border border-gray-500">Location</th>
+            <th className="border border-gray-500">Customer Name</th>
           </tr>
         </thead>
         <tbody>
           {histories.map((historyItem, index) => (
-            <CustomerHistory historyItem={historyItem} key={index + 1} />
+            <CustomerHistory
+              historyItem={historyItem}
+              key={index + 1}
+              index={index + 1}
+            />
           ))}
         </tbody>
       </table>

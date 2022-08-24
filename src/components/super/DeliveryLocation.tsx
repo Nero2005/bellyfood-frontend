@@ -1,19 +1,34 @@
 import { RefreshIcon } from "@heroicons/react/solid";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import { getCustomers } from "../../services";
 import { UserState } from "../../store/userReducer";
+import { LinkRoutes } from "../../utils";
 import Customer from "../admin/Customer";
 
 function DeliveryLocation({ location }: { location: string }) {
   const [customers, setCustomers] = useState<UserState[]>(null!);
+  const navigate = useNavigate();
   const loadDeliveryLocation = async () => {
-    const data = await getCustomers({
-      approved: true,
-      paid: true,
-      delivered: false,
-      location,
-    });
-    setCustomers(data.users);
+    const n = toast.loading("Loading customers");
+    try {
+      const data = await getCustomers({
+        approved: true,
+        paid: true,
+        delivered: false,
+        location,
+      });
+      setCustomers(data.users);
+      toast.success("Customers loaded", { id: n });
+    } catch (err: any) {
+      console.log(err);
+      if (err === "Unauthorized") {
+        navigate(LinkRoutes.LOGIN);
+        window.location.reload();
+      }
+      toast.error("An error occurred", { id: n });
+    }
   };
 
   useEffect(() => {

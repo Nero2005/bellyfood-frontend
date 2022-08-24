@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
 import { getAdminByCode, getSuperDailyHistory } from "../../services";
 import { Agent, HistoryDetails } from "../../utils";
 import DailyHistory from "./DailyHistory";
 
 function Histories() {
   const [day, setDay] = useState(new Date().toISOString().split("T")[0]);
+  const [save, setSave] = useState(false);
+  const [bellysaveH, setBellysaveH] = useState<any>(null!);
   const [historyDetails, setHistoryDetails] = useState<HistoryDetails>(null!);
 
   useEffect(() => {
-    console.log(day);
     (async () => {
-      const h = await getSuperDailyHistory(day.split("T")[0]);
+      const h = await getSuperDailyHistory(day.split("T")[0], "bellyfood");
+      const b = await getSuperDailyHistory(day.split("T")[0], "bellysave");
       setHistoryDetails(h);
+      setBellysaveH(b);
     })();
-  }, [day]);
+  }, [day, save]);
 
   // const showModal = () => {}
 
@@ -28,7 +31,12 @@ function Histories() {
           onChange={(e) => setDay(e.target.value)}
         />
       </div>
-      <DailyHistory day={day} historyDetails={historyDetails} />
+      <DailyHistory
+        setSave={setSave}
+        day={day}
+        historyDetails={historyDetails}
+        bellysaveH={bellysaveH}
+      />
     </div>
   );
 }

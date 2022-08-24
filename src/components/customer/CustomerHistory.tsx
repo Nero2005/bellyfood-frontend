@@ -1,28 +1,30 @@
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import { getCustomerDeliveryHistory } from "../../services";
-import { get, HistoryItem } from "../../utils";
+import { get, HistoryItem, LinkRoutes } from "../../utils";
 import Delivery from "./Delivery";
 
 function CustomerHistory() {
   const [histories, setHistories] = useState<HistoryItem[]>(null!);
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
       const n = toast.loading("Getting completed deliveries");
       try {
-        // const res = await get("users/delivery/history");
         const data = await getCustomerDeliveryHistory();
-        console.log(data);
         setHistories(data.histories);
         toast.success("Got completed deliveries!", {
           id: n,
         });
       } catch (err: any) {
         console.log(err);
-        toast.error(`Error: ${err.msg}`, {
-          id: n,
-        });
+        if (err === "Unauthorized") {
+          navigate(LinkRoutes.LOGIN);
+          window.location.reload();
+        }
+        toast.error("An error occurred", { id: n });
       }
     })();
   }, []);

@@ -22,8 +22,6 @@ function NotFound() {
       query = query.concat(`${value[0]}=${value[1]} `);
     });
     query = query.trim().split(" ").join("&");
-    console.log(obj);
-    console.log(query);
   });
 
   return (

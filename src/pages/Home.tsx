@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-// import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { UserState } from "../store/userReducer";
 
 import "./Home.css";
-import Header from "../components/guest/Header";
 import Welcome from "../components/guest/Welcome";
 import BasketModal from "../components/guest/BasketModal";
 import Baskets from "../components/guest/Baskets";
@@ -41,11 +39,7 @@ export interface Basket {
   open: boolean;
 }
 function Home({ isAuthenticated, dashboard }: Props) {
-  // const user = useAppSelector((state) => state.users.user);
   const [showModal, setShowModal] = useState<Basket>({ name: "", open: false });
-
-  // const dispatch = useAppDispatch();
-  // We want to help people see, understand and consume health food at 36 state in Nigeria and Africa in a totally new way. To us food isn’t just food. Is to source it locally free from poisonous preservatives for human consumption and wellbeing
   const vision =
     "We want to help people see, understand and consume healthy food in all 36 states of Nigeria and Africa " +
     "in a totally new way. To us food isn’t just food. It’s sourced locally and free " +
@@ -67,11 +61,8 @@ function Home({ isAuthenticated, dashboard }: Props) {
     "food subscription delivery service in Nigeria allows customers to pay for food items " +
     "on a subscription basis.";
 
-  // useEffect(() => {}, []);
-
   return (
     <div className="max-w-7xl mx-auto">
-      {/* <Header isAuthenticated={isAuthenticated} dashboard={dashboard} /> */}
       <Welcome vision={vision} mission={mission} about={about} />
 
       <div className="px-10 py-5 mt-2 bg-white flex lg:flex-row flex-col lg:space-x-5 space-y-5 items-center">

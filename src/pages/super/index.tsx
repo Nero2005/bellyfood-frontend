@@ -2,7 +2,6 @@ import React from "react";
 import CompletedDeliveries from "../../components/admin/CompletedDeliveries";
 import CreateCustomer from "../../components/admin/CreateCustomer";
 import PendingApproval from "../../components/admin/PendingApproval";
-import Header from "../../components/guest/Header";
 import Admins from "../../components/super/Admins";
 import CreateAdmin from "../../components/super/CreateAdmin";
 import Dashboard from "../../components/super/Dashboard";
@@ -12,6 +11,7 @@ import { useAppSelector } from "../../store/hooks";
 import DailyHistory from "../../components/super/DailyHistory";
 import Histories from "../../components/super/Histories";
 import Customers from "../../components/super/Customers";
+import BellysaveCustomers from "../../components/super/bellysave/BellysaveCustomers";
 
 interface Props {
   dashboard: () => string;
@@ -35,18 +35,18 @@ function Super({ dashboard }: Props) {
       case "CREATE_ADMIN":
         return <CreateAdmin />;
       case "CREATE_CUSTOMER":
-        return <CreateCustomer isAdmin />;
+        return <CreateCustomer isAdmin isSuper />;
       case "HISTORY":
         return <Histories />;
       case "CUSTOMERS":
         return <Customers />;
+      case "BELLYSAVE_SUPER":
+        return <BellysaveCustomers />;
     }
   };
 
   return (
     <div>
-      {/* <Header isAuthenticated={() => true} dashboard={dashboard} /> */}
-
       <div className="flex flex-col space-y-7 max-w-5xl mx-auto">
         <SuperMenu />
 
