@@ -98,7 +98,10 @@ function Dashboard() {
                 />
                 <span>Total Price:</span>
               </div>
-              <p className="font-semibold">{user?.totalPrice}</p>
+              <p className="font-semibold">
+                {user?.totalPrice}
+                {user?.late ? ", Payment late so price increased by 10%" : ""}
+              </p>
             </div>
             <div className="flex items-center space-x-3">
               <div>

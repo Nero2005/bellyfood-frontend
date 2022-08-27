@@ -11,25 +11,6 @@ import AboutImg from "../assets/images/aboutus.jpeg";
 import Donate from "../components/guest/Donate";
 import CreateCustomer from "../components/admin/CreateCustomer";
 
-export const newUser: UserState = {
-  _id: "1",
-  name: "Nero",
-  gender: "M",
-  phone: "2",
-  roles: ["SUPERADMIN", "ADMIN"],
-  agentCode: "1234",
-  location: "Ikorodu",
-  approved: true,
-  packageNames: ["NANO"],
-  totalPrice: 0,
-  amountPaid: 0,
-  paid: false,
-  delivered: false,
-  date: new Date().toISOString(),
-  lastLogin: new Date().toISOString(),
-  lastPayment: new Date().toISOString(),
-};
-
 interface Props {
   isAuthenticated: () => boolean;
   dashboard: () => string;

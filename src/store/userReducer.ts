@@ -25,6 +25,7 @@ export interface UserState {
   date?: string;
   lastLogin?: string;
   lastPayment?: string;
+  late: boolean;
 }
 
 interface State {
