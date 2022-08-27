@@ -151,7 +151,7 @@ customer.approved && customer.paid && customer.delivered &&
   return (
     <div className="flex flex-col cursor-pointer w-full">
       <div
-        className="text-blue-500 flex flex-col md:flex-row md:space-x-2 space-y-2 lg:space-x-32 justify-center py-2 items-center bg-white"
+        className="text-blue-500 flex flex-col md:flex-row md:space-x-2 space-y-2 md:space-y-0 lg:space-x-10 justify-center py-2 items-center bg-white"
         onClick={() => setOpen((open) => ({ ...open, [page]: !open[page] }))}
       >
         <h1 className="text-sm lg:text-base">{customer.name}</h1>
@@ -168,6 +168,9 @@ customer.approved && customer.paid && customer.delivered &&
           >
             Approve
           </button>
+        )}
+        {!customer.approved && (
+          <span className="text-sm lg:text-base">{customer.agentName}</span>
         )}
         {customer.approved && customer.paid && !customer.delivered && (
           <button

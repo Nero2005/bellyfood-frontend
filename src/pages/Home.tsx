@@ -9,6 +9,7 @@ import CompareBaskets from "../components/guest/CompareBaskets";
 import Footer from "../components/guest/Footer";
 import AboutImg from "../assets/images/aboutus.jpeg";
 import Donate from "../components/guest/Donate";
+import CreateCustomer from "../components/admin/CreateCustomer";
 
 export const newUser: UserState = {
   _id: "1",
@@ -83,6 +84,8 @@ function Home({ isAuthenticated, dashboard }: Props) {
       <Baskets setShowModal={setShowModal} />
 
       <CompareBaskets />
+
+      <CreateCustomer />
 
       <Footer />
     </div>
