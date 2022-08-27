@@ -21,9 +21,14 @@ function Baskets({ setShowModal }: Props) {
           >
             View Basket Contents
           </button>
-          <button className="bg-gray-50 text-green-400 rounded-xl py-1 px-8 mb-4">
-            Buy
-          </button>
+          <a
+            href="https://wa.me/2347030491986?text=I'm%20interested%20in%20the%20NANO%20package%20for%20sale"
+            target="_blank"
+          >
+            <button className="bg-gray-50 text-green-400 rounded-xl py-1 px-8 mb-4">
+              Buy
+            </button>
+          </a>
         </div>
         <div className="flex flex-col items-center bg-white rounded-sm shadow-md shadow-gray-500 px-7 py-2">
           <h2 className="text-2xl font-bold mb-8">MICRO</h2>
@@ -34,9 +39,14 @@ function Baskets({ setShowModal }: Props) {
           >
             View Basket Contents
           </button>
-          <button className="bg-gray-50 text-green-400 rounded-xl py-1 px-8 mb-4">
-            Buy
-          </button>
+          <a
+            href="https://wa.me/2347030491986?text=I'm%20interested%20in%20the%20MICRO%20package%20for%20sale"
+            target="_blank"
+          >
+            <button className="bg-gray-50 text-green-400 rounded-xl py-1 px-8 mb-4">
+              Buy
+            </button>
+          </a>
         </div>
         <div className="flex flex-col items-center bg-white rounded-sm shadow-md shadow-gray-500 px-7 py-2">
           <h2 className="text-2xl font-bold mb-8">MEGA</h2>
@@ -47,9 +57,14 @@ function Baskets({ setShowModal }: Props) {
           >
             View Basket Contents
           </button>
-          <button className="bg-gray-50 text-green-400 rounded-xl py-1 px-8 mb-4">
-            Buy
-          </button>
+          <a
+            href="https://wa.me/2347030491986?text=I'm%20interested%20in%20the%20MEGA%20package%20for%20sale"
+            target="_blank"
+          >
+            <button className="bg-gray-50 text-green-400 rounded-xl py-1 px-8 mb-4">
+              Buy
+            </button>
+          </a>
         </div>
         <div className="flex flex-col items-center bg-white rounded-sm shadow-md shadow-gray-500 px-7 py-2">
           <h2 className="text-2xl font-bold mb-8">GIGA</h2>
@@ -60,9 +75,14 @@ function Baskets({ setShowModal }: Props) {
           >
             View Basket Contents
           </button>
-          <button className="bg-gray-50 text-green-400 rounded-xl py-1 px-8 mb-4">
-            Buy
-          </button>
+          <a
+            href="https://wa.me/2347030491986?text=I'm%20interested%20in%20the%20GIGA%20package%20for%20sale"
+            target="_blank"
+          >
+            <button className="bg-gray-50 text-green-400 rounded-xl py-1 px-8 mb-4">
+              Buy
+            </button>
+          </a>
         </div>
         <div className="flex flex-col items-center bg-white rounded-sm shadow-md shadow-gray-500 px-7 py-2">
           <h2 className="text-2xl font-bold mb-8">OGA NA BOSS</h2>
@@ -73,9 +93,14 @@ function Baskets({ setShowModal }: Props) {
           >
             View Basket Contents
           </button>
-          <button className="bg-gray-50 text-green-400 rounded-xl py-1 px-8 mb-4">
-            Buy
-          </button>
+          <a
+            href="https://wa.me/2347030491986?text=I'm%20interested%20in%20the%20OGA%20NA%BOSS%20package%20for%20sale"
+            target="_blank"
+          >
+            <button className="bg-gray-50 text-green-400 rounded-xl py-1 px-8 mb-4">
+              Buy
+            </button>
+          </a>
         </div>
       </div>
     </div>
