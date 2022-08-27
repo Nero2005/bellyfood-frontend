@@ -22,7 +22,7 @@ function Baskets({ setShowModal }: Props) {
             View Basket Contents
           </button>
           <a
-            href="https://wa.me/2347030491986?text=I'm%20interested%20in%20the%20NANO%20package%20for%20sale"
+            href="https://wa.me/2348053634000?text=I'm%20interested%20in%20the%20NANO%20package%20for%20sale"
             target="_blank"
           >
             <button className="bg-gray-50 text-green-400 rounded-xl py-1 px-8 mb-4">
@@ -40,7 +40,7 @@ function Baskets({ setShowModal }: Props) {
             View Basket Contents
           </button>
           <a
-            href="https://wa.me/2347030491986?text=I'm%20interested%20in%20the%20MICRO%20package%20for%20sale"
+            href="https://wa.me/2348053634000?text=I'm%20interested%20in%20the%20MICRO%20package%20for%20sale"
             target="_blank"
           >
             <button className="bg-gray-50 text-green-400 rounded-xl py-1 px-8 mb-4">
@@ -58,7 +58,7 @@ function Baskets({ setShowModal }: Props) {
             View Basket Contents
           </button>
           <a
-            href="https://wa.me/2347030491986?text=I'm%20interested%20in%20the%20MEGA%20package%20for%20sale"
+            href="https://wa.me/2348053634000?text=I'm%20interested%20in%20the%20MEGA%20package%20for%20sale"
             target="_blank"
           >
             <button className="bg-gray-50 text-green-400 rounded-xl py-1 px-8 mb-4">
@@ -76,7 +76,7 @@ function Baskets({ setShowModal }: Props) {
             View Basket Contents
           </button>
           <a
-            href="https://wa.me/2347030491986?text=I'm%20interested%20in%20the%20GIGA%20package%20for%20sale"
+            href="https://wa.me/2348053634000?text=I'm%20interested%20in%20the%20GIGA%20package%20for%20sale"
             target="_blank"
           >
             <button className="bg-gray-50 text-green-400 rounded-xl py-1 px-8 mb-4">
@@ -94,7 +94,7 @@ function Baskets({ setShowModal }: Props) {
             View Basket Contents
           </button>
           <a
-            href="https://wa.me/2347030491986?text=I'm%20interested%20in%20the%20OGA%20NA%BOSS%20package%20for%20sale"
+            href="https://wa.me/2348053634000?text=I'm%20interested%20in%20the%20OGA%20NA%BOSS%20package%20for%20sale"
             target="_blank"
           >
             <button className="bg-gray-50 text-green-400 rounded-xl py-1 px-8 mb-4">
