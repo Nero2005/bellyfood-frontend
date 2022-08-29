@@ -19,7 +19,7 @@ export const getHeaderLinks = ({ isAuthenticated, dashboard }: Props) => {
     { text: "ABOUT US", link: "/home#about", isA: true },
     { text: "DONATE A FOOD BASKET", link: "/home#donate", isA: true },
     { text: "SUBSCRIPTION PLAN", link: "/home#baskets", isA: true },
-    { text: "GIFT A BASKET", link: "/home#gift", isA: true },
+    { text: "GIFT A BASKET", link: "/home#donate", isA: true },
     { text: "CONTACT", link: "/home#contact", isA: true },
   ];
   if (isAuthenticated()) links.push({ text: "DASHBOARD", link: dashboard() });

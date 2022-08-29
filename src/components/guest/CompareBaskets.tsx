@@ -239,7 +239,7 @@ function CompareBaskets() {
             <tr className="">
               <td className="py-2">Maggi</td>
               <td className="">
-                <CheckIcon className="w-6 h-6 text-green-500" />
+                {/* <CheckIcon className="w-6 h-6 text-green-500" /> */}
               </td>
               <td className="">
                 <CheckIcon className="w-6 h-6 text-green-500" />
@@ -293,13 +293,13 @@ function CompareBaskets() {
             <tr className="">
               <td className="py-2">Sugar</td>
               <td className="">
+                {/* <CheckIcon className="w-6 h-6 text-green-500" /> */}
+              </td>
+              <td className="">
+                {/* <CheckIcon className="w-6 h-6 text-green-500" /> */}
+              </td>
+              <td className="">
                 <CheckIcon className="w-6 h-6 text-green-500" />
-              </td>
-              <td className="">
-                {/* <CheckIcon className="w-6 h-6 text-green-500" /> */}
-              </td>
-              <td className="">
-                {/* <CheckIcon className="w-6 h-6 text-green-500" /> */}
               </td>
               <td className="">
                 <CheckIcon className="w-6 h-6 text-green-500" />

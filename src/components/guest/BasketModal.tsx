@@ -6,7 +6,7 @@ interface Props {
   name: string;
 }
 function BasketModal({ setShowModal, name }: Props) {
-  const bronzeContent = [
+  const nano = [
     "1 BUCKET OF RICE",
     "1 BUCKET OF BEANS",
     "1 BUCKET OF GARRI",
@@ -15,11 +15,9 @@ function BasketModal({ setShowModal, name }: Props) {
     "2 SACHETS OF VEGETABLE OIL",
     "1 ROLL OF MILO",
     "1 ROLL OF MILK",
-    "1 PACK OF MAGGI CHICKEN CUBES",
-    "1 SACHET OF SUGAR",
     "1 SACHET OF TOMATO PASTE",
   ];
-  const silverContent = [
+  const micro = [
     "2 BUCKETS OF RICE",
     "1 BUCKET OF BEANS",
     "2 BUCKETS OF GARRI",
@@ -30,10 +28,9 @@ function BasketModal({ setShowModal, name }: Props) {
     "1 REFILL SACHET OF MILO",
     "1 REFILL SACHET OF MILK",
     "1 PACK OF MAGGI CHICKEN CUBES",
-    "1 SACHET OF SUGAR",
     "2 SACHETS OF TOMATO PASTE",
   ];
-  const goldContent = [
+  const mega = [
     "3 BUCKETS OF RICE",
     "2 BUCKETS OF BEANS",
     "2 BUCKETS OF GARRI",
@@ -48,9 +45,9 @@ function BasketModal({ setShowModal, name }: Props) {
     "2 SACHETS OF SUGAR",
     "3 SACHETS OF TOMATO PASTE",
   ];
-  const diamondContent = [
+  const giga = [
     "1 BAG OF RICE",
-    "3 BUCKETS OF BEANS",
+    "2 BUCKETS OF BEANS",
     "3 BUCKETS OF GARRI",
     "1KG OF POUNDED YAM",
     "5 PACKS OF SPAGHETTI",
@@ -67,9 +64,9 @@ function BasketModal({ setShowModal, name }: Props) {
     "3 SACHETS OF SUGAR",
     "3 SACHETS OF TOMATO PASTE",
   ];
-  const platinumContent = [
+  const oga = [
     "1 BAG OF RICE",
-    "4 BUCKETS OF BEANS",
+    "3 BUCKETS OF BEANS",
     "4 BUCKETS OF GARRI",
     "1KG OF POUNDED YAM",
     "1 CARTON OF SPAGHETTI",
@@ -90,23 +87,23 @@ function BasketModal({ setShowModal, name }: Props) {
   const baskets = [
     {
       name: "NANO",
-      content: bronzeContent,
+      content: nano,
     },
     {
       name: "MICRO",
-      content: silverContent,
+      content: micro,
     },
     {
       name: "MEGA",
-      content: goldContent,
+      content: mega,
     },
     {
       name: "GIGA",
-      content: diamondContent,
+      content: giga,
     },
     {
       name: "OGA NA BOSS",
-      content: platinumContent,
+      content: oga,
     },
   ];
   return (

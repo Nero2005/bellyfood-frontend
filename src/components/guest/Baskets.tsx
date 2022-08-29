@@ -1,5 +1,6 @@
 import React, { SetStateAction } from "react";
 import { Basket } from "../../pages/Home";
+import BellyfoodBaskets from "../../assets/images/bellyfood-baskets.jpeg";
 
 interface Props {
   setShowModal: (value: SetStateAction<Basket>) => void;
@@ -10,7 +11,14 @@ function Baskets({ setShowModal }: Props) {
       id="baskets"
       className="bg-white rounded-md py-8 flex flex-col items-center my-20"
     >
-      <h1 className="text-5xl text-purple-600 font-thin mb-5">BASKETS</h1>
+      <div className="flex flex-col md:flex-row w-full justify-evenly items-center px-3 mb-5">
+        <h1 className="text-5xl text-purple-600 font-bold mb-5">BASKETS</h1>
+        <img
+          src={BellyfoodBaskets}
+          className="w-full md:max-w-xl border"
+          alt=""
+        />
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4 place-items-center">
         <div className="flex flex-col items-center bg-white rounded-sm shadow-md shadow-gray-500 px-7 py-2">
           <h2 className="text-2xl font-bold mb-8">NANO</h2>
@@ -22,7 +30,7 @@ function Baskets({ setShowModal }: Props) {
             View Basket Contents
           </button>
           <a
-            href="https://wa.me/2348053634000?text=I'm%20interested%20in%20the%20NANO%20package%20for%20sale"
+            href="https://wa.me/2347082223332?text=I'm%20interested%20in%20the%20NANO%20package%20for%20sale"
             target="_blank"
           >
             <button className="bg-gray-50 text-green-400 rounded-xl py-1 px-8 mb-4">
@@ -40,7 +48,7 @@ function Baskets({ setShowModal }: Props) {
             View Basket Contents
           </button>
           <a
-            href="https://wa.me/2348053634000?text=I'm%20interested%20in%20the%20MICRO%20package%20for%20sale"
+            href="https://wa.me/2347082223332?text=I'm%20interested%20in%20the%20MICRO%20package%20for%20sale"
             target="_blank"
           >
             <button className="bg-gray-50 text-green-400 rounded-xl py-1 px-8 mb-4">
@@ -58,7 +66,7 @@ function Baskets({ setShowModal }: Props) {
             View Basket Contents
           </button>
           <a
-            href="https://wa.me/2348053634000?text=I'm%20interested%20in%20the%20MEGA%20package%20for%20sale"
+            href="https://wa.me/2347082223332?text=I'm%20interested%20in%20the%20MEGA%20package%20for%20sale"
             target="_blank"
           >
             <button className="bg-gray-50 text-green-400 rounded-xl py-1 px-8 mb-4">
@@ -76,7 +84,7 @@ function Baskets({ setShowModal }: Props) {
             View Basket Contents
           </button>
           <a
-            href="https://wa.me/2348053634000?text=I'm%20interested%20in%20the%20GIGA%20package%20for%20sale"
+            href="https://wa.me/2347082223332?text=I'm%20interested%20in%20the%20GIGA%20package%20for%20sale"
             target="_blank"
           >
             <button className="bg-gray-50 text-green-400 rounded-xl py-1 px-8 mb-4">
@@ -94,7 +102,7 @@ function Baskets({ setShowModal }: Props) {
             View Basket Contents
           </button>
           <a
-            href="https://wa.me/2348053634000?text=I'm%20interested%20in%20the%20OGA%20NA%BOSS%20package%20for%20sale"
+            href="https://wa.me/2347082223332?text=I'm%20interested%20in%20the%20OGA%20NA%BOSS%20package%20for%20sale"
             target="_blank"
           >
             <button className="bg-gray-50 text-green-400 rounded-xl py-1 px-8 mb-4">

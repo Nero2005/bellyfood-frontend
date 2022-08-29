@@ -27,14 +27,6 @@ function Welcome({ vision, mission, about }: Props) {
           <p className="leading-6 w-80 md:w-full">{mission}</p>
         </div>
       </div>
-      <div className="lg:flex-row lg:space-x-4 flex flex-col space-y-3">
-        <a href="/home#donate">
-          <FontAwesomeIcon
-            icon={faHandHoldingDollar}
-            className="w-10 h-10 cursor-pointer rounded-2xl bg-green-500 py-2 px-4 text-white"
-          />
-        </a>
-      </div>
     </div>
   );
 }

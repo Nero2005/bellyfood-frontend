@@ -17,7 +17,7 @@ function Donate() {
     "families can help them eventually leave behind hunger, fear, and isolation.  The longterm goal is " +
     "for them to put food on the table, pay their bills and follow a path out of a generational cycle of poverty.";
   const p2 =
-    "A plethora of options exist today for ordinary people with a little bit of extra means to help the poor:" +
+    "A plethora of options exist today for ordinary people with a little bit of extra means to help the poor: " +
     "Donating our old clothes,giving alms,sharing our foodstuff with the less privileges or starting up a " +
     "low scale business for them as a means of survival.";
   const p3 =
@@ -38,10 +38,15 @@ function Donate() {
       </div>
       <div className="flex flex-col items-center space-y-3">
         <p className="text-lg">Donate</p>
-        <FontAwesomeIcon
-          icon={faHandHoldingDollar}
-          className="w-10 h-10 text-green-500 cursor-pointer"
-        />
+        <a
+          href="https://wa.me/2347082223332?text=I'm%20interested%20in%20donating%20a%20package"
+          target="_blank"
+        >
+          <FontAwesomeIcon
+            icon={faHandHoldingDollar}
+            className="w-10 h-10 text-green-500 cursor-pointer"
+          />
+        </a>
       </div>
     </div>
   );
