@@ -6,7 +6,7 @@ import {
 } from "@heroicons/react/solid";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { getCustomers, getLocations } from "../../services";
+import { getAgents, getCustomers, getLocations } from "../../services";
 import { UserState } from "../../store/userReducer";
 import SuperCustomer from "./SuperCustomer";
 import TimeAgo from "javascript-time-ago";
@@ -23,12 +23,14 @@ function Customers() {
   const [count, setCount] = useState(0);
   const [pageNumber, setPageNumber] = useState(0);
   const [filter, setFilter] = useState<any>({});
+  const [agents, setAgents] = useState<any[]>([]);
   const navigate = useNavigate();
 
   const loadCustomers = async (page: number) => {
     const n = toast.loading("Getting customers");
     try {
       // const res = await get("super/admins");
+      console.log(filter);
       const data = await getCustomers({ page, ...filter });
       setCustomers(data.users);
       setCount(data.count);
@@ -61,6 +63,8 @@ function Customers() {
   useEffect(() => {
     (async () => {
       await loadCustomers(pageNumber);
+      const agents = await getAgents();
+      setAgents(agents);
     })();
   }, [filter]);
 
@@ -124,6 +128,7 @@ function Customers() {
                 ...prev,
                 paid: undefined,
                 approved: undefined,
+                inactive: undefined,
               }));
               return;
             }
@@ -149,6 +154,25 @@ function Customers() {
           </option>
           <option value={"Active"}>Active</option>
           <option value={"Inactive"}>Inactive</option>
+        </select>
+      </div>
+      <div className="flex space-x-3 items-center sticky mb-3">
+        <select
+          className="flex-1 py-2 px-2 rounded-md"
+          onChange={async (e) => {
+            if (e.target.value === "Select Agent") {
+              setFilter((prev: any) => ({ ...prev, agentName: "" }));
+              return;
+            }
+            setFilter((prev: any) => ({ ...prev, agentName: e.target.value }));
+          }}
+        >
+          <option value={"Select Agent"}>Select Agent</option>
+          {agents?.map((agent, index) => (
+            <option key={index + 1} value={agent.name}>
+              {agent.name}
+            </option>
+          ))}
         </select>
       </div>
       <div className="flex items-center bg-white sticky top-32 px-3">

@@ -54,9 +54,12 @@ export const getWithQuery = (
   let query = "";
   Object.entries(obj).forEach((value: any) => {
     if (!value[1] && value[1] !== false && value[1] !== 0) return;
-    query = query.concat(`${value[0]}=${value[1]} `);
+    query = query.concat(`${value[0]}=${value[1]};`);
   });
-  query = query.trim().split(" ").join("&");
+  query = query
+    .slice(0, query.length - 1)
+    .split(";")
+    .join("&");
   console.log(query);
   return new Promise((resolve, reject) =>
     http
