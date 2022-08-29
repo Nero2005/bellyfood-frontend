@@ -10,6 +10,7 @@ import Footer from "../components/guest/Footer";
 import AboutImg from "../assets/images/aboutus.jpeg";
 import Donate from "../components/guest/Donate";
 import CreateCustomer from "../components/admin/CreateCustomer";
+import Contact from "../components/guest/Contact";
 
 interface Props {
   isAuthenticated: () => boolean;
@@ -67,6 +68,8 @@ function Home({ isAuthenticated, dashboard }: Props) {
       <CompareBaskets />
 
       <CreateCustomer />
+
+      <Contact />
 
       <Footer />
     </div>
