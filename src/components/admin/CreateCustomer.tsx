@@ -244,7 +244,7 @@ function CreateCustomer({ isAdmin, isSuper }: Props) {
           <select
             className="block border rounded shadow ring-green-400 px-4 py-3 w-full mt-1 outline-none focus:ring"
             {...register("location")}
-            defaultValue={`${locations?.slice(0, 1)[0]}`}
+            defaultValue={`${locations ? locations[0] : ""}`}
           >
             {locations?.map((location) => (
               <option value={`${location}`} key={location}>
@@ -258,7 +258,7 @@ function CreateCustomer({ isAdmin, isSuper }: Props) {
           <select
             className="block border rounded shadow ring-green-400 px-4 py-3 w-full mt-1 outline-none focus:ring"
             {...register("password")}
-            defaultValue={`${agents?.slice(0, 1)[0].name}`}
+            defaultValue={`${agents ? agents[0].name : ""}`}
           >
             {agents?.map((agent: any) => (
               <option value={`${agent.name}`} key={agent._id}>
@@ -273,7 +273,7 @@ function CreateCustomer({ isAdmin, isSuper }: Props) {
             <select
               className="block border rounded shadow ring-green-400 px-4 py-3 w-full mt-1 outline-none focus:ring"
               {...register("packageNames")}
-              defaultValue={`${packages?.slice(0, 1)[0]}`}
+              defaultValue={`${packages ? packages[0] : ""}`}
             >
               {packages?.map((pkg) => (
                 <option value={`${pkg.name}`} key={pkg.name}>
