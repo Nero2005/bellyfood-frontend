@@ -50,7 +50,7 @@ function CreateCustomer({ isAdmin, isSuper }: Props) {
   const [test, setTTest] = useState<any[]>([]);
   const [icon, setIcon] = useState<IconProp>(faEyeSlash);
   const [admins, setAdmins] = useState<UserState[]>(null!);
-  const [agents, setAgents] = useState<any>();
+  const [agents, setAgents] = useState<any[]>();
   const [service, setService] = useState<string>("bellyfood");
 
   const navigate = useNavigate();
@@ -239,34 +239,38 @@ function CreateCustomer({ isAdmin, isSuper }: Props) {
             </option>
           </select>
         </label>
-        <label className="p-2">
-          <span>Location: </span>
-          <select
-            className="block border rounded shadow ring-green-400 px-4 py-3 w-full mt-1 outline-none focus:ring"
-            {...register("location")}
-            defaultValue={`${locations ? locations[0] : ""}`}
-          >
-            {locations?.map((location) => (
-              <option value={`${location}`} key={location}>
-                {location}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label className="p-2">
-          <span>Agent: </span>
-          <select
-            className="block border rounded shadow ring-green-400 px-4 py-3 w-full mt-1 outline-none focus:ring"
-            {...register("password")}
-            defaultValue={`${agents ? agents[0].name : ""}`}
-          >
-            {agents?.map((agent: any) => (
-              <option value={`${agent.name}`} key={agent._id}>
-                {agent.name}
-              </option>
-            ))}
-          </select>
-        </label>
+        {locations && locations.length > 0 && (
+          <label className="p-2">
+            <span>Location: </span>
+            <select
+              className="block border rounded shadow ring-green-400 px-4 py-3 w-full mt-1 outline-none focus:ring"
+              {...register("location")}
+              defaultValue={`${locations ? locations[0] : ""}`}
+            >
+              {locations?.map((location) => (
+                <option value={`${location}`} key={location}>
+                  {location}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
+        {agents && agents.length > 0 && (
+          <label className="p-2">
+            <span>Agent: </span>
+            <select
+              className="block border rounded shadow ring-green-400 px-4 py-3 w-full mt-1 outline-none focus:ring"
+              {...register("password")}
+              defaultValue={`${agents ? agents[0].name : ""}`}
+            >
+              {agents?.map((agent: any) => (
+                <option value={`${agent.name}`} key={agent._id}>
+                  {agent.name}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
         {service === "bellyfood" && (
           <label className="p-2">
             <span>Package: </span>
