@@ -80,19 +80,6 @@ function Customers() {
     }
   };
 
-  const getActiveCustomers = () => {
-    try {
-      setCustomers(
-        customers.filter(
-          (customer) => customer.paid === false && customer.approved === true
-        )
-      );
-    } catch (err: any) {
-      console.log(err);
-      toast.error(`Error: ${err.msg}`);
-    }
-  };
-
   return (
     <div className="flex-1 md:mt-1 px-2">
       <h1 className="text-2xl font-semibold text-center my-2">

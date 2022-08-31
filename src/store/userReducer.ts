@@ -12,7 +12,7 @@ export interface UserState {
   phone: string;
   roles: string[];
   agentCode: string;
-  agentName?: string[];
+  agentName?: string;
   bankName?: string;
   accountNumber?: string;
   location?: string;

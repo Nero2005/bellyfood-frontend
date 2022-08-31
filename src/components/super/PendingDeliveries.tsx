@@ -20,7 +20,7 @@ function PendingDeliveries() {
   const navigate = useNavigate();
 
   const loadPendingDeliveries = async () => {
-    const n = toast.loading("Getting customers");
+    // const n = toast.loading("Getting customers");
     try {
       setLocations(await getLocations());
       const data = await getCustomers({
@@ -29,16 +29,16 @@ function PendingDeliveries() {
         delivered: false,
       });
       setCustomers(data.users);
-      toast.success("Got customers!", {
-        id: n,
-      });
+      // toast.success("Got customers!", {
+      //   id: n,
+      // });
     } catch (err: any) {
       console.log(err);
       if (err === "Unauthorized") {
         navigate(LinkRoutes.LOGIN);
         window.location.reload();
       }
-      toast.error("An error occurred", { id: n });
+      // toast.error("An error occurred", { id: n });
     }
   };
 

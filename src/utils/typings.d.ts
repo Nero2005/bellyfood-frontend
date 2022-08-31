@@ -70,6 +70,16 @@ export interface UserFilter {
   location?: string;
 }
 
+export interface AddReport {
+  customerId: any;
+  agentName: string;
+  details: string;
+}
+
+export interface Report extends AddReport {
+  _id: string;
+}
+
 export type Page =
   | "PENDING_PAYMENTS"
   | "PENDING_APPROVAL"
@@ -85,4 +95,5 @@ export type Page =
   | "CUSTOMERS"
   | "ADMIN_HISTORY"
   | "BELLYSAVE_ADMIN"
-  | "BELLYSAVE_SUPER";
+  | "BELLYSAVE_SUPER"
+  | "REPORTS";

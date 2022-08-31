@@ -1,11 +1,16 @@
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { getPayments } from "../../services";
+import { getPayments, postReport } from "../../services";
 import { useAppSelector } from "../../store/hooks";
 import { get, LinkRoutes, Payment } from "../../utils";
+
+interface FormData {
+  report: string;
+}
 
 function Dashboard() {
   const ringRef = useRef<SVGCircleElement>(null!);
@@ -13,7 +18,37 @@ function Dashboard() {
   const textRef = useRef<HTMLSpanElement>(null!);
   const user = useAppSelector((state) => state.users.user);
   const [payments, setPayments] = useState<Payment[]>(null!);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+    reset,
+  } = useForm<FormData>();
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+
+  const onSubmit = handleSubmit(async (formData) => {
+    const n = toast.loading("Adding Report");
+    try {
+      console.log(watch("report"));
+      console.log(formData);
+      const data = {
+        details: formData.report,
+        customerId: user?._id || "1",
+        agentName: user?.agentName || "1",
+      };
+      const data2 = await postReport(data);
+      toast.success("Report added", { id: n });
+    } catch (err: any) {
+      const { status, msg } = err;
+      setErrorMessage(msg);
+      toast.error("An error occurred: " + msg, { id: n });
+      console.log(err);
+    } finally {
+      reset();
+    }
+  });
 
   useEffect(() => {
     if (ringRef && textRef && grayRef) {
@@ -149,6 +184,34 @@ function Dashboard() {
             </div>
           </div>
         </div>
+      </div>
+      <div className="flex flex-col max-w-5xl mx-auto items-center my-3 space-y-4">
+        <h1 className="text-2xl">Report Agent</h1>
+        <form onSubmit={onSubmit} className="flex flex-col space-y-2">
+          <textarea
+            {...register("report", { required: true })}
+            placeholder="Enter report"
+            cols={30}
+            rows={10}
+            className="h-24 rounded-md border border-gray-200 p-2 pl-4 
+          outline-none disabled:bg-gray-50"
+          ></textarea>
+          <button
+            type="submit"
+            className="rounded-full bg-green-500 p-3 font-semibold text-white
+            disabled:bg-gray-200"
+          >
+            Submit
+          </button>
+          {(Object.keys(errors).length > 0 || errorMessage) && (
+            <div className="space-y-2 p-2 text-red-500">
+              {errors.report?.type === "required" && (
+                <p> - Report is required</p>
+              )}
+              {errorMessage && <p>- {errorMessage}</p>}
+            </div>
+          )}
+        </form>
       </div>
       <div className="flex flex-col max-w-5xl mx-auto items-center mt-3 px-2 md:px-0">
         <h1 className="text-2xl">Payment History</h1>

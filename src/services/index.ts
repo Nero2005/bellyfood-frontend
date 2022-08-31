@@ -1,4 +1,12 @@
-import { deleteVerb, get, getWithQuery, post, put, UserFilter } from "../utils";
+import {
+  AddReport,
+  deleteVerb,
+  get,
+  getWithQuery,
+  post,
+  put,
+  UserFilter,
+} from "../utils";
 
 export const getLocations = async () => {
   const res = await get("users/locations");
@@ -209,4 +217,34 @@ export const getAdminsByName = async (name: string) => {
 export const getAdminByCode = async (agentCode: any) => {
   const res = await getWithQuery("super/admin", { agentCode });
   return res.data.user;
+};
+
+export const postReport = async (data: AddReport) => {
+  const res = await post("users/reports", data);
+  return res.data;
+};
+
+export const getReports = async (filter: any) => {
+  const res = await getWithQuery("users/reports", filter);
+  return res.data;
+};
+
+export const changeAdminPassword = async (
+  adminId: string,
+  password: string
+) => {
+  const res = await put(`super/admins/password?adminId=${adminId}`, {
+    password,
+  });
+  return res.data;
+};
+
+export const changeAgentCustomers = async (
+  oldAgent: string,
+  newAgent: string
+) => {
+  const res = await put(
+    `super/agents/customers?oldAgent=${oldAgent}&newAgent=${newAgent}`
+  );
+  return res.data;
 };

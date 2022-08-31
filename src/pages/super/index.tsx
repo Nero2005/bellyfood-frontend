@@ -12,6 +12,7 @@ import DailyHistory from "../../components/super/DailyHistory";
 import Histories from "../../components/super/Histories";
 import Customers from "../../components/super/Customers";
 import BellysaveCustomers from "../../components/super/bellysave/BellysaveCustomers";
+import Reports from "../../components/super/Reports";
 
 interface Props {
   dashboard: () => string;
@@ -42,6 +43,8 @@ function Super({ dashboard }: Props) {
         return <Customers />;
       case "BELLYSAVE_SUPER":
         return <BellysaveCustomers />;
+      case "REPORTS":
+        return <Reports />;
     }
   };
 
