@@ -37,7 +37,9 @@ function SuperCustomer({ customer, loadCustomers, timeAgo, index }: Props) {
             className="text-green-600 w-6 h-6 cursor-pointer"
             onClick={async () => {
               setEditableN("");
-              editCustomer(customer._id, { name: editingName });
+              editCustomer(customer._id, {
+                name: editingName || customer.name,
+              });
               setEditingName("");
             }}
           />
@@ -57,7 +59,7 @@ function SuperCustomer({ customer, loadCustomers, timeAgo, index }: Props) {
             type="text"
             className="w-36"
             defaultValue={customer.phone}
-            onChange={(e) => setEditableP(e.target.value)}
+            onChange={(e) => setEditingPhone(e.target.value)}
           />
         ) : (
           <span>{customer.phone}</span>
@@ -68,7 +70,9 @@ function SuperCustomer({ customer, loadCustomers, timeAgo, index }: Props) {
             className="text-green-600 w-6 h-6 cursor-pointer"
             onClick={async () => {
               setEditableP("");
-              editCustomer(customer._id, { phone: editingPhone });
+              editCustomer(customer._id, {
+                phone: editingPhone || customer.phone,
+              });
               setEditingPhone("");
             }}
           />
