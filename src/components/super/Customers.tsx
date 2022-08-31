@@ -209,6 +209,7 @@ function Customers() {
           }`}
           onClick={() => decPage()}
         />
+
         <span>Page: {pageNumber + 1}</span>
         <ArrowRightIcon
           className={`w-6 cursor-pointer ${
