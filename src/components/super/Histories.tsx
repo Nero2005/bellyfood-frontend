@@ -13,6 +13,8 @@ function Histories() {
     (async () => {
       const h = await getSuperDailyHistory(day.split("T")[0], "bellyfood");
       const b = await getSuperDailyHistory(day.split("T")[0], "bellysave");
+      console.log(h);
+
       setHistoryDetails(h);
       setBellysaveH(b);
     })();
