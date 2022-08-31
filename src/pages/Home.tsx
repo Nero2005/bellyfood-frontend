@@ -67,7 +67,7 @@ function Home({ isAuthenticated, dashboard }: Props) {
 
       <CompareBaskets />
 
-      <CreateCustomer />
+      {/* <CreateCustomer /> */}
 
       <Contact />
 
