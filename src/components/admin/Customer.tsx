@@ -51,6 +51,7 @@ function Customer({ customer, setCustomers, loadFunc }: Props) {
       const d = await postPayment({
         phone,
         amount: parseInt(amount as string),
+        agentCode: parseInt(user?.agentCode || "12345"),
       });
       const n = toast.success(d.msg);
       setAmount(0);
