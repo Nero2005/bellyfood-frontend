@@ -36,7 +36,7 @@ function CustomerHistory({ historyItem, index }: Props) {
   }, [historyItem]);
 
   return (
-    <tr className="border border-gray-500">
+    <tr className="border border-gray-500 text-sm">
       <td className="border border-gray-500 mx-1 px-1">{index}</td>
       <td className="border border-gray-500" ref={adminNameRef}>
         {historyItem.agentName}

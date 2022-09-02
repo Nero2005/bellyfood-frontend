@@ -18,6 +18,7 @@ import ReactPWAInstallProvider, { useReactPWAInstall } from "react-pwa-install";
 import logo from "./logo.svg";
 import Header from "./components/guest/Header";
 import Bellysave from "./pages/Bellysave";
+import Agent from "./pages/agent";
 // import "./index.css";
 
 function App() {
@@ -90,8 +91,10 @@ function App() {
 
   const dashboard = (): string => {
     if (!user) return LinkRoutes.LOGIN;
-    else if (user.roles === undefined) {
+    else if (user.isBellysave) {
       return LinkRoutes.BELLYSAVE;
+    } else if (user.isAgent) {
+      return LinkRoutes.AGENT;
     } else if (isCustomer()) {
       return LinkRoutes.CUSTOMER;
     } else if (isAdmin()) return LinkRoutes.ADMIN;
@@ -151,7 +154,26 @@ function App() {
                 <Home isAuthenticated={isAuthenticated} dashboard={dashboard} />
               }
             />
-            <Route path={LinkRoutes.BELLYSAVE} element={<Bellysave />} />
+            <Route
+              path={LinkRoutes.BELLYSAVE}
+              element={
+                isAuthenticated() ? (
+                  <Bellysave />
+                ) : (
+                  <Navigate to={LinkRoutes.LOGIN} />
+                )
+              }
+            />
+            <Route
+              path={LinkRoutes.AGENT}
+              element={
+                isAuthenticated() ? (
+                  <Agent />
+                ) : (
+                  <Navigate to={LinkRoutes.LOGIN} />
+                )
+              }
+            />
             <Route
               path={LinkRoutes.LOGIN}
               element={

@@ -26,6 +26,8 @@ export interface UserState {
   lastLogin?: string;
   lastPayment?: string;
   late: boolean;
+  isBellysave?: boolean;
+  isAgent?: boolean;
 }
 
 interface State {

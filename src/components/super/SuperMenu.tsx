@@ -50,6 +50,14 @@ function SuperMenu() {
       </button>
       <button
         className={`sticky ${
+          page === "AGENTS" && "shadow-md text-white bg-green-400"
+        } px-6 py-2 hover:bg-green-400 hover:text-white border-r border-black transform ease-in duration-300`}
+        onClick={() => dispatch(setPage("AGENTS"))}
+      >
+        Agents
+      </button>
+      <button
+        className={`sticky ${
           page === "CUSTOMERS" && "shadow-md text-white bg-green-400"
         } px-6 py-2 hover:bg-green-400 hover:text-white border-r border-black transform ease-in duration-300`}
         onClick={() => dispatch(setPage("CUSTOMERS"))}

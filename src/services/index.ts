@@ -1,4 +1,5 @@
 import {
+  AddAgent,
   AddReport,
   deleteVerb,
   get,
@@ -23,8 +24,16 @@ export const postLocation = async (location: string) => {
   return res.data;
 };
 
-export const postAgent = async (name: string) => {
-  const res = await post("users/agents", { name });
+export const postAgent = async (data: AddAgent) => {
+  const res = await post("users/agents", data);
+  return res.data;
+};
+
+export const changeAgentPassword = async (
+  agentId: string,
+  password: string
+) => {
+  const res = await put(`super/agents/password`, { agentId, password });
   return res.data;
 };
 

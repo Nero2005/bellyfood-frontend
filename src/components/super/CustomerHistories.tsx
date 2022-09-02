@@ -16,7 +16,7 @@ function CustomerHistories({ openCustomers, histories }: Props) {
     >
       <table className="mx-auto text-center overflow-scroll border border-gray-500">
         <thead>
-          <tr className="border border-gray-500">
+          <tr className="border border-gray-500 text-sm">
             <th className="border border-gray-500">S/N</th>
             <th className="border border-gray-500">Admin Name</th>
             <th className="border border-gray-500">Agent Name</th>

@@ -76,6 +76,12 @@ export interface AddReport {
   details: string;
 }
 
+export interface AddAgent {
+  name: string;
+  password: string;
+  phone: string;
+}
+
 export interface Report extends AddReport {
   _id: string;
 }
@@ -96,4 +102,5 @@ export type Page =
   | "ADMIN_HISTORY"
   | "BELLYSAVE_ADMIN"
   | "BELLYSAVE_SUPER"
-  | "REPORTS";
+  | "REPORTS"
+  | "AGENTS";

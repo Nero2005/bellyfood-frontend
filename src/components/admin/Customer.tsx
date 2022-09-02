@@ -68,6 +68,7 @@ function Customer({ customer, setCustomers, loadFunc }: Props) {
   const deliver = async () => {
     try {
       // const res = await post(`super/deliver?customerId=${customer._id}`);
+      // customer.approved && customer.paid && customer.delivered
       const data = await postDelivery(customer._id);
       const n = toast.success(data.msg);
       if (loadFunc) {
@@ -206,14 +207,12 @@ customer.approved && customer.paid && customer.delivered &&
             ))}
           </select>
         )}
-        {customer.approved && customer.paid && customer.delivered && (
-          <button
-            className="lg:px-6 lg:py-3 shadow-md text-white bg-green-400 px-3 py-2 hover:px-5 hover:py-3 transform duration-200"
-            onClick={deleteCustomer}
-          >
-            Delete
-          </button>
-        )}
+        <button
+          className="lg:px-6 lg:py-3 shadow-md text-white bg-green-400 px-3 py-2 hover:px-5 hover:py-3 transform duration-200"
+          onClick={deleteCustomer}
+        >
+          Delete
+        </button>
       </div>
       <div
         className={`${

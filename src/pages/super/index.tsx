@@ -13,6 +13,7 @@ import Histories from "../../components/super/Histories";
 import Customers from "../../components/super/Customers";
 import BellysaveCustomers from "../../components/super/bellysave/BellysaveCustomers";
 import Reports from "../../components/super/Reports";
+import Agents from "../../components/super/Agents";
 
 interface Props {
   dashboard: () => string;
@@ -45,6 +46,8 @@ function Super({ dashboard }: Props) {
         return <BellysaveCustomers />;
       case "REPORTS":
         return <Reports />;
+      case "AGENTS":
+        return <Agents />;
     }
   };
 
