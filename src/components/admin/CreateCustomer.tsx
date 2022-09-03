@@ -205,7 +205,7 @@ function CreateCustomer({ isAdmin, isSuper }: Props) {
           <label className="p-2">
             <span>Bank Name: </span>
             <input
-              {...register("bankName", { required: true })}
+              {...register("bankName")}
               type="text"
               placeholder="Enter bank name"
               className="block border rounded form-input shadow ring-green-400 px-4 py-3 w-full mt-1 outline-none focus:ring"
@@ -216,7 +216,7 @@ function CreateCustomer({ isAdmin, isSuper }: Props) {
           <label className="p-2">
             <span>Account Number: </span>
             <input
-              {...register("accountNumber", { required: true })}
+              {...register("accountNumber")}
               type="text"
               placeholder="Enter account number"
               className="block border rounded form-input shadow ring-green-400 px-4 py-3 w-full mt-1 outline-none focus:ring"
