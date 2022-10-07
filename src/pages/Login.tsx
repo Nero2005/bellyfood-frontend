@@ -40,6 +40,7 @@ function Login({ dashboard }: Props) {
       }
       formData.phone = `+234${phone}`;
       const res = await post("auth/login", { ...formData, service });
+      console.log(res.data);
       navigate(LinkRoutes.DASHBOARD);
       window.location.reload();
     } catch (err: any) {
