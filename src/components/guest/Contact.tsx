@@ -32,6 +32,10 @@ function Contact() {
           </p>
         </div>
         <div className="py-2">
+          <h2 className="text-xl font-semibold pb-2">Branch</h2>
+          <p>ORILE BRANCH Line 1, Section C, Ifesowapo complex Orile Doyin</p>
+        </div>
+        <div className="py-2">
           <h2 className="text-xl font-semibold pb-2">Customer Service Line</h2>
           <p>For enquiry or complaint, call: 08053634000 or 07082223332</p>
         </div>

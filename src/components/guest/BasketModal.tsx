@@ -18,7 +18,7 @@ function BasketModal({ setShowModal, name }: Props) {
     "1 SACHET OF TOMATO PASTE",
   ];
   const micro = [
-    "2 BUCKETS OF RICE",
+    "1 BUCKETS OF RICE",
     "1 BUCKET OF BEANS",
     "2 BUCKETS OF GARRI",
     "3 PACKS OF SPAGHETTI",
